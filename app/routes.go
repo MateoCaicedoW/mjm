@@ -3,9 +3,9 @@ package app
 import (
 	"net/http"
 
-	"mjm/public"
 	"mjm/app/actions/home"
 	"mjm/app/middleware"
+	"mjm/public"
 
 	"github.com/gobuffalo/buffalo"
 )
