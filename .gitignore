@@ -22,3 +22,4 @@ coverage.data
 jhw.*
 .jhw-cache/
 *.sublime*
+.yarn/
