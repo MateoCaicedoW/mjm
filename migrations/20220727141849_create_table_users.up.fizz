@@ -1,0 +1,9 @@
+create_table("users") {
+	t.Column("id", "uuid", {"primary": true})
+    t.Column("department_id", "uuid", {})
+	t.Column("first_name", "varchar", {"size":255})
+	t.Column("last_name", "varchar", {"size":255})
+	t.Column("email_adress", "varchar", {"size":255})
+    t.Column("phone_number","varchar", {"size":255})
+	
+}
