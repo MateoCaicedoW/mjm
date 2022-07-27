@@ -1,0 +1,6 @@
+create_table("requeriment_sub_types") {
+    t.Column("id", "uuid", {primary: true})
+    t.Column("requirement_type_id", "uuid", {})
+    t.Column("name", "string", {})
+    t.ForeignKey("requirement_type_id", {"requirement_types": ["id"]}, {"on_delete": "cascade"})
+}
