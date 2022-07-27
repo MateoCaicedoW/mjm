@@ -14,3 +14,4 @@ type Departments struct {
 	UpdatedAt   time.Time `json:"updated_at" db:"updated_at"`
 	RequirementType       *Requirement_type     `belongs_to:"requirement_types"`
 }
+
