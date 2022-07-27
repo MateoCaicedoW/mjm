@@ -3,7 +3,8 @@ create_table("users") {
     t.Column("department_id", "uuid", {})
 	t.Column("first_name", "varchar", {"size":255})
 	t.Column("last_name", "varchar", {"size":255})
-	t.Column("email_adress", "varchar", {"size":255})
+    t.Column("dni", "varchar", {"size":255})
+	t.Column("email_address", "varchar", {"size":255})
     t.Column("phone_number","varchar", {"size":255})
 	
 }
