@@ -1,0 +1,17 @@
+create_table("requirements") {
+    	t.Column("id", "uuid", {"primary": true})
+        t.Column("title", "string",{"size": 255})
+        t.Column("description", "text",{})
+        t.Column("created_by", "timestamp", {"default": "now()"})
+        t.Column("created_at", "timestamp", {"default": "now()"})
+}
+create_table("users") {
+	t.Column("id", "uuid", {"primary": true})
+    t.Column("department_id", "uuid", {})
+	t.Column("first_name", "varchar", {"size":255})
+	t.Column("last_name", "varchar", {"size":255})
+    t.Column("dni", "varchar", {"size":255})
+	t.Column("email_address", "varchar", {"size":255})
+    t.Column("phone_number","varchar", {"size":255})
+	
+}
