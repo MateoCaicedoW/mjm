@@ -1,0 +1,8 @@
+<div class="py-4 mb-2">
+    <h3 class="d-inline-block">Edit Requirement</h3>
+</div>
+
+<%= formFor(requirement, {action: requirementPath({ requirement_id: requirement.ID }), method: "PUT"}) { %>
+	<%= partial("requirements/form.html") %>
+    <%= linkTo(requirementPath({ requirement_id: requirement.ID }), {class: "btn btn-warning", "data-confirm": "Are you sure?", body: "Cancel"}) %>
+<% } %>

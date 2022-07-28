@@ -16,8 +16,10 @@ type Requirement struct {
 	RequirementSubTypeId   uuid.UUID      `db:"requirement_sub_type_id"`
 	ModifiedBy             uuid.UUID      `db:"modified_by"`
 	ModifiedAt             uuid.Timestamp `db:"modified_at"`
-	AprovedBy              uuid.UUID      `db:"aproved_by"`
-	AprovedAt              uuid.Timestamp `db:"aproved_at"`
+	ApprovedBy             uuid.UUID      `db:"approved_by"`
+	ApprovedAt             uuid.Timestamp `db:"approved_at"`
+	AcceptedBy             uuid.UUID      `db:"accepted_by"`
+	AcceptedAt             uuid.Timestamp `db:"accepted_at"`
 	DeclinedBy             uuid.UUID      `db:"declined_by"`
 	DeclinedAt             uuid.Timestamp `db:"declined_at"`
 	ProcessedBy            uuid.UUID      `db:"processed_by"`
@@ -29,3 +31,5 @@ type Requirement struct {
 	FinishedAt             uuid.Timestamp `db:"finished_at"`
 	Solved                 bool           `db:"solved"`
 }
+
+var Requirements []Requirement

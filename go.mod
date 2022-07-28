@@ -5,12 +5,13 @@ go 1.18
 require (
 	github.com/gobuffalo/buffalo v0.18.9
 	github.com/gobuffalo/envy v1.10.1
+	github.com/gobuffalo/grift v1.5.1
 	github.com/gobuffalo/mw-csrf v1.0.1
 	github.com/gobuffalo/mw-paramlogger v1.0.1
 	github.com/gobuffalo/pop/v6 v6.0.6
 	github.com/gobuffalo/suite/v4 v4.0.3
 	github.com/gofrs/uuid v4.2.0+incompatible
-	github.com/wawandco/ox v0.12.2
+	github.com/wawandco/ox v0.12.3
 )
 
 require (
@@ -28,7 +29,6 @@ require (
 	github.com/gobuffalo/fizz v1.14.2 // indirect
 	github.com/gobuffalo/flect v0.2.5 // indirect
 	github.com/gobuffalo/github_flavored_markdown v1.1.1 // indirect
-	github.com/gobuffalo/grift v1.5.1 // indirect
 	github.com/gobuffalo/helpers v0.6.5 // indirect
 	github.com/gobuffalo/httptest v1.5.1 // indirect
 	github.com/gobuffalo/logger v1.0.6 // indirect
