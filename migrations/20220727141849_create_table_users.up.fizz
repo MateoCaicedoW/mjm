@@ -6,4 +6,5 @@ create_table("users") {
     t.Column("dni", "varchar", {"size":255})
 	t.Column("email_address", "varchar", {"size":255})
     t.Column("phone_number","varchar", {"size":255})
+	t.Timestamps()
 }

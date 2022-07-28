@@ -2,4 +2,5 @@ create_table("departments") {
    t.Column("id", "uuid", {primary: true})
    t.Column("name", "string", {})
    t.Column("description", "text", {})
+   t.Timestamps()
 }
