@@ -3,7 +3,6 @@ package requirements
 import (
 	"fmt"
 	"net/http"
-	"time"
 
 	"github.com/gobuffalo/buffalo"
 	"github.com/gobuffalo/pop/v6"
@@ -33,18 +32,19 @@ func List(c buffalo.Context) error {
 	requirements := models.Requirements
 
 	// Paginate results. Params "page" and "per_page" control pagination.
-	// Default values are "page=1" and "per_page=20".
-	q := tx.PaginateFromParams(c.Params())
-	q = q.Order("created_at desc")
+	q := pagination(tx, c)
 
 	// Retrieve all Requirements from the DB
-	if err := q.Eager().All(&requirements); err != nil {
+	if err := q.Eager().Where("approved_by is null and declined_by is null").All(&requirements); err != nil {
 
 		return err
 	}
+	path := c.Value("current_route").(buffalo.RouteInfo)
 
+	counters(tx, c)
 	// Add the paginator to the context so it can be used in the template.
 	c.Set("pagination", q.Paginator)
+	c.Set("path", path.PathName)
 	c.Set("requirements", requirements)
 
 	return c.Render(http.StatusOK, r.HTML("requirement/index.plush.html"))
@@ -78,6 +78,7 @@ func New(c buffalo.Context) error {
 	// Get the DB connection from the context
 	tx, ok := c.Value("tx").(*pop.Connection)
 	requirement := &models.Requirement{}
+
 	if !ok {
 		return fmt.Errorf("no transaction found")
 	}
@@ -85,7 +86,6 @@ func New(c buffalo.Context) error {
 	//set all dropdown
 	setDropdowns(tx, c)
 
-	requirement.CreatedAt = time.Now()
 	c.Set("requirement", requirement)
 
 	return c.Render(http.StatusOK, r.HTML("/requirement/new.plush.html"))
@@ -99,9 +99,9 @@ func Create(c buffalo.Context) error {
 
 	// Bind requirement to the html form elements
 	if err := c.Bind(requirement); err != nil {
+
 		return err
 	}
-
 	// Get the DB connection from the context
 	tx, ok := c.Value("tx").(*pop.Connection)
 	if !ok {
@@ -126,6 +126,7 @@ func Create(c buffalo.Context) error {
 
 		return c.Render(http.StatusUnprocessableEntity, r.HTML("/requirement/new.plush.html"))
 	}
+	fmt.Println("ddddd")
 
 	// If there are no errors set a success message
 	c.Flash().Add("success", "requirement.created.success")
@@ -228,41 +229,49 @@ func Delete(c buffalo.Context) error {
 	return c.Redirect(http.StatusSeeOther, "/requirements")
 }
 
-func setDropdownUsers(users []models.User, c buffalo.Context) {
-	userMap := make(map[string]uuid.UUID)
+func Approved(c buffalo.Context) error {
+	// Get the DB connection from the context
+	showPendingApprovedDenied("is not null", "approved", c)
 
-	for i := 0; i < len(users); i++ {
+	return c.Render(http.StatusOK, r.HTML("/requirement/index.plush.html"))
+}
 
-		userMap[users[i].FirstName+" "+users[i].LastName] = users[i].ID
-	}
+func Pending(c buffalo.Context) error {
+	// Get the DB connection from the context
+	showPendingApprovedDenied("is null", "pending", c)
+	return c.Render(http.StatusOK, r.HTML("/requirement/index.plush.html"))
+}
+
+func Denied(c buffalo.Context) error {
+	// Get the DB connection from the context
+	showPendingApprovedDenied("is not null", "denied", c)
+	return c.Render(http.StatusOK, r.HTML("/requirement/index.plush.html"))
+}
+
+func setDropdownUsers(users models.Users, c buffalo.Context) {
+	userMap := users.Map()
+
+	userMap["Select an User"] = uuid.Nil
 	c.Set("users", userMap)
 }
 
-func setDropdownDepartment(departments []models.Department, c buffalo.Context) {
-	departmentMap := make(map[string]uuid.UUID)
-
-	for i := 0; i < len(departments); i++ {
-		departmentMap[departments[i].Name] = departments[i].ID
-	}
+func setDropdownDepartment(departments models.Departments, c buffalo.Context) {
+	departmentMap := departments.Map()
+	departmentMap["Select an Area"] = uuid.Nil
 	c.Set("departments", departmentMap)
 }
 
-func setDropdownRequirementType(types []models.RequirementType, c buffalo.Context) {
-	typeMap := make(map[string]uuid.UUID)
+func setDropdownRequirementType(types models.RequirementTypes, c buffalo.Context) {
+	typeMap := types.Map()
 
-	for i := 0; i < len(types); i++ {
-		typeMap[types[i].Name] = types[i].ID
-	}
+	typeMap["Select a Type"] = uuid.Nil
 	c.Set("requirementTypes", typeMap)
 
 }
 
-func setDropdownRequirementSubType(subtypes []models.RequirementSubType, c buffalo.Context) {
-	subtypeMap := make(map[string]uuid.UUID)
-
-	for i := 0; i < len(subtypes); i++ {
-		subtypeMap[subtypes[i].Name] = subtypes[i].ID
-	}
+func setDropdownRequirementSubType(subtypes models.RequirementSubTypes, c buffalo.Context) {
+	subtypeMap := subtypes.Map()
+	subtypeMap["Select a Subtype"] = uuid.Nil
 	c.Set("requirementSubTypes", subtypeMap)
 
 }
@@ -294,4 +303,51 @@ func setDropdowns(tx *pop.Connection, c buffalo.Context) error {
 	}
 	setDropdownRequirementSubType(requirementSubType, c)
 	return nil
+}
+
+func pagination(tx *pop.Connection, c buffalo.Context) *pop.Query {
+	// Default values are "page=1" and "per_page=20".
+	q := tx.PaginateFromParams(c.Params())
+	q = q.Order("created_at desc")
+	return q
+}
+
+func showPendingApprovedDenied(where string, option string, c buffalo.Context) {
+	tx, _ := c.Value("tx").(*pop.Connection)
+
+	// Allocate an empty Requirement
+	requirements := models.Requirements
+	q := pagination(tx, c)
+	if option == "approved" {
+		condition := "approved_by " + where
+		q.Eager().Where(condition).All(&requirements)
+
+	}
+
+	if option == "pending" {
+		condition := "approved_by " + where + " and declined_by is null"
+		q.Eager().Where(condition).All(&requirements)
+
+	}
+	if option == "denied" {
+		condition := "declined_by " + where
+		q.Eager().Where(condition).All(&requirements)
+
+	}
+	counters(tx, c)
+	c.Set("requirements", requirements)
+	c.Set("pagination", q.Paginator)
+	path := c.Value("current_route").(buffalo.RouteInfo)
+	c.Set("path", path.PathName)
+}
+
+func counters(tx *pop.Connection, c buffalo.Context) {
+	// Allocate an empty Requirement
+	requirement := &models.Requirements
+	pending, _ := tx.Where("approved_by is null and declined_by is null").Count(requirement)
+	approved, _ := tx.Where("approved_by is not null").Count(requirement)
+	denied, _ := tx.Where("declined_by is not null").Count(requirement)
+	c.Set("pending", pending)
+	c.Set("approved", approved)
+	c.Set("denied", denied)
 }

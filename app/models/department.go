@@ -25,4 +25,3 @@ func (d Departments) Map() map[string]uuid.UUID {
 	}
 	return departmentsMap
 }
-
