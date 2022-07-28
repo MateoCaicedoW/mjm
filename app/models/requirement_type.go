@@ -1,9 +1,15 @@
 package models
 
-import "github.com/gofrs/uuid"
+import (
+	"time"
 
-type RequerimentType struct {
+	"github.com/gofrs/uuid"
+)
+
+type RequirementType struct {
 	ID           uuid.UUID `db:"id"`
 	DepartmentId uuid.UUID `db:"department_id"`
 	Name         string    `db:"name"`
+	CreatedAt    time.Time `db:"created_at"`
+	UpdatedAt    time.Time `db:"updated_at"`
 }
