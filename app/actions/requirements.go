@@ -6,18 +6,16 @@ import (
 
 	"github.com/gobuffalo/buffalo"
 	"github.com/gobuffalo/pop/v6"
+	"github.com/gofrs/uuid"
 
 	"mjm/app/models"
 )
 
 // RequirementsResource is the resource for the Requirement model
-type RequirementsResource struct {
-	buffalo.Resource
-}
 
 // List gets all Requirements. This function is mapped to the path
 // GET /requirements
-func (v RequirementsResource) List(c buffalo.Context) error {
+func ListRequirements(c buffalo.Context) error {
 	// Get the DB connection from the context
 	tx, ok := c.Value("tx").(*pop.Connection)
 	if !ok {
@@ -39,12 +37,12 @@ func (v RequirementsResource) List(c buffalo.Context) error {
 	c.Set("pagination", q.Paginator)
 	c.Set("requirements", requirements)
 
-	return c.Render(http.StatusOK, r.HTML("/requirements/index.plush.html"))
+	return c.Render(http.StatusOK, r.HTML("requirement/index.plush.html"))
 }
 
 // Show gets the data for one Requirement. This function is mapped to
 // the path GET /requirements/{requirement_id}
-// func (v RequirementsResource) Show(c buffalo.Context) error {
+// func  Show(c buffalo.Context) error {
 // 	// Get the DB connection from the context
 // 	tx, ok := c.Value("tx").(*pop.Connection)
 // 	if !ok {
@@ -66,15 +64,36 @@ func (v RequirementsResource) List(c buffalo.Context) error {
 
 // New renders the form for creating a new Requirement.
 // This function is mapped to the path GET /requirements/new
-// func (v RequirementsResource) New(c buffalo.Context) error {
-// 	c.Set("requirement", &models.Requirement{})
+func RequirementsNew(c buffalo.Context) error {
+	// Get the DB connection from the context
+	tx, ok := c.Value("tx").(*pop.Connection)
 
-// 	return c.Render(http.StatusOK, r.HTML("/requirements/new.plush.html"))
-// }
+	if !ok {
+		return fmt.Errorf("no transaction found")
+	}
+
+	users := []models.User{}
+	if err := tx.All(&users); err != nil {
+		return err
+	}
+	//create map of users
+	userMap := make(map[string]uuid.UUID)
+
+	for i := 0; i < len(users); i++ {
+
+		userMap[users[i].FirstName+" "+users[i].LastName] = users[i].ID
+	}
+
+	c.Set("users", userMap)
+
+	c.Set("requirement", &models.Requirement{})
+
+	return c.Render(http.StatusOK, r.HTML("/requirement/new.plush.html"))
+}
 
 // // Create adds a Requirement to the DB. This function is mapped to the
 // // path POST /requirements
-// func (v RequirementsResource) Create(c buffalo.Context) error {
+// func  Create(c buffalo.Context) error {
 // 	// Allocate an empty Requirement
 // 	requirement := &models.Requirement{}
 
@@ -115,7 +134,7 @@ func (v RequirementsResource) List(c buffalo.Context) error {
 
 // // Edit renders a edit form for a Requirement. This function is
 // // mapped to the path GET /requirements/{requirement_id}/edit
-// func (v RequirementsResource) Edit(c buffalo.Context) error {
+// func  Edit(c buffalo.Context) error {
 // 	// Get the DB connection from the context
 // 	tx, ok := c.Value("tx").(*pop.Connection)
 // 	if !ok {
@@ -136,7 +155,7 @@ func (v RequirementsResource) List(c buffalo.Context) error {
 
 // // Update changes a Requirement in the DB. This function is mapped to
 // // the path PUT /requirements/{requirement_id}
-// func (v RequirementsResource) Update(c buffalo.Context) error {
+// func  Update(c buffalo.Context) error {
 // 	// Get the DB connection from the context
 // 	tx, ok := c.Value("tx").(*pop.Connection)
 // 	if !ok {
@@ -180,7 +199,7 @@ func (v RequirementsResource) List(c buffalo.Context) error {
 
 // // Destroy deletes a Requirement from the DB. This function is mapped
 // // to the path DELETE /requirements/{requirement_id}
-// func (v RequirementsResource) Destroy(c buffalo.Context) error {
+// func  Destroy(c buffalo.Context) error {
 // 	// Get the DB connection from the context
 // 	tx, ok := c.Value("tx").(*pop.Connection)
 // 	if !ok {

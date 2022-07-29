@@ -1,4 +1,5 @@
-<%= f.InputTag("ID") %>
-        <%= f.InputTag("CreatedAt") %>
-        <%= f.InputTag("UpdatedAt") %>
-        <button class="btn btn-success" role="submit">Save</button>
+
+        <%= f.InputTag("Title") %>
+        <%= f.TextArea("Description", {rows: 5}) %>
+        <%= f.SelectTag("CreatedBy", {options: users }) %>
+        <button class="btn btn-success mt-3" role="submit">Save</button>

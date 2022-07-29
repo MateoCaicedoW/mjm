@@ -1,9 +1,12 @@
 <div class="py-4 mb-2">
 	<h3 class="d-inline-block">Requirements</h3>
 	<div class="float-right">
-		<%= linkTo(newRequirementsPath(), {class: "btn btn-primary"}) { %>
-		Create New Requirement
-		<% } %>
+		<a href="/requirements/new">
+			<button class="btn btn-success">
+				<i class="fa fa-plus"></i>
+				New Requirement
+			</button>
+		</a>
 	</div>
 </div>
 
