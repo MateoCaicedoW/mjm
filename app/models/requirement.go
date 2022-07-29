@@ -18,8 +18,8 @@ type Requirement struct {
 	RequirementSubTypeId   uuid.UUID `db:"requirement_sub_type_id"`
 	ModifiedBy             uuid.UUID `db:"modified_by"`
 	ModifiedAt             time.Time `db:"modified_at"`
-	AprovedBy              uuid.UUID `db:"aproved_by"`
-	AprovedAt              time.Time `db:"aproved_at"`
+	ApprovedBy             uuid.UUID `db:"approved_by"`
+	ApprovedAt             time.Time `db:"approved_at"`
 	AcceptedBy             uuid.UUID `db:"accepted_by"`
 	AcceptedAt             time.Time `db:"accepted_at"`
 	DeclinedBy             uuid.UUID `db:"declined_by"`
