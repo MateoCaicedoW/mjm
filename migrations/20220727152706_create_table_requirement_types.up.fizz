@@ -1,6 +1,7 @@
-    create_table("requirement_types") {
+create_table("requirement_types") {
     t.Column("id", "uuid", {primary: true})
     t.Column("department_id", "uuid", {})
     t.Column("name", "string", {})
+    t.Timestamps()
     t.ForeignKey("department_id", {"departments": ["id"]}, {"on_delete": "cascade"})
 }
