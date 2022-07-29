@@ -1,1 +1,1 @@
-drop_table("requirement_sub_types")
+drop_table("requeriment_sub_types")

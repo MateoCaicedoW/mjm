@@ -1,0 +1,1 @@
+rename_table("requirement_sub_types", "requeriment_sub_types")
