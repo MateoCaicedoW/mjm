@@ -13,7 +13,7 @@ create_table("requirements") {
     t.Column("approved_by","uuid",{})
     t.Column("approved_at", "timestamp", {"default": "now()"})
     t.Column("accepted_by","uuid",{})
-    t.Column("accpeted_at", "timestamp", {"default": "now()"})
+    t.Column("accepted_at", "timestamp", {"default": "now()"})
     t.Column("declined_by","uuid",{})
     t.Column("declined_at", "timestamp", {"default": "now()"})
     t.Column("proccessed_by","uuid",{})
