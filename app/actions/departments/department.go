@@ -13,7 +13,7 @@ var (
 	r = render.Engine
 )
 
-func IndexDepartment(c buffalo.Context) error {
+func ListDepartment(c buffalo.Context) error {
 	tx := c.Value("tx").(*pop.Connection)
 
 	departments := []models.Department{}
@@ -34,9 +34,10 @@ func FormCreateDeparment(c buffalo.Context) error {
 
 func ViewDetails(c buffalo.Context) error {
 	tx := c.Value("tx").(*pop.Connection)
-	department := models.Department{}
 
+	department := models.Department{}
 	depatmentID := c.Param("department_id")
+
 	err := tx.Find(&department, depatmentID)
 	if err != nil {
 		return err
@@ -75,6 +76,7 @@ func Edit(c buffalo.Context) error {
 	}
 
 	c.Set("deparment", department)
+	
 	return c.Render(http.StatusOK, r.HTML("/departments/edit_department.plush.html"))
 }
 

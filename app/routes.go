@@ -19,7 +19,7 @@ func setRoutes(root *buffalo.App) {
 	root.Use(middleware.CSRF)
 
 	root.GET("/", home.Index)
-	root.GET("/departments", departments.IndexDepartment)
+	root.GET("/departments", departments.ListDepartment)
 	root.GET("/add-department", departments.FormCreateDeparment)
 	root.POST("/create-department", departments.CreateDepartment)
 	root.GET("/edit/{department_id}", departments.Edit)
