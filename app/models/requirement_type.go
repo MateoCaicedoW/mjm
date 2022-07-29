@@ -6,10 +6,13 @@ import (
 	"github.com/gofrs/uuid"
 )
 
+// RequirementType model struct.
 type RequirementType struct {
-	ID           uuid.UUID `db:"id"`
-	DepartmentId uuid.UUID `db:"department_id"`
-	Name         string    `db:"name"`
-	CreatedAt    time.Time `db:"created_at"`
-	UpdatedAt    time.Time `db:"updated_at"`
+	ID           uuid.UUID `form:"id" db:"id"`
+	DepartmentID uuid.UUID `form:"department_id" db:"department_id"`
+	Name         string    `form:"name" db:"name"`
+	CreatedAt    time.Time `form:"created_at" db:"created_at"`
+	UpdatedAt    time.Time `form:"updated_at" db:"updated_at"`
 }
+
+type RequirementTypes []RequirementType

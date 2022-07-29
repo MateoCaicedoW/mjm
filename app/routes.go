@@ -3,6 +3,7 @@ package app
 import (
 	"net/http"
 
+	"mjm/app/actions"
 	"mjm/app/actions/home"
 	"mjm/app/middleware"
 	"mjm/public"
@@ -18,5 +19,10 @@ func setRoutes(root *buffalo.App) {
 	root.Use(middleware.CSRF)
 
 	root.GET("/", home.Index)
+	root.GET("/requirement-type", actions.List)
+	root.GET("/requirement-type-new", actions.New)
+	root.POST("/requirement-type-create", actions.Create)
+	
+
 	root.ServeFiles("/", http.FS(public.FS()))
 }
