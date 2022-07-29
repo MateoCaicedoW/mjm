@@ -16,5 +16,6 @@ type User struct {
 	PhoneNumber  string       `db:"phone_number" `
 	CreatedAt    time.Time    `db:"created_at"`
 	UpdatedAt    time.Time    `db:"updated_at"`
+	DepartmentID uuid.UUID    `db:"department_id"`
 	Departments  []Department `has_many:"deparments"`
 }

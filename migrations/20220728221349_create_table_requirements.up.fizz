@@ -27,7 +27,7 @@ create_table("requirements") {
     t.ForeignKey("created_by", {"users": ["id"]}, {"on_delete": "cascade"})
     t.ForeignKey("requesting_department_id", {"departments": ["id"]}, {"on_delete": "cascade"})
     t.ForeignKey("service_department_id", {"departments": ["id"]}, {"on_delete": "cascade"})
-    t.ForeignKey("requirement_type_id", {"requeriments_types": ["id"]}, {"on_delete": "cascade"})
+    t.ForeignKey("requirement_type_id", {"requirement_types": ["id"]}, {"on_delete": "cascade"})
     t.ForeignKey("requirement_sub_type_id", {"requeriment_sub_types": ["id"]}, {"on_delete": "cascade"})
     t.ForeignKey("modified_by", {"users": ["id"]}, {"on_delete": "cascade"})
     t.ForeignKey("approved_by", {"users": ["id"]}, {"on_delete": "cascade"})
