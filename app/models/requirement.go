@@ -20,10 +20,12 @@ type Requirement struct {
 	ModifiedAt             time.Time `db:"modified_at"`
 	AprovedBy              uuid.UUID `db:"aproved_by"`
 	AprovedAt              time.Time `db:"aproved_at"`
+	AcceptedBy             uuid.UUID `db:"accepted_by"`
+	AcceptedAt             time.Time `db:"accepted_at"`
 	DeclinedBy             uuid.UUID `db:"declined_by"`
 	DeclinedAt             time.Time `db:"declined_at"`
-	ProcessedBy            uuid.UUID `db:"processed_by"`
-	ProcessedAt            time.Time `db:"processed_at"`
+	ProcessedBy            uuid.UUID `db:"proccessed_by"`
+	ProcessedAt            time.Time `db:"proccessed_at"`
 	AssignedBy             uuid.UUID `db:"assigned_by"`
 	AssignedTo             uuid.UUID `db:"assigned_to"`
 	AssignedAt             time.Time `db:"assigned_at"`
