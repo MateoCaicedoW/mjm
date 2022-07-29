@@ -16,7 +16,7 @@ var (
 func IndexDepartment(c buffalo.Context) error {
 	tx := c.Value("tx").(*pop.Connection)
 
-	departments := []models.Departments{}
+	departments := []models.Department{}
 	err := tx.All(&departments)
 	if err != nil {
 		return err
@@ -34,7 +34,7 @@ func FormCreateDeparment(c buffalo.Context) error {
 
 func ViewDetails(c buffalo.Context) error {
 	tx := c.Value("tx").(*pop.Connection)
-	department := models.Departments{}
+	department := models.Department{}
 
 	depatmentID := c.Param("department_id")
 	err := tx.Find(&department, depatmentID)
@@ -50,7 +50,7 @@ func ViewDetails(c buffalo.Context) error {
 func CreateDepartment(c buffalo.Context) error {
 	tx := c.Value("tx").(*pop.Connection)
 
-	deparment := models.Departments{}
+	deparment := models.Department{}
 	if err := c.Bind(&deparment); err != nil {
 		return err
 	}
@@ -66,7 +66,7 @@ func CreateDepartment(c buffalo.Context) error {
 func Edit(c buffalo.Context) error {
 	tx := c.Value("tx").(*pop.Connection)
 
-	department := models.Departments{}
+	department := models.Department{}
 	departmentID := c.Param("department_id")
 
 	err := tx.Find(&department, departmentID)
@@ -81,7 +81,7 @@ func Edit(c buffalo.Context) error {
 func Editdepartment(c buffalo.Context) error {
 	tx := c.Value("tx").(*pop.Connection)
 
-	deparment := models.Departments{}
+	deparment := models.Department{}
 	departmentID := c.Param("department_id")
 
 	err := tx.Find(&deparment, departmentID)
@@ -104,7 +104,7 @@ func Editdepartment(c buffalo.Context) error {
 func DeleteDepartment(c buffalo.Context) error {
 	tx := c.Value("tx").(*pop.Connection)
 
-	department := models.Departments{}
+	department := models.Department{}
 	departmentID := c.Param("department_id")
 
 	err := tx.Find(&department, departmentID)
