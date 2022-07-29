@@ -1,0 +1,8 @@
+<%= form({id: "save", action: editDatumDepartmentIDPath({department_id: deparment.ID}) ,method: "PUT"}) { %>
+    <%= f.InputTag({type:"text", placeholder:"Name", class:"number-add", name:"name", value: deparment.Name}) %>
+    <%= f.InputTag({type:"text", name:"description", class:"mt-4", placeholder:"description", value: deparment.Description}) %>
+<% } %>
+<div class="d-flex">
+    <button class="btn d-flex btn-primary mt-3" form="save">Save Line</button>
+    <a class="btn btn-danger ms-3 mt-3" href="/departments">cancel</a>
+</div>

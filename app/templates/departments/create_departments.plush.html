@@ -1,0 +1,5 @@
+<%= form({id: "save", action: createDepartmentPath() ,method: "POST"}) { %>
+    <%= f.InputTag({type:"text", placeholder:"Name", class:"number-add", name:"name"}) %>
+    <%= f.InputTag({type:"text", name:"description", class:"mt-4", placeholder:"description"}) %>
+<% } %>
+<button class="btn d-flex btn-primary mt-3" form="save">Save Line</button>

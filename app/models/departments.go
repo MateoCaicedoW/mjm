@@ -7,11 +7,9 @@ import (
 )
 
 type Departments struct {
-	ID          uuid.UUID `json:"id" db:"id"`
-	Name        string    `json:"name" db:"name"`
-	Description string    `json:"description" db:"description"`
-	CreatedAt   time.Time `json:"created_at" db:"created_at"`
-	UpdatedAt   time.Time `json:"updated_at" db:"updated_at"`
-	RequirementType       *Requirement_type     `belongs_to:"requirement_types"`
+	ID          uuid.UUID `form:"id" db:"id"`
+	Name        string    `form:"name" db:"name"`
+	Description string    `form:"description" db:"description"`
+	CreatedAt   time.Time `form:"created_at" db:"created_at"`
+	UpdatedAt   time.Time `form:"updated_at" db:"updated_at"`
 }
-
