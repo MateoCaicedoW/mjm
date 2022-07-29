@@ -111,7 +111,7 @@ func Create(c buffalo.Context) error {
 	fmt.Println("ccccc")
 
 	// Validate the data from the html form
-	verrs, err := tx.Eager().ValidateAndCreate(requirement, "modified_by", "approved_by", "declined_by", "accepted_by", "finished_by", "proccessed_by", "assigned_to", "assigned_by", "modified_at", "approved_at", "declined_at", "accepted_at", "finished_at", "processed_at", "assigned_at")
+	verrs, err := tx.Eager().ValidateAndCreate(requirement)
 	if err != nil {
 
 		return err

@@ -1,10 +1,11 @@
-<div class="py-4 mb-2">
-    <h3 class="d-inline-block">Edit Requirement</h3>
+<div class="py-3">
+    <h3 class="d-inline-block fw-bolder"><a class="text-dark " href="/requirements"><i class="fa-solid fa-arrow-left"></i></a>  Edit Requirement</h3>
 </div>
 
 <%= formFor(requirement, {action:"/requirements/update/"+requirement.ID, method: "PUT"}) { %>
 	<%= partial("requirement/form.plush.html") %>
-    <a href="/requirements">
-        <button class="btn btn-warning mt-3" type="button" >Cancel</button>
-    </a>
+    <div class="d-flex gap-2 justify-content-end">
+		<%= linkTo(requirementsPath(), {class: "btn btn-warning mt-3", "data-confirm": "Are you sure?", body: "Cancel"}) %>
+		<button class="btn btn-success mt-3 fw-light " role="submit">Save Changes</button>
+	</div>
    <% } %>
