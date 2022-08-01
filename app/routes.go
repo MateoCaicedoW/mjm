@@ -17,7 +17,7 @@ func setRoutes(root *buffalo.App) {
 	root.Use(middleware.ParameterLogger)
 	root.Use(middleware.CSRF)
 
-	root.GET("/requirements", actions.ListRequirements)
+	root.GET("/requirements", requireme)
 	root.GET("/requirements/new", actions.RequirementsNew)
 	root.ServeFiles("/", http.FS(public.FS()))
 }

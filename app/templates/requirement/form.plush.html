@@ -2,4 +2,8 @@
         <%= f.InputTag("Title") %>
         <%= f.TextArea("Description", {rows: 5}) %>
         <%= f.SelectTag("CreatedBy", {options: users }) %>
+        <%= f.SelectTag("RequestingDepartmentId", {options: departments, label: "Department"  }) %>
+        <%= f.SelectTag("ServiceDepartmentId", {options: departments , label: "Service Department" }) %>
+        <%= f.SelectTag("RequirementTypeId", {options: requirementTypes, label:"Requirement Type" }) %>
+        <%= f.SelectTag("RequirementSubTypeId", {options: requirementSubTypes, label: "Requirement Sub Type" }) %>
         <button class="btn btn-success mt-3" role="submit">Save</button>

@@ -1,14 +1,22 @@
-package actions
+package requirements
 
 import (
 	"fmt"
 	"net/http"
+	"time"
 
 	"github.com/gobuffalo/buffalo"
 	"github.com/gobuffalo/pop/v6"
 	"github.com/gofrs/uuid"
 
 	"mjm/app/models"
+	"mjm/app/render"
+)
+
+var (
+	// r is a buffalo/render Engine that will be used by actions
+	// on this package to render render HTML or any other formats.
+	r = render.Engine
 )
 
 // RequirementsResource is the resource for the Requirement model
@@ -67,7 +75,7 @@ func ListRequirements(c buffalo.Context) error {
 func RequirementsNew(c buffalo.Context) error {
 	// Get the DB connection from the context
 	tx, ok := c.Value("tx").(*pop.Connection)
-
+	requirement := &models.Requirement{}
 	if !ok {
 		return fmt.Errorf("no transaction found")
 	}
@@ -83,10 +91,43 @@ func RequirementsNew(c buffalo.Context) error {
 
 		userMap[users[i].FirstName+" "+users[i].LastName] = users[i].ID
 	}
+	//create map of departments
+	departmentMap := make(map[string]uuid.UUID)
+	departments := []models.Department{}
+	if err := tx.All(&departments); err != nil {
+		return err
+	}
+	for i := 0; i < len(departments); i++ {
+		departmentMap[departments[i].Name] = departments[i].ID
+	}
 
+	//create map of requirement types
+	requirementTypeMap := make(map[string]uuid.UUID)
+	requirementTypes := []models.RequirementType{}
+	if err := tx.All(&requirementTypes); err != nil {
+		return err
+	}
+	for i := 0; i < len(requirementTypes); i++ {
+		requirementTypeMap[requirementTypes[i].Name] = requirementTypes[i].ID
+	}
+
+	//create map of requirement sub types
+	requirementSubType := []models.RequirementSubType{}
+	requirementSubTypeMap := make(map[string]uuid.UUID)
+	if err := tx.All(&requirementSubType); err != nil {
+		return err
+	}
+	for i := 0; i < len(requirementSubType); i++ {
+		requirementSubTypeMap[requirementSubType[i].Name] = requirementSubType[i].ID
+	}
+
+	c.Set("requirementTypes", requirementTypeMap)
 	c.Set("users", userMap)
+	c.Set("departments", departmentMap)
+	c.Set("requirementSubTypes", requirementSubTypeMap)
 
-	c.Set("requirement", &models.Requirement{})
+	requirement.CreatedAt = time.Now()
+	c.Set("requirement", requirement)
 
 	return c.Render(http.StatusOK, r.HTML("/requirement/new.plush.html"))
 }
