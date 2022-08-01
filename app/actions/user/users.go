@@ -35,7 +35,7 @@ func List(c buffalo.Context) error {
 	return c.Render(http.StatusOK, r.HTML("/user/index.plush.html"))
 }
 
-func ShowInfo(c buffalo.Context) error {
+func View(c buffalo.Context) error {
 
 	tx, ok := c.Value("tx").(*pop.Connection)
 	if !ok {
@@ -53,7 +53,7 @@ func ShowInfo(c buffalo.Context) error {
 	return c.Render(http.StatusOK, r.HTML("/user/show.plush.html"))
 }
 
-func FormCreate(c buffalo.Context) error {
+func New(c buffalo.Context) error {
 
 	tx, ok := c.Value("tx").(*pop.Connection)
 	if !ok {
