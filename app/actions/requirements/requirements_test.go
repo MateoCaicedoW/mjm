@@ -5,6 +5,7 @@ import (
 	"mjm/app/models"
 	"testing"
 
+	"github.com/gobuffalo/nulls"
 	"github.com/gobuffalo/suite/v4"
 	"github.com/wawandco/fako"
 )
@@ -49,8 +50,12 @@ func (as *ActionSuite) Test_List() {
 		requirements[i].CreatedByUserID = user.ID
 		requirements[i].RequestingDepartmentID = deparment.ID
 		requirements[i].ServiceDepartmentID = deparment.ID
+		requirements[i].ModifiedByUserID = nulls.UUID{
+			UUID: user.ID,
+		}
+
 		fako.Fill(&requirements[i])
-		err5 := as.DB.Create(&requirements[i])
+		err5 := as.DB.Create(&requirements[i], "modified_by", "approved_by", "declined_by", "accepted_by", "finished_by", "proccessed_by", "assigned_to", "assigned_by")
 		as.NoError(err5)
 	}
 
