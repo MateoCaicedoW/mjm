@@ -19,23 +19,32 @@
 		<th>Service Department</th>
 		<th>Requirement Type</th>
 		<th>Requirement Sub Type</th>
+		<th>Actions</th>
 	</thead>
 	<tbody>
 		<%= for (requirement) in requirements { %>
 		<tr>
 			<td class="align-middle"><%= requirement.Title %></td>
 			<td class="align-middle"><%= requirement.Description %></td>
-			<td class="align-middle"><%= requirement.User %></td>
-			<td class="align-middle"><%= requirement.Department %></td>
-			<td class="align-middle"><%= requirement.ServiceDepartment %></td>
-			<td class="align-middle"><%= requirement.RequirementType %></td>
-			<td class="align-middle"><%= requirement.RequirementSubType %></td>
-			
+			<td class="align-middle"><%= requirement.CreatedByUser.FirstName %></td>
+			<td class="align-middle"><%= requirement.RequestingDepartment.Name %></td>
+			<td class="align-middle"><%= requirement.ServiceDepartment.Name %></td>
+			<td class="align-middle"><%= requirement.RequirementSubType.Name %></td>
+			<td class="align-middle"><%= requirement.RequirementType.Name %></td>
 			<td>
 				<div class="float-right">
-					<%= linkTo(requirementPath({ requirement_id: requirement.ID }), {class: "btn btn-info", body: "View"}) %>
-					<%= linkTo(editRequirementPath({ requirement_id: requirement.ID }), {class: "btn btn-warning", body: "Edit"}) %>
-					<%= linkTo(requirementPath({ requirement_id: requirement.ID }), {class: "btn btn-danger", "data-method": "DELETE", "data-confirm": "Are you sure?", body: "Destroy"}) %>
+					<a href="/requirements/update/<%= requirement.ID %>">
+						<button class="btn btn-primary">
+							<i class="fa fa-edit"></i>
+						</button>
+					</a>
+					<%= form({action: "/requirements/delete/"+requirement.ID , method:"DELETE",  class: "py-2 py-md-0"}) { %>
+						<button class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#A<%=requirement.ID%>" type="button">
+							<i class="fa fa-trash"></i>
+						</button>
+						<%= partial("requirement/modal.plush.html", {ID : requirement.ID}) %>
+				<% } %> 	
+					
 				</div>
 			</td>
 		</tr>
