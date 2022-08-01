@@ -1,6 +1,6 @@
-<%= form({id: "save", action: editDatumDepartmentIDPath({department_id: deparment.ID}) ,method: "PUT"}) { %>
-    <%= f.InputTag({type:"text", placeholder:"Name", class:"number-add", name:"name", value: deparment.Name}) %>
-    <%= f.InputTag({type:"text", name:"description", class:"mt-4", placeholder:"description", value: deparment.Description}) %>
+<%= formFor(department, {id: "save", action: editDatumDepartmentIDPath({department_id: department.ID}) ,method: "PUT"}) { %>
+    <%= f.InputTag("Name", {type:"text", placeholder:"Name", class:"number-add", value: department.Name}) %>
+    <%= f.InputTag("Description", {type:"text", class:"mt-4", placeholder:"description", value: department.Description}) %>
 <% } %>
 <div class="d-flex">
     <button class="btn d-flex btn-primary mt-3" form="save">Save Line</button>

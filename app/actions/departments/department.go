@@ -28,24 +28,9 @@ func ListDepartment(c buffalo.Context) error {
 }
 
 func FormCreateDeparment(c buffalo.Context) error {
+	c.Set("department", &models.Department{})
 
 	return c.Render(http.StatusOK, r.HTML("/departments/create_departments.plush.html"))
-}
-
-func ViewDetails(c buffalo.Context) error {
-	tx := c.Value("tx").(*pop.Connection)
-
-	department := models.Department{}
-	depatmentID := c.Param("department_id")
-
-	err := tx.Find(&department, depatmentID)
-	if err != nil {
-		return err
-	}
-
-	c.Set("department", department)
-
-	return c.Render(http.StatusOK, r.HTML("/departments/view_details.plush.html"))
 }
 
 func CreateDepartment(c buffalo.Context) error {
@@ -64,6 +49,22 @@ func CreateDepartment(c buffalo.Context) error {
 	return c.Redirect(http.StatusSeeOther, "/departments")
 }
 
+func ViewDetails(c buffalo.Context) error {
+	tx := c.Value("tx").(*pop.Connection)
+
+	department := models.Department{}
+	depatmentID := c.Param("department_id")
+
+	err := tx.Find(&department, depatmentID)
+	if err != nil {
+		return err
+	}
+
+	c.Set("department", department)
+
+	return c.Render(http.StatusOK, r.HTML("/departments/view_details.plush.html"))
+}
+
 func Edit(c buffalo.Context) error {
 	tx := c.Value("tx").(*pop.Connection)
 
@@ -75,8 +76,8 @@ func Edit(c buffalo.Context) error {
 		return err
 	}
 
-	c.Set("deparment", department)
-	
+	c.Set("department", department)
+
 	return c.Render(http.StatusOK, r.HTML("/departments/edit_department.plush.html"))
 }
 

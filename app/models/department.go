@@ -7,9 +7,9 @@ import (
 )
 
 type Department struct {
-	ID          uuid.UUID `form:"id" db:"id"`
-	Name        string    `form:"name" db:"name"`
-	Description string    `form:"description" db:"description"`
-	CreatedAt   time.Time `form:"created_at" db:"created_at"`
-	UpdatedAt   time.Time `form:"updated_at" db:"updated_at"`
+	ID          uuid.UUID `db:"id"`
+	Name        string    `db:"name" fako:"job_name"`
+	Description string    `db:"description" fako:"sentence"`
+	CreatedAt   time.Time `db:"created_at"`
+	UpdatedAt   time.Time `db:"updated_at"`
 }
