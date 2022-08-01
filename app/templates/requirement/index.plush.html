@@ -23,9 +23,14 @@
 	<tbody>
 		<%= for (requirement) in requirements { %>
 		<tr>
-			<td class="align-middle"><%= requirement.ID %></td>
-			<td class="align-middle"><%= requirement.CreatedAt %></td>
-			<td class="align-middle"><%= requirement.UpdatedAt %></td>
+			<td class="align-middle"><%= requirement.Title %></td>
+			<td class="align-middle"><%= requirement.Description %></td>
+			<td class="align-middle"><%= requirement.User %></td>
+			<td class="align-middle"><%= requirement.Department %></td>
+			<td class="align-middle"><%= requirement.ServiceDepartment %></td>
+			<td class="align-middle"><%= requirement.RequirementType %></td>
+			<td class="align-middle"><%= requirement.RequirementSubType %></td>
+			
 			<td>
 				<div class="float-right">
 					<%= linkTo(requirementPath({ requirement_id: requirement.ID }), {class: "btn btn-info", body: "View"}) %>

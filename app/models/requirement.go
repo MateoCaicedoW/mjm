@@ -31,11 +31,20 @@ type Requirement struct {
 	AssignedAt             time.Time           `db:"assigned_at"`
 	FinishedBy             uuid.UUID           `db:"finished_by"`
 	FinishedAt             time.Time           `db:"finished_at"`
+	UpdatedAt              time.Time           `db:"updated_at"`
 	Solved                 bool                `db:"solved"`
-	User                   *User               `has_one:"user"`
+	CreatedByUser          *User               `has_one:"user"`
 	Department             *Department         `has_one:"department"`
+	ServiceDepartment      *Department         `has_one:"department"`
 	RequirementType        *RequirementType    `has_one:"requirement_type"`
 	RequirementSubType     *RequirementSubType `has_one:"requirement_sub_type"`
+	ModifiedByUser         *User               `has_one:"user"`
+	ApprovedByUser         *User               `has_one:"user"`
+	AcceptedByUser         *User               `has_one:"user"`
+	DeclinedByUser         *User               `has_one:"user"`
+	ProcessedByUser        *User               `has_one:"user"`
+	AssignedByUser         *User               `has_one:"user"`
+	FinishedByUser         *User               `has_one:"user"`
 }
 
 var Requirements []Requirement

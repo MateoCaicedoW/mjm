@@ -23,7 +23,7 @@ var (
 
 // List gets all Requirements. This function is mapped to the path
 // GET /requirements
-func ListRequirements(c buffalo.Context) error {
+func List(c buffalo.Context) error {
 	// Get the DB connection from the context
 	tx, ok := c.Value("tx").(*pop.Connection)
 	if !ok {
@@ -72,7 +72,7 @@ func ListRequirements(c buffalo.Context) error {
 
 // New renders the form for creating a new Requirement.
 // This function is mapped to the path GET /requirements/new
-func RequirementsNew(c buffalo.Context) error {
+func New(c buffalo.Context) error {
 	// Get the DB connection from the context
 	tx, ok := c.Value("tx").(*pop.Connection)
 	requirement := &models.Requirement{}
@@ -134,44 +134,44 @@ func RequirementsNew(c buffalo.Context) error {
 
 // // Create adds a Requirement to the DB. This function is mapped to the
 // // path POST /requirements
-// func  Create(c buffalo.Context) error {
-// 	// Allocate an empty Requirement
-// 	requirement := &models.Requirement{}
+func Create(c buffalo.Context) error {
+	// Allocate an empty Requirement
+	requirement := &models.Requirement{}
 
-// 	// Bind requirement to the html form elements
-// 	if err := c.Bind(requirement); err != nil {
-// 		return err
-// 	}
+	// Bind requirement to the html form elements
+	if err := c.Bind(requirement); err != nil {
+		return err
+	}
+	fmt.Println(requirement)
+	// Get the DB connection from the context
+	tx, ok := c.Value("tx").(*pop.Connection)
+	if !ok {
+		return fmt.Errorf("no transaction found")
+	}
 
-// 	// Get the DB connection from the context
-// 	tx, ok := c.Value("tx").(*pop.Connection)
-// 	if !ok {
-// 		return fmt.Errorf("no transaction found")
-// 	}
+	// Validate the data from the html form
+	verrs, err := tx.ValidateAndCreate(requirement, "modified_by")
+	if err != nil {
+		return err
+	}
 
-// 	// Validate the data from the html form
-// 	verrs, err := tx.ValidateAndCreate(requirement)
-// 	if err != nil {
-// 		return err
-// 	}
+	if verrs.HasAny() {
+		// Make the errors available inside the html template
+		c.Set("errors", verrs)
 
-// 	if verrs.HasAny() {
-// 		// Make the errors available inside the html template
-// 		c.Set("errors", verrs)
+		// Render again the new.html template that the user can
+		// correct the input.
+		c.Set("requirement", requirement)
 
-// 		// Render again the new.html template that the user can
-// 		// correct the input.
-// 		c.Set("requirement", requirement)
+		return c.Render(http.StatusUnprocessableEntity, r.HTML("/requirements/new.plush.html"))
+	}
 
-// 		return c.Render(http.StatusUnprocessableEntity, r.HTML("/requirements/new.plush.html"))
-// 	}
+	// If there are no errors set a success message
+	c.Flash().Add("success", "requirement.created.success")
 
-// 	// If there are no errors set a success message
-// 	c.Flash().Add("success", "requirement.created.success")
-
-// 	// and redirect to the show page
-// 	return c.Redirect(http.StatusSeeOther, "requirementPath()", render.Data{"requirement_id": requirement.ID})
-// }
+	// and redirect to the show page
+	return c.Redirect(http.StatusSeeOther, "/requirements")
+}
 
 // // Edit renders a edit form for a Requirement. This function is
 // // mapped to the path GET /requirements/{requirement_id}/edit
