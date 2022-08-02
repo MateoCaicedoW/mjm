@@ -20,10 +20,8 @@ func Test_ActionSuite(t *testing.T) {
 }
 
 func (as ActionSuite) Test_List() {
-	deparments := models.Department{
-		Name:        "Sistemas",
-		Description: "Description",
-	}
+	deparments := models.Department{}
+	fako.Fill(&deparments)
 
 	err := as.DB.Create(&deparments)
 	as.NoError(err)
@@ -34,10 +32,8 @@ func (as ActionSuite) Test_List() {
 }
 
 func (as ActionSuite) Test_Create() {
-	deparments := models.Department{
-		Name:        "Sistemas",
-		Description: "Description",
-	}
+	deparments := &models.Department{}
+	fako.Fill(deparments)
 
 	res := as.HTML("/department/create").Post(deparments)
 
@@ -51,15 +47,16 @@ func (as ActionSuite) Test_Update() {
 	err := as.DB.Create(deparments)
 	as.NoError(err)
 
-	deparmentsUpdate := &models.Department{}
-	fako.Fill(deparmentsUpdate)
+	departmentsUpdate := &models.Department{}
+	fako.Fill(departmentsUpdate)
+	departmentsUpdate.ID = deparments.ID
 
-	res := as.HTML("/update/%s", deparments.ID).Put(deparmentsUpdate)
+	res := as.HTML("/update/%s", departmentsUpdate.ID).Put(departmentsUpdate)
 
 	as.Equal(res.Code, http.StatusSeeOther)
 	as.Equal("/departments/list", res.Location())
 	as.DB.Reload(deparments)
-	as.Equal(deparmentsUpdate.Name, deparments.Name)
+	as.Equal(departmentsUpdate.Name, deparments.Name)
 }
 
 func (as ActionSuite) Test_Destroy() {
