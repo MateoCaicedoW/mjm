@@ -32,7 +32,7 @@ type Requirement struct {
 	AssignedAt             nulls.Time          `db:"assigned_at"`
 	FinishedByUserID       nulls.UUID          `db:"finished_by"`
 	FinishedAt             nulls.Time          `db:"finished_at"`
-	UpdatedAt              nulls.Time          `db:"updated_at"`
+	UpdatedAt              time.Time           `db:"updated_at"`
 	Solved                 bool                `db:"solved"`
 	CreatedByUser          *User               `belongs_to:"users"`
 	RequestingDepartment   *Department         `belongs_to:"departments"`
