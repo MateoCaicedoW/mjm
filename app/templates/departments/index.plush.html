@@ -10,7 +10,7 @@
     <tbody>
         <%= for (department) in departments { %>
             <tr>
-                <th scope="row"><a href="/show/<%=department.ID %>"><%= Department.ID %> </a></th>
+                <th scope="row"><a href="/show/<%=department.ID %>"><%= department.ID %> </a></th>
                 <td><%= department.Name %></td>
                 <td><%= department.Description %></td>
                 <td>
