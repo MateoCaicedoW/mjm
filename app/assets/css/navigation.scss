@@ -40,17 +40,22 @@
     gap:6px
 }
 
-
-@media (max-width: 991px) {
-    .navigation{
-        z-index: 999;
-        transform: translateX(-100%);
+.home{
+    width: calc(100% - 200px);
+    margin-left: 200px;
+  
+   
+}
+// @media (max-width: 991px) {
+//     .navigation{
+//         z-index: 999;
+//         transform: translateX(-100%);
        
        
-    }
-    .navigation.open{
-        transform: translateX(0);
-    }
+//     }
+//     .navigation.open{
+//         transform: translateX(0);
+//     }
 
     
-}
+// }
