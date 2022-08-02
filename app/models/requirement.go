@@ -9,8 +9,8 @@ import (
 
 type Requirement struct {
 	ID                     uuid.UUID           `db:"id"`
-	Title                  string              `db:"title" fako:"job_title"`
-	Description            string              `db:"description" fako:"sentence"`
+	Title                  string              `db:"title" `
+	Description            string              `db:"description" `
 	CreatedByUserID        uuid.UUID           `db:"created_by"`
 	CreatedAt              time.Time           `db:"created_at"`
 	RequestingDepartmentID uuid.UUID           `db:"requesting_department_id"`
