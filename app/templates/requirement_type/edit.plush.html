@@ -2,11 +2,10 @@
     <h3 class="d-inline-block">Edit RequirementType</h3>
 </div>
 
-<%= formFor(requirementType, {action: requirementTypePath({ requirement_type_id: requirementType.ID }), method: "PUT"}) { %>
-	<%= f.InputTag("ID") %>
-        <%= f.InputTag("CreatedAt") %>
-        <%= f.InputTag("UpdatedAt") %>
+<%= formFor(requirementType, {action: updateRequirementTypeIDPath({ requirement_type_id: requirementType.ID }), method: "PUT"}) { %>
+        <%= f.InputTag("ID") %>
         <%= f.InputTag("Name") %>
+        <%= f.SelectTag("DepartmentID", {options: departments}) %>
         <button class="btn btn-success" role="submit">Save</button>
     <%= linkTo(requirementTypePath({ requirement_type_id: requirementType.ID }), {class: "btn btn-warning", "data-confirm": "Are you sure?", body: "Cancel"}) %>
 <% } %>
