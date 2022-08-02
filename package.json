@@ -1,6 +1,6 @@
 {
   "name": "mjm",
-  "license": "MIT", 
+  "license": "MIT",
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
@@ -41,4 +41,3 @@
     "webpack-manifest-plugin": "4.0.2"
   }
 }
-
