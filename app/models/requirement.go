@@ -18,21 +18,21 @@ type Requirement struct {
 	RequirementSubTypeID   uuid.UUID           `db:"requirement_sub_type_id"`
 	RequirementTypeID      uuid.UUID           `db:"requirement_type_id"`
 	ModifiedByUserID       nulls.UUID          `db:"modified_by"`
-	ModifiedAt             time.Time           `db:"modified_at"`
+	ModifiedAt             nulls.Time          `db:"modified_at"`
 	ApprovedByUserID       nulls.UUID          `db:"approved_by"`
-	ApprovedAt             time.Time           `db:"approved_at"`
+	ApprovedAt             nulls.Time          `db:"approved_at"`
 	AcceptedByUserID       nulls.UUID          `db:"accepted_by"`
-	AcceptedAt             time.Time           `db:"accepted_at"`
+	AcceptedAt             nulls.Time          `db:"accepted_at"`
 	DeclinedByUserID       nulls.UUID          `db:"declined_by"`
-	DeclinedAt             time.Time           `db:"declined_at"`
+	DeclinedAt             nulls.Time          `db:"declined_at"`
 	ProcessedByUserID      nulls.UUID          `db:"processed_by"`
-	ProcessedAt            time.Time           `db:"processed_at"`
+	ProcessedAt            nulls.Time          `db:"processed_at"`
 	AssignedByUserID       nulls.UUID          `db:"assigned_by"`
 	AssignedToUserID       nulls.UUID          `db:"assigned_to"`
-	AssignedAt             time.Time           `db:"assigned_at"`
+	AssignedAt             nulls.Time          `db:"assigned_at"`
 	FinishedByUserID       nulls.UUID          `db:"finished_by"`
-	FinishedAt             time.Time           `db:"finished_at"`
-	UpdatedAt              time.Time           `db:"updated_at"`
+	FinishedAt             nulls.Time          `db:"finished_at"`
+	UpdatedAt              nulls.Time          `db:"updated_at"`
 	Solved                 bool                `db:"solved"`
 	CreatedByUser          *User               `belongs_to:"users"`
 	RequestingDepartment   *Department         `belongs_to:"departments"`
