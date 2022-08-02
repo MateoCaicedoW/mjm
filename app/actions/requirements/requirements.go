@@ -109,11 +109,10 @@ func Create(c buffalo.Context) error {
 		return fmt.Errorf("no transaction found")
 	}
 
-	fmt.Println("requirement: ", requirement)
 	// Validate the data from the html form
 	verrs, err := tx.Eager().ValidateAndCreate(requirement, "modified_by", "approved_by", "declined_by", "accepted_by", "finished_by", "proccessed_by", "assigned_to", "assigned_by")
 	if err != nil {
-		fmt.Println("Rosa")
+
 		return err
 	}
 
@@ -124,8 +123,9 @@ func Create(c buffalo.Context) error {
 		// Render again the new.html template that the user can
 		// correct the input.
 		c.Set("requirement", requirement)
+		setDropdowns(tx, c)
 
-		return c.Render(http.StatusUnprocessableEntity, r.HTML("/requirements/new.plush.html"))
+		return c.Render(http.StatusUnprocessableEntity, r.HTML("/requirement/new.plush.html"))
 	}
 
 	// If there are no errors set a success message
@@ -177,7 +177,7 @@ func Update(c buffalo.Context) error {
 		return err
 	}
 
-	verrs, err := tx.ValidateAndUpdate(requirement)
+	verrs, err := tx.Eager().ValidateAndUpdate(requirement)
 	if err != nil {
 		return err
 	}
@@ -191,7 +191,7 @@ func Update(c buffalo.Context) error {
 		// correct the input.
 		c.Set("requirement", requirement)
 
-		return c.Render(http.StatusUnprocessableEntity, r.HTML("/requirements/edit.plush.html"))
+		return c.Render(http.StatusUnprocessableEntity, r.HTML("/requirement/edit.plush.html"))
 	}
 
 	// If there are no errors set a success message
@@ -218,7 +218,7 @@ func Destroy(c buffalo.Context) error {
 		return c.Error(http.StatusNotFound, err)
 	}
 
-	if err := tx.Destroy(requirement); err != nil {
+	if err := tx.Eager().Destroy(requirement); err != nil {
 		return err
 	}
 
