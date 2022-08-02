@@ -3,7 +3,6 @@ package requirements
 import (
 	"fmt"
 	"net/http"
-	"time"
 
 	"github.com/gobuffalo/buffalo"
 	"github.com/gobuffalo/pop/v6"
@@ -78,6 +77,7 @@ func New(c buffalo.Context) error {
 	// Get the DB connection from the context
 	tx, ok := c.Value("tx").(*pop.Connection)
 	requirement := &models.Requirement{}
+
 	if !ok {
 		return fmt.Errorf("no transaction found")
 	}
@@ -110,16 +110,19 @@ func Create(c buffalo.Context) error {
 	// Allocate an empty Requirement
 	requirement := &models.Requirement{}
 
+	fmt.Println("aaaaa")
 	// Bind requirement to the html form elements
 	if err := c.Bind(requirement); err != nil {
+
 		return err
 	}
-
+	fmt.Println("bbbbb")
 	// Get the DB connection from the context
 	tx, ok := c.Value("tx").(*pop.Connection)
 	if !ok {
 		return fmt.Errorf("no transaction found")
 	}
+	fmt.Println("ccccc")
 
 	// Validate the data from the html form
 	verrs, err := tx.Eager().ValidateAndCreate(requirement)
@@ -138,6 +141,7 @@ func Create(c buffalo.Context) error {
 		setDropdowns(tx, c)
 		return c.Render(http.StatusUnprocessableEntity, r.HTML("/requirement/new.plush.html"))
 	}
+	fmt.Println("ddddd")
 
 	// If there are no errors set a success message
 	c.Flash().Add("success", "requirement.created.success")
@@ -247,6 +251,7 @@ func setDropdownUsers(users []models.User, c buffalo.Context) {
 
 		userMap[users[i].FirstName+" "+users[i].LastName] = users[i].ID
 	}
+	userMap["Select an User"] = uuid.Nil
 	c.Set("users", userMap)
 }
 
@@ -256,6 +261,7 @@ func setDropdownDepartment(departments []models.Department, c buffalo.Context) {
 	for i := 0; i < len(departments); i++ {
 		departmentMap[departments[i].Name] = departments[i].ID
 	}
+	departmentMap["Select an Area"] = uuid.Nil
 	c.Set("departments", departmentMap)
 }
 
@@ -265,6 +271,7 @@ func setDropdownRequirementType(types []models.RequirementType, c buffalo.Contex
 	for i := 0; i < len(types); i++ {
 		typeMap[types[i].Name] = types[i].ID
 	}
+	typeMap["Select a Type"] = uuid.Nil
 	c.Set("requirementTypes", typeMap)
 
 }
@@ -275,6 +282,7 @@ func setDropdownRequirementSubType(subtypes []models.RequirementSubType, c buffa
 	for i := 0; i < len(subtypes); i++ {
 		subtypeMap[subtypes[i].Name] = subtypes[i].ID
 	}
+	subtypeMap["Select a Subtype"] = uuid.Nil
 	c.Set("requirementSubTypes", subtypeMap)
 
 }
