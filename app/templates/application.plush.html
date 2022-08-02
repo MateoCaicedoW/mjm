@@ -12,6 +12,9 @@
   <%= javascriptTag("application.js", {defer: true}) %>
 </head>
 <body class="h-full">
+  <aside>
+    <%= partial("partials/navigation.plush.html") %>
+  </aside>
 	<main class="container mt-3">
 		<%= yield %>
 	</main>
