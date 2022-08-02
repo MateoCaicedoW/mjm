@@ -3,15 +3,15 @@ package app
 import (
 	"net/http"
 
-	"mjm/app/actions"
 	"mjm/app/actions/home"
+	requirement_type "mjm/app/actions/requeriment_type"
+
 	"mjm/app/middleware"
 	"mjm/public"
 
 	"github.com/gobuffalo/buffalo"
 )
 
-// SetRoutes for the application
 func setRoutes(root *buffalo.App) {
 	root.Use(middleware.RequestID)
 	root.Use(middleware.Database)
@@ -19,10 +19,13 @@ func setRoutes(root *buffalo.App) {
 	root.Use(middleware.CSRF)
 
 	root.GET("/", home.Index)
-	root.GET("/requirement-type", actions.List)
-	root.GET("/requirement-type-new", actions.New)
-	root.POST("/requirement-type-create", actions.Create)
-	
+	root.GET("/requirement-type", requirement_type.List)
+	root.GET("/requirement-type/new", requirement_type.New)
+	root.POST("/requirement-type/create", requirement_type.Create)
+	root.GET("/Show/{requirement_type_id}", requirement_type.Show)
+	root.GET("/edit/{requirement_type_id}", requirement_type.Edit)
+	root.PUT("/update/{requirement_type_id}", requirement_type.Update)
+	root.DELETE("/delete/{requirement_type_id}", requirement_type.Delete)
 
 	root.ServeFiles("/", http.FS(public.FS()))
 }
