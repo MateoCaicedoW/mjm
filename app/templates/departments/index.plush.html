@@ -10,7 +10,7 @@
     <tbody>
         <%= for (Department) in department { %>
             <tr>
-                <th scope="row"><a href="/view/<%=Department.ID %>"><%= Department.ID %> </a></th>
+                <th scope="row"><a href="/show/<%=Department.ID %>"><%= Department.ID %> </a></th>
                 <td><%= Department.Name %></td>
                 <td><%= Department.Description %></td>
                 <td>
@@ -20,7 +20,7 @@
                         </button>
                         <ul class="dropdown-menu">
                             <li><a class="dropdown-item" href="/edit/<%= Department.ID %>">Change Contract End Date</a></li>
-                            <li><%= linkTo(	deleteDepartmentIDPath({department_id: Department.ID}), {class: "dropdown-item", data-method:"DELETE", data-confirm:"Are you sure?"}) { %> Remove <% } %></li>
+                            <li><%= linkTo(	destroyDepartmentIDPath({department_id: Department.ID}), {class: "dropdown-item", data-method:"DELETE", data-confirm:"Are you sure?"}) { %> Remove <% } %></li>
                         </ul>
                     </div>
                 </td>
@@ -28,4 +28,4 @@
         <% } %>
     </tbody>
 </table>
-<a class="btn btn-primary" href="/add-department">Add Line</a>
+<a class="btn btn-primary" href="/department/new">Add Line</a>

@@ -19,12 +19,12 @@ func setRoutes(root *buffalo.App) {
 	root.Use(middleware.CSRF)
 
 	root.GET("/", home.Index)
-	root.GET("/departments", departments.ListDepartment)
-	root.GET("/add-department", departments.FormCreateDeparment)
-	root.POST("/create-department", departments.CreateDepartment)
+	root.GET("/departments/list", departments.List)
+	root.GET("/department/new", departments.New)
+	root.POST("/department/create", departments.Create)
 	root.GET("/edit/{department_id}", departments.Edit)
-	root.GET("/view/{department_id}", departments.ViewDetails)
-	root.PUT("/edit-data/{department_id}", departments.Editdepartment)
-	root.DELETE("/delete/{department_id}", departments.DeleteDepartment)
+	root.GET("/show/{department_id}", departments.Show)
+	root.PUT("/update/{department_id}", departments.Update)
+	root.DELETE("/destroy/{department_id}", departments.Destroy)
 	root.ServeFiles("/", http.FS(public.FS()))
 }

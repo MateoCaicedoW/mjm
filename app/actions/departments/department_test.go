@@ -19,7 +19,7 @@ func Test_ActionSuite(t *testing.T) {
 	suite.Run(t, as)
 }
 
-func (as ActionSuite) Test_ListDepartment() {
+func (as ActionSuite) Test_List() {
 	deparments := models.Department{
 		Name:        "Sistemas",
 		Description: "Description",
@@ -27,25 +27,25 @@ func (as ActionSuite) Test_ListDepartment() {
 
 	err := as.DB.Create(&deparments)
 	as.NoError(err)
-	res := as.HTML("/departments").Get()
+	res := as.HTML("/departments/list").Get()
 	body := res.Body.String()
 	as.Contains(body, deparments.Name)
 	as.Contains(body, deparments.Description)
 }
 
-func (as ActionSuite) Test_CreateDepartment() {
+func (as ActionSuite) Test_Create() {
 	deparments := models.Department{
 		Name:        "Sistemas",
 		Description: "Description",
 	}
 
-	res := as.HTML("/create-department").Post(deparments)
+	res := as.HTML("/department/create").Post(deparments)
 
 	as.Equal(res.Code, http.StatusSeeOther)
-	as.Equal("/departments", res.Location())
+	as.Equal("/departments/list", res.Location())
 }
 
-func (as ActionSuite) Test_UpdateDepartment() {
+func (as ActionSuite) Test_Update() {
 	deparments := &models.Department{}
 	fako.Fill(deparments)
 	err := as.DB.Create(deparments)
@@ -54,35 +54,35 @@ func (as ActionSuite) Test_UpdateDepartment() {
 	deparmentsUpdate := &models.Department{}
 	fako.Fill(deparmentsUpdate)
 
-	res := as.HTML("/edit-data/%s", deparments.ID).Put(deparmentsUpdate)
+	res := as.HTML("/update/%s", deparments.ID).Put(deparmentsUpdate)
 
 	as.Equal(res.Code, http.StatusSeeOther)
-	as.Equal("/departments", res.Location())
+	as.Equal("/departments/list", res.Location())
 	as.DB.Reload(deparments)
 	as.Equal(deparmentsUpdate.Name, deparments.Name)
 }
 
-func (as ActionSuite) Test_DestroyDepartment() {
+func (as ActionSuite) Test_Destroy() {
 	deparments := &models.Department{}
 	fako.Fill(deparments)
 	err := as.DB.Create(deparments)
 	as.NoError(err)
 
-	res := as.HTML("/delete/%s", deparments.ID).Delete()
+	res := as.HTML("/destroy/%s", deparments.ID).Delete()
 
 	as.Equal(res.Code, http.StatusSeeOther)
-	as.Equal("/departments", res.Location())
+	as.Equal("/departments/list", res.Location())
 }
 
-func (as ActionSuite) Test_NewDepartment() {
-	res := as.HTML("/add-department").Get()
+func (as ActionSuite) Test_New() {
+	res := as.HTML("/department/new").Get()
 
 	as.Equal(res.Code, http.StatusOK)
 	body := res.Body.String()
 	as.Contains(body, "Save Line")
 }
 
-func (as *ActionSuite) Test_EditDepartment() {
+func (as *ActionSuite) Test_Edit() {
 	deparments := &models.Department{}
 	fako.Fill(deparments)
 	err := as.DB.Create(deparments)
@@ -96,13 +96,13 @@ func (as *ActionSuite) Test_EditDepartment() {
 	as.Contains(body, "Save Line")
 }
 
-func (as *ActionSuite) Test_ViewDepartment() {
+func (as *ActionSuite) Test_View() {
 	deparments := &models.Department{}
 	fako.Fill(deparments)
 	err := as.DB.Create(deparments)
 	as.NoError(err)
 
-	res := as.HTML("/view/" + deparments.ID.String()).Get()
+	res := as.HTML("/show/" + deparments.ID.String()).Get()
 	as.Equal(http.StatusOK, res.Code)
 
 	body := res.Body.String()

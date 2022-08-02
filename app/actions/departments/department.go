@@ -13,7 +13,7 @@ var (
 	r = render.Engine
 )
 
-func ListDepartment(c buffalo.Context) error {
+func List(c buffalo.Context) error {
 	tx := c.Value("tx").(*pop.Connection)
 
 	departments := []models.Department{}
@@ -27,13 +27,13 @@ func ListDepartment(c buffalo.Context) error {
 	return c.Render(http.StatusOK, r.HTML("/departments/index.plush.html"))
 }
 
-func FormCreateDeparment(c buffalo.Context) error {
+func New(c buffalo.Context) error {
 	c.Set("department", &models.Department{})
 
-	return c.Render(http.StatusOK, r.HTML("/departments/create_departments.plush.html"))
+	return c.Render(http.StatusOK, r.HTML("/departments/new.plush.html"))
 }
 
-func CreateDepartment(c buffalo.Context) error {
+func Create(c buffalo.Context) error {
 	tx := c.Value("tx").(*pop.Connection)
 
 	deparment := models.Department{}
@@ -46,10 +46,10 @@ func CreateDepartment(c buffalo.Context) error {
 		return err
 	}
 
-	return c.Redirect(http.StatusSeeOther, "/departments")
+	return c.Redirect(http.StatusSeeOther, "/departments/list")
 }
 
-func ViewDetails(c buffalo.Context) error {
+func Show(c buffalo.Context) error {
 	tx := c.Value("tx").(*pop.Connection)
 
 	department := models.Department{}
@@ -62,7 +62,7 @@ func ViewDetails(c buffalo.Context) error {
 
 	c.Set("department", department)
 
-	return c.Render(http.StatusOK, r.HTML("/departments/view_details.plush.html"))
+	return c.Render(http.StatusOK, r.HTML("/departments/show.plush.html"))
 }
 
 func Edit(c buffalo.Context) error {
@@ -78,10 +78,10 @@ func Edit(c buffalo.Context) error {
 
 	c.Set("department", department)
 
-	return c.Render(http.StatusOK, r.HTML("/departments/edit_department.plush.html"))
+	return c.Render(http.StatusOK, r.HTML("/departments/edit.plush.html"))
 }
 
-func Editdepartment(c buffalo.Context) error {
+func Update(c buffalo.Context) error {
 	tx := c.Value("tx").(*pop.Connection)
 
 	deparment := models.Department{}
@@ -101,10 +101,10 @@ func Editdepartment(c buffalo.Context) error {
 		return err
 	}
 
-	return c.Redirect(http.StatusSeeOther, "/departments")
+	return c.Redirect(http.StatusSeeOther, "/departments/list")
 }
 
-func DeleteDepartment(c buffalo.Context) error {
+func Destroy(c buffalo.Context) error {
 	tx := c.Value("tx").(*pop.Connection)
 
 	department := models.Department{}
@@ -120,5 +120,5 @@ func DeleteDepartment(c buffalo.Context) error {
 		return err
 	}
 
-	return c.Redirect(http.StatusSeeOther, "/departments")
+	return c.Redirect(http.StatusSeeOther, "/departments/list")
 }
