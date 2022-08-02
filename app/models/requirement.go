@@ -1,11 +1,6 @@
 package models
 
 import (
-<<<<<<< HEAD
-	"time"
-
-	"github.com/gobuffalo/nulls"
-=======
 	"regexp"
 	"time"
 
@@ -13,19 +8,13 @@ import (
 	"github.com/gobuffalo/pop/v6"
 	"github.com/gobuffalo/validate/v3"
 	"github.com/gobuffalo/validate/v3/validators"
->>>>>>> requirements_crud
 	"github.com/gofrs/uuid"
 )
 
 type Requirement struct {
 	ID                     uuid.UUID           `db:"id"`
-<<<<<<< HEAD
-	Title                  string              `db:"title" `
-	Description            string              `db:"description" `
-=======
 	Title                  string              `db:"title" fako:"job_title"`
 	Description            string              `db:"description" fako:"sentence"`
->>>>>>> requirements_crud
 	CreatedByUserID        uuid.UUID           `db:"created_by"`
 	CreatedAt              time.Time           `db:"created_at"`
 	RequestingDepartmentID uuid.UUID           `db:"requesting_department_id"`
@@ -33,7 +22,6 @@ type Requirement struct {
 	RequirementSubTypeID   uuid.UUID           `db:"requirement_sub_type_id"`
 	RequirementTypeID      uuid.UUID           `db:"requirement_type_id"`
 	ModifiedByUserID       nulls.UUID          `db:"modified_by"`
-<<<<<<< HEAD
 	ModifiedAt             nulls.Time          `db:"modified_at"`
 	ApprovedByUserID       nulls.UUID          `db:"approved_by"`
 	ApprovedAt             nulls.Time          `db:"approved_at"`
@@ -48,24 +36,7 @@ type Requirement struct {
 	AssignedAt             nulls.Time          `db:"assigned_at"`
 	FinishedByUserID       nulls.UUID          `db:"finished_by"`
 	FinishedAt             nulls.Time          `db:"finished_at"`
-	UpdatedAt              nulls.Time          `db:"updated_at"`
-=======
-	ModifiedAt             time.Time           `db:"modified_at"`
-	ApprovedByUserID       nulls.UUID          `db:"approved_by"`
-	ApprovedAt             time.Time           `db:"approved_at"`
-	AcceptedByUserID       nulls.UUID          `db:"accepted_by"`
-	AcceptedAt             time.Time           `db:"accepted_at"`
-	DeclinedByUserID       nulls.UUID          `db:"declined_by"`
-	DeclinedAt             time.Time           `db:"declined_at"`
-	ProcessedByUserID      nulls.UUID          `db:"processed_by"`
-	ProcessedAt            time.Time           `db:"processed_at"`
-	AssignedByUserID       nulls.UUID          `db:"assigned_by"`
-	AssignedToUserID       nulls.UUID          `db:"assigned_to"`
-	AssignedAt             time.Time           `db:"assigned_at"`
-	FinishedByUserID       nulls.UUID          `db:"finished_by"`
-	FinishedAt             time.Time           `db:"finished_at"`
 	UpdatedAt              time.Time           `db:"updated_at"`
->>>>>>> requirements_crud
 	Solved                 bool                `db:"solved"`
 	CreatedByUser          *User               `belongs_to:"users"`
 	RequestingDepartment   *Department         `belongs_to:"departments"`
@@ -80,8 +51,6 @@ type Requirement struct {
 	AssignedToUser         *User               `belongs_to:"users"`
 	AssignedByUser         *User               `belongs_to:"users"`
 	FinishedByUser         *User               `belongs_to:"users"`
-<<<<<<< HEAD
-=======
 }
 
 var Requirements []Requirement
@@ -130,7 +99,31 @@ func (r *Requirement) Validate(tx *pop.Connection) (*validate.Errors, error) {
 			Name:    "Title",
 			Message: "%s Title must be letters only.",
 		},
+		&validators.UUIDIsPresent{
+			Field:   r.CreatedByUserID,
+			Name:    "CreatedByUserID",
+			Message: "User is required.",
+		},
+		&validators.UUIDIsPresent{
+			Field:   r.RequestingDepartmentID,
+			Name:    "RequestingDepartmentID",
+			Message: "Area is required.",
+		},
+		&validators.UUIDIsPresent{
+			Field:   r.ServiceDepartmentID,
+			Name:    "ServiceDepartmentID",
+			Message: "Service Area is required.",
+		},
+		&validators.UUIDIsPresent{
+			Field:   r.RequirementTypeID,
+			Name:    "RequirementTypeID",
+			Message: "Type is required.",
+		},
+		&validators.UUIDIsPresent{
+			Field:   r.RequirementSubTypeID,
+			Name:    "RequirementSubTypeID",
+			Message: "Subtype is required.",
+		},
 	), nil
 
->>>>>>> requirements_crud
 }

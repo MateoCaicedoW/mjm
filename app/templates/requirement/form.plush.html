@@ -1,10 +1,33 @@
+<div class="row mb-3">
+        <div class="col">
+                <%= f.InputTag("Title", {placeholder: "Type your title here...", class:"fw-light" }) %>
+        </div>
 
-        <%= f.InputTag("Title") %>
-        <%= f.TextArea("Description", {rows: 5}) %>
-        <%= f.SelectTag("CreatedByUserID", {options: users, label: "User" }) %>
-        <%= f.SelectTag("RequestingDepartmentID", {options: departments, label: "Department"  }) %>
-        <%= f.SelectTag("ServiceDepartmentID", {options: departments , label: "Service Department" }) %>
-        <%= f.SelectTag("RequirementTypeID", {options: requirementTypes, label:"Requirement Type" }) %>
-        <%= f.SelectTag("RequirementSubTypeID", {options: requirementSubTypes, label: "Requirement Sub Type" }) %>
-        <button class="btn btn-success mt-3" role="submit">Save</button>
-        
+        <div class="col">
+                <%= f.SelectTag("ServiceDepartmentID", {options: departments , label: "Service Area" , selected:"Select an Area ", class:"form-select fw-light"}) %>
+        </div>
+
+</div>
+<div class=" row mb-3">
+                        <div class="col">
+
+                                <%= f.SelectTag("CreatedByUserID", {options: users, label: "User",class:"form-select  fw-light" }) %>
+                        </div>
+
+                        <div class="col">
+                                <%= f.SelectTag("RequestingDepartmentID", {options: departments, label: "Area", class:"form-select  fw-light" }) %>
+                        </div>
+</div>
+<div class="row mb-3">
+        <div class="col">
+                <%= f.SelectTag("RequirementTypeID", { options: requirementTypes, label:"Type",class:"form-select  fw-light"}) %>
+        </div>
+
+        <div class="col">
+                <%= f.SelectTag("RequirementSubTypeID", {options: requirementSubTypes,label: "Subtype" ,class:"form-select  fw-light"}) %>
+        </div>
+
+</div>
+
+<%= f.TextArea("Description", {rows: 5, placeholder:"Add more details about this requirement here.",class:"fw-light"  }) %>
+

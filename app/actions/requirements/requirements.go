@@ -3,7 +3,6 @@ package requirements
 import (
 	"fmt"
 	"net/http"
-	"time"
 
 	"github.com/gobuffalo/buffalo"
 	"github.com/gobuffalo/pop/v6"
@@ -43,7 +42,6 @@ func List(c buffalo.Context) error {
 		return err
 	}
 
-	fmt.Println("requirements: ", requirements)
 	// Add the paginator to the context so it can be used in the template.
 	c.Set("pagination", q.Paginator)
 	c.Set("requirements", requirements)
@@ -79,6 +77,7 @@ func New(c buffalo.Context) error {
 	// Get the DB connection from the context
 	tx, ok := c.Value("tx").(*pop.Connection)
 	requirement := &models.Requirement{}
+
 	if !ok {
 		return fmt.Errorf("no transaction found")
 	}
@@ -86,7 +85,6 @@ func New(c buffalo.Context) error {
 	//set all dropdown
 	setDropdowns(tx, c)
 
-	requirement.CreatedAt = time.Now()
 	c.Set("requirement", requirement)
 
 	return c.Render(http.StatusOK, r.HTML("/requirement/new.plush.html"))
@@ -98,19 +96,22 @@ func Create(c buffalo.Context) error {
 	// Allocate an empty Requirement
 	requirement := &models.Requirement{}
 
+	fmt.Println("aaaaa")
 	// Bind requirement to the html form elements
 	if err := c.Bind(requirement); err != nil {
+
 		return err
 	}
-
+	fmt.Println("bbbbb")
 	// Get the DB connection from the context
 	tx, ok := c.Value("tx").(*pop.Connection)
 	if !ok {
 		return fmt.Errorf("no transaction found")
 	}
+	fmt.Println("ccccc")
 
 	// Validate the data from the html form
-	verrs, err := tx.Eager().ValidateAndCreate(requirement, "modified_by", "approved_by", "declined_by", "accepted_by", "finished_by", "proccessed_by", "assigned_to", "assigned_by")
+	verrs, err := tx.Eager().ValidateAndCreate(requirement, "modified_by", "approved_by", "declined_by", "accepted_by", "finished_by", "proccessed_by", "assigned_to", "assigned_by", "modified_at", "approved_at", "declined_at", "accepted_at", "finished_at", "processed_at", "assigned_at")
 	if err != nil {
 
 		return err
@@ -127,6 +128,7 @@ func Create(c buffalo.Context) error {
 
 		return c.Render(http.StatusUnprocessableEntity, r.HTML("/requirement/new.plush.html"))
 	}
+	fmt.Println("ddddd")
 
 	// If there are no errors set a success message
 	c.Flash().Add("success", "requirement.created.success")
@@ -236,6 +238,7 @@ func setDropdownUsers(users []models.User, c buffalo.Context) {
 
 		userMap[users[i].FirstName+" "+users[i].LastName] = users[i].ID
 	}
+	userMap["Select an User"] = uuid.Nil
 	c.Set("users", userMap)
 }
 
@@ -245,6 +248,7 @@ func setDropdownDepartment(departments []models.Department, c buffalo.Context) {
 	for i := 0; i < len(departments); i++ {
 		departmentMap[departments[i].Name] = departments[i].ID
 	}
+	departmentMap["Select an Area"] = uuid.Nil
 	c.Set("departments", departmentMap)
 }
 
@@ -254,6 +258,7 @@ func setDropdownRequirementType(types []models.RequirementType, c buffalo.Contex
 	for i := 0; i < len(types); i++ {
 		typeMap[types[i].Name] = types[i].ID
 	}
+	typeMap["Select a Type"] = uuid.Nil
 	c.Set("requirementTypes", typeMap)
 
 }
@@ -264,6 +269,7 @@ func setDropdownRequirementSubType(subtypes []models.RequirementSubType, c buffa
 	for i := 0; i < len(subtypes); i++ {
 		subtypeMap[subtypes[i].Name] = subtypes[i].ID
 	}
+	subtypeMap["Select a Subtype"] = uuid.Nil
 	c.Set("requirementSubTypes", subtypeMap)
 
 }
