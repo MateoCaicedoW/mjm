@@ -31,17 +31,23 @@ func (as ActionSuite) Test_List() {
 	as.Contains(body, deparments.Description)
 }
 
-func (as ActionSuite) Test_Create() {
-	deparments := &models.Department{}
-	fako.Fill(deparments)
+func (as *ActionSuite) Test_Create() {
+	departments := &models.Department{}
+	fako.Fill(departments)
 
-	res := as.HTML("/department/create").Post(deparments)
+	res := as.HTML("/department/create/").Post(departments)
 
 	as.Equal(res.Code, http.StatusSeeOther)
 	as.Equal("/departments/list", res.Location())
+
+	department := []models.Department{}
+	as.DB.All(&department)
+	for _, v := range department {
+		as.Equal(v.Name, departments.Name)
+	}
 }
 
-func (as ActionSuite) Test_Update() {
+func (as *ActionSuite) Test_Update() {
 	deparments := &models.Department{}
 	fako.Fill(deparments)
 	err := as.DB.Create(deparments)
@@ -56,22 +62,26 @@ func (as ActionSuite) Test_Update() {
 	as.Equal(res.Code, http.StatusSeeOther)
 	as.Equal("/departments/list", res.Location())
 	as.DB.Reload(deparments)
-	as.Equal(departmentsUpdate.Name, deparments.Name)
+	as.Equal(deparments.Name, departmentsUpdate.Name)
 }
 
-func (as ActionSuite) Test_Destroy() {
-	deparments := &models.Department{}
-	fako.Fill(deparments)
-	err := as.DB.Create(deparments)
+func (as *ActionSuite) Test_Destroy() {
+	deparment := &models.Department{}
+	fako.Fill(deparment)
+	err := as.DB.Create(deparment)
 	as.NoError(err)
 
-	res := as.HTML("/destroy/%s", deparments.ID).Delete()
+	res := as.HTML("/destroy/%s", deparment.ID).Delete()
 
 	as.Equal(res.Code, http.StatusSeeOther)
 	as.Equal("/departments/list", res.Location())
+
+	body := res.Body.String()
+	as.NotContains(body, deparment.Name)
+	as.NotContains(body, deparment.Description)
 }
 
-func (as ActionSuite) Test_New() {
+func (as *ActionSuite) Test_New() {
 	res := as.HTML("/department/new").Get()
 
 	as.Equal(res.Code, http.StatusOK)

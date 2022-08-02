@@ -8,19 +8,19 @@
       </tr>
     </thead>
     <tbody>
-        <%= for (Department) in departments { %>
+        <%= for (department) in departments { %>
             <tr>
-                <th scope="row"><a href="/show/<%=Department.ID %>"><%= Department.ID %> </a></th>
-                <td><%= Department.Name %></td>
-                <td><%= Department.Description %></td>
+                <th scope="row"><a href="/show/<%=department.ID %>"><%= Department.ID %> </a></th>
+                <td><%= department.Name %></td>
+                <td><%= department.Description %></td>
                 <td>
                     <div class="btn-group">
                         <button type="button" class="more-options btn" data-bs-toggle="dropdown" aria-expanded="false">
                           ...
                         </button>
                         <ul class="dropdown-menu">
-                            <li><a class="dropdown-item" href="/edit/<%= Department.ID %>">Change Contract End Date</a></li>
-                            <li><%= linkTo(	destroyDepartmentIDPath({department_id: Department.ID}), {class: "dropdown-item", data-method:"DELETE", data-confirm:"Are you sure?"}) { %> Remove <% } %></li>
+                            <li><a class="dropdown-item" href="/edit/<%= department.ID %>">Edit</a></li>
+                            <li><%= linkTo(	destroyDepartmentIDPath({department_id: department.ID}), {class: "dropdown-item", data-method:"DELETE", data-confirm:"Are you sure?"}) { %> Remove <% } %></li>
                         </ul>
                     </div>
                 </td>
