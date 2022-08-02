@@ -8,7 +8,7 @@
       </tr>
     </thead>
     <tbody>
-        <%= for (Department) in department { %>
+        <%= for (Department) in departments { %>
             <tr>
                 <th scope="row"><a href="/show/<%=Department.ID %>"><%= Department.ID %> </a></th>
                 <td><%= Department.Name %></td>

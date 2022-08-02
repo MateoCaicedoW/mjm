@@ -22,7 +22,7 @@ func List(c buffalo.Context) error {
 		return err
 	}
 
-	c.Set("department", departments)
+	c.Set("departments", departments)
 
 	return c.Render(http.StatusOK, r.HTML("/departments/index.plush.html"))
 }
