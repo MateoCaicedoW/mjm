@@ -51,7 +51,14 @@ func (as *ActionSuite) Test_Create() {
 
 	as.NoError(as.DB.Create(&department))
 
-	user := models.User{
+	user := &models.User{
+
+		FirstName:    "Joaquin",
+		LastName:     "Olivo",
+		PhoneNumber:  "3042015706",
+		DepartmentID: department.ID,
+	}
+	user2 := models.User{
 		FirstName:    "Joaquin",
 		LastName:     "Olivo",
 		PhoneNumber:  "3042015706",
@@ -59,14 +66,17 @@ func (as *ActionSuite) Test_Create() {
 	}
 
 	res := as.HTML("/create-user").Post(user)
-
 	as.Equal(res.Code, http.StatusSeeOther)
 	as.Equal("/users/", res.Location())
-	userArray := []models.User{}
-	as.DB.All(userArray)
-	for _, v := range userArray {
-		as.Equal(v.FirstName, user.FirstName)
-	}
+	res2 := as.HTML("/create-user").Post(user2)
+	as.Equal(res2.Code, http.StatusSeeOther)
+	as.Equal("/users/", res2.Location())
+
+	users := models.Users{}
+	as.DB.All(&users)
+	count, _ := as.DB.Count(users)
+	as.Equal(count, 2)
+	as.Len(users, 2)
 
 }
 
@@ -119,18 +129,14 @@ func (as *ActionSuite) Test_Delete() {
 	}
 	as.NoError(as.DB.Create(&user))
 
-	userUpdate := &models.User{}
-	userUpdate.DNI = "1k123j1j43203k4"
-	userUpdate.EmailAddress = "jolivo@wawand.co"
-	userUpdate.PhoneNumber = "321234543"
-	userUpdate.FirstName = "Joaquin"
-	userUpdate.LastName = "asfasf"
-	userUpdate.ID = user.ID
-	userUpdate.DepartmentID = department.ID
-
 	res := as.HTML("/delete-user/" + user.ID.String()).Delete()
 	as.Equal(res.Code, http.StatusSeeOther)
 	as.Equal("/users/", res.Location())
+	res = as.HTML("/users/").Get()
+	body := res.Body.String()
+	as.NotContains(body, user.FirstName)
+	as.NotContains(body, user.LastName)
+	as.NotContains(body, user.PhoneNumber)
 
 }
 
@@ -159,22 +165,16 @@ func (as *ActionSuite) Test_Edit() {
 
 }
 
-func (as *ActionSuite) Test_Form_Create() {
-
-	user := &models.User{}
+func (as *ActionSuite) Test_New() {
 
 	res := as.HTML("/new-users/").Get()
 	as.Equal(http.StatusOK, res.Code)
 	body := res.Body.String()
-	as.Contains(body, user.FirstName)
-	as.Contains(body, user.LastName)
-	as.Contains(body, user.PhoneNumber)
-	as.Contains(body, user.DNI)
 	as.Contains(body, "New User")
 
 }
 
-func (as *ActionSuite) Test_Info_User() {
+func (as *ActionSuite) Test_View() {
 
 	department := models.Department{
 		Name:        "name ",
