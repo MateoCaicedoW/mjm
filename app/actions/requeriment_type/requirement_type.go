@@ -96,7 +96,7 @@ func Create(c buffalo.Context) error {
 
 	c.Flash().Add("success", "requirementType.created.success")
 
-	return c.Redirect(http.StatusSeeOther, "requirementTypePath()")
+	return c.Redirect(http.StatusSeeOther, "requirementTypesPath()")
 }
 
 func Edit(c buffalo.Context) error {
@@ -154,7 +154,7 @@ func Update(c buffalo.Context) error {
 
 	c.Flash().Add("success", "requirementType.updated.success")
 
-	return c.Redirect(http.StatusSeeOther, "requirementTypePath()")
+	return c.Redirect(http.StatusSeeOther, "requirementTypesPath()")
 }
 
 func Delete(c buffalo.Context) error {
@@ -176,5 +176,5 @@ func Delete(c buffalo.Context) error {
 
 	c.Flash().Add("success", "requirementType.destroyed.success")
 
-	return c.Redirect(http.StatusSeeOther, "requirementTypePath()")
+	return c.Redirect(http.StatusSeeOther, "requirementTypesPath()")
 }
