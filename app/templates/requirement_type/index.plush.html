@@ -24,7 +24,7 @@
 			<td class="align-middle"><%= requirementType.Name %></td>
 			<td>
 				<div class="float-right">
-					<%= linkTo(showRequirementTypeIDPath	({ requirement_type_id: requirementType.ID }), {class: "btn btn-info", body: "View"}) %>
+					<%= linkTo(showRequirementTypeIDPath({ requirement_type_id: requirementType.ID }), {class: "btn btn-info", body: "View"}) %>
 					<%= linkTo(editRequirementTypeIDPath({ requirement_type_id: requirementType.ID }), {class: "btn btn-warning", body: "Edit"}) %>
 					<%= linkTo(deleteRequirementTypeIDPath({ requirement_type_id: requirementType.ID }), {class: "btn btn-danger", data-method: "DELETE" ,"data-confirm": "Are you sure?", body: "Destroy"}) %>
 				</div>
