@@ -33,7 +33,7 @@ func (as *ActionSuite) Test_List() {
 	requirementType.DepartmentID = department.ID
 	as.NoError(as.DB.Create(&requirementType))
 
-	res := as.HTML("/requirement-type/").Get()
+	res := as.HTML("/requirement-types/").Get()
 	body := res.Body.String()
 	as.Contains(body, requirementType.Name)
 
@@ -54,11 +54,11 @@ func (as *ActionSuite) Test_Create() {
 
 	as.Equal(res.Code, http.StatusSeeOther)
 
-	as.Equal("/requirement-type/", res.Location())
+	as.Equal("/requirement-types/", res.Location())
 
-	RequirementTypes := models.RequirementTypes{}
-	as.DB.All(&RequirementTypes)
-	for _, v := range RequirementTypes {
+	requirementTypes := models.RequirementTypes{}
+	as.DB.All(&requirementTypes)
+	for _, v := range requirementTypes {
 		as.Equal(v.Name, requirementType.Name)
 	}
 }
@@ -79,10 +79,13 @@ func (as *ActionSuite) Test_Update() {
 	requirementTypeUpdate := &models.RequirementType{}
 	fako.Fill(requirementTypeUpdate)
 	requirementTypeUpdate.DepartmentID = department.ID
+	requirementTypeUpdate.ID = requirementType.ID
 
-	res := as.HTML("/update/" + requirementType.ID.String()).Put(requirementTypeUpdate)
+	res := as.HTML("/update/%v", requirementTypeUpdate.ID).Put(requirementTypeUpdate)
 	as.Equal(res.Code, http.StatusSeeOther)
-	as.Equal("/requirement-type/", res.Location())
+	as.Equal("/requirement-types/", res.Location())
+	as.DB.Reload(requirementType)
+	as.Equal(requirementTypeUpdate.Name, requirementType.Name)
 
 }
 func (as *ActionSuite) Test_Delete() {
@@ -100,10 +103,16 @@ func (as *ActionSuite) Test_Delete() {
 	as.NoError(as.DB.Create(requirementType))
 
 	res := as.HTML("/delete/" + requirementType.ID.String()).Delete()
+	as.Equal("/requirement-types/", res.Location())
+	as.Equal(res.Code, http.StatusSeeOther)
+
+	requirementTypes := models.RequirementTypes{}
+	as.DB.All(&requirementTypes)
+	count, _ := as.DB.Count(requirementTypes)
+	as.Equal(count, 0)
+	res = as.HTML("/requirement-types/").Get()
 	body := res.Body.String()
 	as.NotContains(body, requirementType.Name)
-	as.Equal(res.Code, http.StatusSeeOther)
-	as.Equal("/requirement-type/", res.Location())
 
 }
 func (as *ActionSuite) Test_Edit() {
@@ -142,7 +151,7 @@ func (as *ActionSuite) Test_Show() {
 	requirementType.DepartmentID = department.ID
 	as.NoError(as.DB.Create(requirementType))
 
-	res := as.HTML("/Show/" + requirementType.ID.String()).Get()
+	res := as.HTML("/show/" + requirementType.ID.String()).Get()
 	as.Equal(http.StatusOK, res.Code)
 	body := res.Body.String()
 	as.Contains(body, requirementType.Name)
