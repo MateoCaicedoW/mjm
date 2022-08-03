@@ -1,4 +1,4 @@
-package tasks
+package grifts
 
 import (
 	"mjm/app"

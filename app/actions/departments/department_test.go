@@ -20,49 +20,56 @@ func Test_ActionSuite(t *testing.T) {
 }
 
 func (as ActionSuite) Test_List() {
-	deparments := models.Department{}
-	fako.Fill(&deparments)
+	deparment := models.Department{}
+	fako.Fill(&deparment)
 
-	err := as.DB.Create(&deparments)
+	err := as.DB.Create(&deparment)
 	as.NoError(err)
 	res := as.HTML("/departments/list").Get()
 	body := res.Body.String()
-	as.Contains(body, deparments.Name)
-	as.Contains(body, deparments.Description)
+	as.Contains(body, deparment.Name)
+	as.Contains(body, deparment.Description)
 }
 
 func (as *ActionSuite) Test_Create() {
-	departments := &models.Department{}
-	fako.Fill(departments)
+	department := &models.Department{}
+	fako.Fill(department)
 
-	res := as.HTML("/department/create/").Post(departments)
+	count, _ := as.DB.Count(&department)
+
+	res := as.HTML("/department/create/").Post(department)
 
 	as.Equal(res.Code, http.StatusSeeOther)
 	as.Equal("/departments/list", res.Location())
 
-	department := []models.Department{}
-	as.DB.All(&department)
-	for _, v := range department {
-		as.Equal(v.Name, departments.Name)
+	departmentCreate := []models.Department{}
+	as.DB.All(&departmentCreate)
+
+	countDB, _ := as.DB.Count(&department)
+
+	for _, v := range departmentCreate {
+		as.Equal(v.Name, department.Name)
 	}
+
+	as.NotEqual(count, countDB)
 }
 
 func (as *ActionSuite) Test_Update() {
-	deparments := &models.Department{}
-	fako.Fill(deparments)
-	err := as.DB.Create(deparments)
+	deparment := &models.Department{}
+	fako.Fill(deparment)
+	err := as.DB.Create(deparment)
 	as.NoError(err)
 
-	departmentsUpdate := &models.Department{}
-	fako.Fill(departmentsUpdate)
-	departmentsUpdate.ID = deparments.ID
+	departmentUpdate := &models.Department{}
+	fako.Fill(departmentUpdate)
+	departmentUpdate.ID = deparment.ID
 
-	res := as.HTML("/update/%s", departmentsUpdate.ID).Put(departmentsUpdate)
+	res := as.HTML("/update/%s", departmentUpdate.ID).Put(departmentUpdate)
 
 	as.Equal(res.Code, http.StatusSeeOther)
 	as.Equal("/departments/list", res.Location())
-	as.DB.Reload(deparments)
-	as.Equal(deparments.Name, departmentsUpdate.Name)
+	as.DB.Reload(deparment)
+	as.Equal(deparment.Name, departmentUpdate.Name)
 }
 
 func (as *ActionSuite) Test_Destroy() {
@@ -90,28 +97,28 @@ func (as *ActionSuite) Test_New() {
 }
 
 func (as *ActionSuite) Test_Edit() {
-	deparments := &models.Department{}
-	fako.Fill(deparments)
-	err := as.DB.Create(deparments)
+	deparment := &models.Department{}
+	fako.Fill(deparment)
+	err := as.DB.Create(deparment)
 	as.NoError(err)
 
-	res := as.HTML("/edit/" + deparments.ID.String()).Get()
+	res := as.HTML("/edit/" + deparment.ID.String()).Get()
 	as.Equal(http.StatusOK, res.Code)
 
 	body := res.Body.String()
-	as.Contains(body, deparments.Name)
+	as.Contains(body, deparment.Name)
 	as.Contains(body, "Save Line")
 }
 
 func (as *ActionSuite) Test_View() {
-	deparments := &models.Department{}
-	fako.Fill(deparments)
-	err := as.DB.Create(deparments)
+	deparment := &models.Department{}
+	fako.Fill(deparment)
+	err := as.DB.Create(deparment)
 	as.NoError(err)
 
-	res := as.HTML("/show/" + deparments.ID.String()).Get()
+	res := as.HTML("/show/" + deparment.ID.String()).Get()
 	as.Equal(http.StatusOK, res.Code)
 
 	body := res.Body.String()
-	as.Contains(body, deparments.Description)
+	as.Contains(body, deparment.Description)
 }
