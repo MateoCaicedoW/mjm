@@ -19,10 +19,10 @@ func setRoutes(root *buffalo.App) {
 	root.Use(middleware.CSRF)
 
 	root.GET("/", home.Index)
-	root.GET("/requirement-type", requirement_type.List)
+	root.GET("/requirement-types", requirement_type.List)
 	root.GET("/requirement-type/new", requirement_type.New)
 	root.POST("/requirement-type/create", requirement_type.Create)
-	root.GET("/Show/{requirement_type_id}", requirement_type.Show)
+	root.GET("/show/{requirement_type_id}", requirement_type.Show)
 	root.GET("/edit/{requirement_type_id}", requirement_type.Edit)
 	root.PUT("/update/{requirement_type_id}", requirement_type.Update)
 	root.DELETE("/delete/{requirement_type_id}", requirement_type.Delete)
