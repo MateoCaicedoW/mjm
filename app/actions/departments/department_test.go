@@ -35,23 +35,19 @@ func (as *ActionSuite) Test_Create() {
 	department := &models.Department{}
 	fako.Fill(department)
 
-	count, _ := as.DB.Count(&department)
-
 	res := as.HTML("/department/create/").Post(department)
 
 	as.Equal(res.Code, http.StatusSeeOther)
 	as.Equal("/departments/list", res.Location())
 
-	departmentCreate := []models.Department{}
-	as.DB.All(&departmentCreate)
+	list := []models.Department{}
+	as.DB.All(&list)
 
-	countDB, _ := as.DB.Count(&department)
-
-	for _, v := range departmentCreate {
+	for _, v := range list {
 		as.Equal(v.Name, department.Name)
 	}
 
-	as.NotEqual(count, countDB)
+	as.Len(list, 1)
 }
 
 func (as *ActionSuite) Test_Update() {
