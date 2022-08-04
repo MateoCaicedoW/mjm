@@ -7,6 +7,7 @@ import (
 )
 
 type Department struct {
+
 	ID           uuid.UUID     `json:"id" db:"id"`
 	Name         string        `json:"name" db:"name"`
 	Description  string        `json:"description" db:"description"`
@@ -14,4 +15,5 @@ type Department struct {
 	UpdatedAt    time.Time     `json:"updated_at" db:"updated_at"`
 	Users        []User        `has_many:"users"`
 	Requirements []Requirement `has_many:"requirements"`
+
 }
