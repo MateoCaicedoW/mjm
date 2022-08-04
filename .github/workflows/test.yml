@@ -42,7 +42,7 @@ jobs:
         
       - name: test
         env: 
-          DATABASE_URL: "postgres://postgres:postgres@127.0.0.1:${{ job.services.postgres.ports[5432] }}/TodoBuffalo_test?sslmode=disable"
+          DATABASE_URL: "postgres://postgres:postgres@127.0.0.1:${{ job.services.postgres.ports[5432] }}/mjm_test?sslmode=disable"
         run: |
           go install github.com/wawandco/ox/cmd/ox@v0.12.3
           ox test
