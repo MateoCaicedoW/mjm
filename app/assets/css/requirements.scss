@@ -8,3 +8,52 @@
     border-bottom: 1px solid #E06F3F;
     color: #E06F3F;
 }
+
+.btn-group{
+    border: 1px solid #D0D0D0;
+    border-radius: 30px;
+
+    .btn{
+        border: none;
+        background-color: transparent;
+        color: #393939;
+        font-size: 1.5rem;
+        padding: 0 8px;
+      
+       
+    }
+}
+
+.requirement-container{
+    padding: 25px 25px 25px 25px;
+    background-color: #FFFFFF;
+    border: 1px solid #D0D0D0;
+    box-shadow: 2px 4px 6px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+    h1{
+        font-style: normal;
+        font-weight: 700;
+        font-size: 20px;
+        line-height: 24px;
+        color: #393939;
+
+    }
+    h3{
+        font-style: normal;
+        font-weight: 700;
+        font-size: 14px;
+        line-height: 17px;
+    }
+
+    .deny{
+        color:#00AD9B;
+        border-right: 1px solid #D0D0D0;
+
+    }
+    .approve{
+        color:#E06F3F;
+    }
+    .options{
+        height: 20px;
+    }
+}
