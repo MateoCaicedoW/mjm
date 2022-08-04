@@ -14,6 +14,12 @@ require (
 )
 
 require (
+	github.com/corpix/uarand v0.0.0-20170723150923-031be390f409 // indirect
+	github.com/icrowley/fake v0.0.0-20220625154756-3c7517006344 // indirect
+	github.com/markbates/inflect v1.0.4 // indirect
+)
+
+require (
 	github.com/BurntSushi/toml v1.1.0 // indirect
 	github.com/Masterminds/semver/v3 v3.1.1 // indirect
 	github.com/aymerick/douceur v0.2.0 // indirect
@@ -33,7 +39,7 @@ require (
 	github.com/gobuffalo/httptest v1.5.1 // indirect
 	github.com/gobuffalo/logger v1.0.6 // indirect
 	github.com/gobuffalo/meta v0.3.2 // indirect
-	github.com/gobuffalo/nulls v0.4.1 // indirect
+	github.com/gobuffalo/nulls v0.4.1 
 	github.com/gobuffalo/plush/v4 v4.1.13 // indirect
 	github.com/gobuffalo/refresh v1.13.1 // indirect
 	github.com/gobuffalo/tags/v3 v3.1.3 // indirect
@@ -75,6 +81,7 @@ require (
 	github.com/spf13/cobra v1.5.0 // indirect
 	github.com/spf13/pflag v1.0.5 // indirect
 	github.com/stretchr/testify v1.8.0 // indirect
+	github.com/wawandco/fako v0.0.0-20180828010250-c36a0bc97398
 	golang.org/x/crypto v0.0.0-20220622213112-05595931fe9d // indirect
 	golang.org/x/mod v0.6.0-dev.0.20220419223038-86c51ed26bb4 // indirect
 	golang.org/x/net v0.0.0-20211112202133-69e39bad7dc2 // indirect
