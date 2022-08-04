@@ -27,39 +27,70 @@
 
 <div>
 	<%= for (requirement) in requirements { %>
-		<div>
-			<h1>
-				<%= requirement.Title %>
-			</h1>
-			<div>
-				<div>
-					DENY
-				</div>
-				<div>
-					APPROVE
-				</div>
-				<div class="dropdown">
-					<a class="btn " href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-						Dropdown link
-					</a>
-
-					<ul class="dropdown-menu">
-						<li><a class="dropdown-item" href="/requirements/update/<%= requirement.ID %>">Edit</a></li>
-						<li>
-							<%= form({action: "/requirements/delete/" +requirement.ID , method:"DELETE", class: "py-2 py-md-0" }) { %>
-
-								<button class="dropdown-item" data-bs-toggle="modal" data-bs-target="#A<%=requirement.ID%>" type="button">
-									Delete
+		<div class="requirement-container">
+			<div class="d-flex justify-content-between ">
+				<h1 >
+					<%= requirement.Title %>
+				</h1>
+				<div class="d-flex justify-content-center align-content-center ">
+					<div class="d-flex flex-column justify-content-center">
+						<div class="d-flex options">
+							<div class="d-flex flex-column justify-content-center pe-3 deny "> <h3 class="fw-light m-0">DENY</h3></div>
+							<div class="d-flex flex-column justify-content-center px-3 approve "><h3 class="fw-light  m-0">APPROVE</h3></div>
+						</div>
+					</div>
+					
+					<div>
+						<div class="btn-group">
+							<button type="button" class="btn" data-bs-toggle="dropdown" aria-expanded="false">
+								<i class="fa-solid fa-ellipsis"></i>
+							</button>
+							<ul class="dropdown-menu dropdown-menu-end">
+							  <li><a class="text-decoration-none " href="/requirements/update/<%= requirement.ID %>">
+								<button class="dropdown-item">
+								Edit
 								</button>
-								<%= partial("requirement/modal.plush.html", {ID : requirement.ID}) %>
-							<% } %>
-						</li>
-					</ul>
+							</a></li>
+							  <li>
+								<button class="dropdown-item" data-bs-toggle="modal" data-bs-target="#A<%=requirement.ID%>" type="button">
+								Delete
+							</button>
+							</li>
+							</ul>
+						  </div>
+					</div>
+				</div>
+	
+				
+			</div>
+			<div>
+				<span class="text-muted">
+					<%= requirement.CreatedByUser.FirstName %> - Created at <%= requirement.CreatedAt %>
+				</span>
+			</div>
+			<div>
+				<p>
+					<%= requirement.Description %>
+				</p>
+			</div>
+			<div class="d-flex flex-column justify-content-center">
+				<div class="d-flex options">
+					<div class="d-flex flex-column justify-content-center pe-3 "> <h3 class=" m-0">Type: <span class="fw-light text-decoration-underline"><%= requirement.RequirementType.Name %></span></h3></div>
+					<div class="d-flex flex-column justify-content-center px-3 "><h3 class=" m-0">Area: <span class="fw-light text-decoration-underline"><%= requirement.ServiceDepartment.Name %></span></h3></div>
 				</div>
 			</div>
+
 		</div>
-		<% } %>
+		
+		
+		<%= form({action: "/requirements/delete/"+requirement.ID , method:"DELETE",  class: "py-2 py-md-0"}) { %>
+			<%= partial("requirement/modal.plush.html", {ID : requirement.ID}) %>
+		<% } %> 
+	<% } %>
 </div>
+
+
+
 
 
 <div class="text-center">
