@@ -55,13 +55,13 @@ func New(c buffalo.Context) error {
 		return fmt.Errorf("no transaction found")
 	}
 
-	departments := []models.Departments{}
+	departments := models.Departments{}
 
 	if err := tx.All(&departments); err != nil {
 		return err
 	}
 
-	c.Set("departments", departments)
+	c.Set("departments", departments.Map())
 	c.Set("user", &models.User{})
 
 	return c.Render(http.StatusOK, r.HTML("/user/new.plush.html"))
@@ -104,11 +104,16 @@ func Edit(c buffalo.Context) error {
 	}
 
 	user := &models.User{}
+	departments := models.Departments{}
 
 	if err := tx.Find(user, c.Param("user_id")); err != nil {
 		return c.Error(http.StatusNotFound, err)
 	}
 
+	if err := tx.All(&departments); err != nil {
+		return err
+	}
+	c.Set("departments", departments.Map())
 	c.Set("user", user)
 
 	return c.Render(http.StatusOK, r.HTML("/user/edit.plush.html"))

@@ -28,8 +28,9 @@
 			<td class="align-middle"><%= user.FirstName %></td>
 			<td class="align-middle"><%= user.LastName %></td>
 			<td class="align-middle"><%= user.DNI %></td>
-			<td class="align-middle"><%= user.Email %></td>
+			<td class="align-middle"><%= user.EmailAddress %></td>
 			<td class="align-middle"><%= user.PhoneNumber %></td>
+
 			<td>
 				<div class="float-right">
 					<%= linkTo(viewUserPath({ user_id: user.ID }), {class: "btn btn-info", body: "View"}) %>

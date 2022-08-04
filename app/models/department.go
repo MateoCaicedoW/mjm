@@ -13,3 +13,13 @@ type Department struct {
 	CreatedAt   time.Time `db:"created_at"`
 	UpdatedAt   time.Time `db:"updated_at"`
 }
+type Departments []Department
+
+func (d Departments) Map() map[string]uuid.UUID {
+	departmentsMap := map[string]uuid.UUID{}
+	for _, v := range d {
+
+		departmentsMap[v.Name] = v.ID
+	}
+	return departmentsMap
+}

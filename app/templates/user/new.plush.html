@@ -4,38 +4,26 @@
 
 
 
-<%= form({action: createUserPath(), method: "POST"}) { %>
+<%= formFor(user, {action: createUserPath(), method: "POST"}) { %>
     <div class="row">
-        <div class="col-md-12 py-3">
-            <label class="form-label">Department</label>
-            <%= f.InputTag({name:"department_id"  }) %>
-          </div>
+
       <div class="col-md-6 py-3">
-        <label class="form-label">First Name</label>
-        <%= f.InputTag({name:"first_name"  }) %>
+        <%= f.InputTag("FirstName") %>
       </div>
       <div class="col-md-6 py-3">
-        <label class="form-label">Last Name</label>
-        <%= f.InputTag({name:"last_name" }) %>
+        <%= f.InputTag("LastName") %>
       </div>
       <div class="col-md-10 py-3 ">
-        <label class="form-label">Dni</label>
-        <%= f.InputTag({name:"dni" }) %>
+        <%= f.InputTag("DNI") %>
       </div>
-      <div class="col-md-2 pt-5 px-5">
-        <select class="form-select">
-            <%= for (department) in departments { %>
-                <option value="1"><%= department.Name %></option>
-             <% } %>
-          </select>
+      <div class="col-md-2 pt-3">
+        <%= f.SelectTag("DepartmentID", {options: departments}) %>
       </div>
       <div class="col-md-6 py-3">
-        <label class="form-label">Email</label>
-        <%= f.InputTag({name:"email_address" }) %>
+        <%= f.InputTag("EmailAddress") %>
       </div>
       <div class="col-md-6 py-3">
-        <label class="form-label">Number</label>
-        <%= f.InputTag({name:"phone_number" }) %>
+        <%= f.InputTag("PhoneNumber") %>
       </div>
     
       
@@ -44,27 +32,3 @@
     <button type="submit" class="btn btn-primary">send</button>
 	<%= linkTo(usersPath(), {class: "btn btn-warning", "data-confirm": "Are you sure?", body: "Cancel"}) %>
 <% } %>
-
-
-
-<!-- <div class="py-4 mb-2">
-  	<h3 class="d-inline-block">New User</h3>
-</div>
-
-<%= formFor(user, {action: createUserPath(), method: "POST"}) { %>
-         <%= f.InputTag("DepartmentId") %>
-        <%= f.InputTag("FirstName") %>
-        <%= f.InputTag("LastName") %>
-        <%= f.InputTag("DNI") %>
-        <%= f.InputTag("EmailAddress") %>
-        <%= f.InputTag("PhoneNumber") %>
-		
-        <button type="submit" class="btn btn-primary">send</button>
-	<%= linkTo(rootPath(), {class: "btn btn-warning", "data-confirm": "Are you sure?", body: "Cancel"}) %>
-<% } %>
-
- -->
-
-
-
-
