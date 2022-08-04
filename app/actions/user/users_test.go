@@ -158,10 +158,12 @@ func (as *ActionSuite) Test_Edit() {
 
 	as.NoError(as.DB.Create(user))
 
-	res := as.HTML("/users/").Get()
+	res := as.HTML("/edit-user/" + user.ID.String()).Get()
 	as.Equal(http.StatusOK, res.Code)
 	body := res.Body.String()
 	as.Contains(body, user.FirstName)
+	as.Contains(body, user.PhoneNumber)
+	as.Contains(body, "Edit User")
 
 }
 
