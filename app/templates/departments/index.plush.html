@@ -1,0 +1,31 @@
+<table class="table">
+    <thead>
+      <tr>
+        <th scope="col">ID</th>
+        <th scope="col">Name</th>
+        <th scope="col">Description</th>
+        <th scope="col">Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+        <%= for (department) in departments { %>
+            <tr>
+                <th scope="row"><a href="/show/<%=department.ID %>"><%= department.ID %> </a></th>
+                <td><%= department.Name %></td>
+                <td><%= department.Description %></td>
+                <td>
+                    <div class="btn-group">
+                        <button type="button" class="more-options btn" data-bs-toggle="dropdown" aria-expanded="false">
+                          ...
+                        </button>
+                        <ul class="dropdown-menu">
+                            <li><a class="dropdown-item" href="/edit/<%= department.ID %>">Edit</a></li>
+                            <li><%= linkTo(	destroyDepartmentIDPath({department_id: department.ID}), {class: "dropdown-item", data-method:"DELETE", data-confirm:"Are you sure?"}) { %> Remove <% } %></li>
+                        </ul>
+                    </div>
+                </td>
+            </tr>
+        <% } %>
+    </tbody>
+</table>
+<a class="btn btn-primary" href="/department/new">Add Line</a>

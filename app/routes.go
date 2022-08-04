@@ -3,6 +3,7 @@ package app
 import (
 	"net/http"
 
+	"mjm/app/actions/departments"
 	"mjm/app/actions/home"
 	requirement_type "mjm/app/actions/requeriment_type"
 
@@ -26,6 +27,13 @@ func setRoutes(root *buffalo.App) {
 	root.GET("/edit/{requirement_type_id}", requirement_type.Edit)
 	root.PUT("/update/{requirement_type_id}", requirement_type.Update)
 	root.DELETE("/delete/{requirement_type_id}", requirement_type.Delete)
+	root.GET("/departments/list", departments.List)
+	root.GET("/department/new", departments.New)
+	root.POST("/department/create", departments.Create)
+	root.GET("/edit/{department_id}", departments.Edit)
+	root.GET("/show/{department_id}", departments.Show)
+	root.PUT("/update/{department_id}", departments.Update)
+	root.DELETE("/destroy/{department_id}", departments.Destroy)
 
 	root.ServeFiles("/", http.FS(public.FS()))
 }
