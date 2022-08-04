@@ -3,9 +3,9 @@ package app
 import (
 	"net/http"
 
-	"mjm/app/actions"
 	"mjm/app/actions/departments"
 	"mjm/app/actions/home"
+	"mjm/app/actions/user"
 	"mjm/app/middleware"
 	"mjm/public"
 
@@ -27,12 +27,13 @@ func setRoutes(root *buffalo.App) {
 	root.GET("/show/{department_id}", departments.Show)
 	root.PUT("/update/{department_id}", departments.Update)
 	root.DELETE("/destroy/{department_id}", departments.Destroy)
-	root.GET("/users", actions.List)
-	root.GET("/new-users", actions.New)
-	root.POST("/create-user", actions.Create)
-	root.GET("/edit-user", actions.Edit)
-	root.PUT("/update-user", actions.Update)
-	root.GET("/delete-user", actions.Destroy)
-	root.GET("/view-user", actions.Show)
+	root.GET("/users", user.List)
+	root.GET("/new-users", user.FormCreate)
+	root.POST("/create-user", user.Create)
+	root.GET("/edit-user/{user_id}", user.Edit)
+	root.PUT("/update-user/{user_id}", user.Update)
+	root.DELETE("/delete-user/{user_id}", user.Delete)
+	root.GET("/view-user/{user_id}", user.ShowInfo)
+
 	root.ServeFiles("/", http.FS(public.FS()))
 }
