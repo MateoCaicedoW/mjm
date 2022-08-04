@@ -4,7 +4,8 @@ import (
 	"net/http"
 
 	"mjm/app/actions/departments"
-	"mjm/app/actions/home"
+
+	"mjm/app/actions/requirements"
 	"mjm/app/actions/user"
 	"mjm/app/middleware"
 	"mjm/public"
@@ -19,7 +20,7 @@ func setRoutes(root *buffalo.App) {
 	root.Use(middleware.ParameterLogger)
 	root.Use(middleware.CSRF)
 
-	root.GET("/", home.Index)
+	root.GET("/", requirements.List)
 	root.GET("/departments/list", departments.List)
 	root.GET("/department/new", departments.New)
 	root.POST("/department/create", departments.Create)
@@ -34,6 +35,13 @@ func setRoutes(root *buffalo.App) {
 	root.PUT("/update-user/{user_id}", user.Update)
 	root.DELETE("/delete-user/{user_id}", user.Delete)
 	root.GET("/view-user/{user_id}", user.View)
+
+	root.GET("/requirements", requirements.List)
+	root.GET("/requirements/new", requirements.New)
+	root.POST("/requirements/new", requirements.Create)
+	root.GET("/requirements/update/{id}", requirements.Edit)
+	root.PUT("/requirements/update/{id}", requirements.Update)
+	root.DELETE("/requirements/delete/{id}", requirements.Destroy)
 
 	root.ServeFiles("/", http.FS(public.FS()))
 }

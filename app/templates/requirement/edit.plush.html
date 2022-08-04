@@ -1,0 +1,10 @@
+<div class="py-4 mb-2">
+    <h3 class="d-inline-block">Edit Requirement</h3>
+</div>
+
+<%= formFor(requirement, {action:"/requirements/update/"+requirement.ID, method: "PUT"}) { %>
+	<%= partial("requirement/form.plush.html") %>
+    <a href="/requirements">
+        <button class="btn btn-warning mt-3" type="button" >Cancel</button>
+    </a>
+   <% } %>
