@@ -1,0 +1,88 @@
+<div class="py-4 mb-2">
+  	<h3 class="d-inline-block">New User</h3>
+</div>
+
+
+
+<%= form({action: createUserPath(), method: "POST"}) { %>
+    <div class="row">
+        <div class="col-md-12 py-3">
+            <label class="form-label">Department</label>
+            <%= f.InputTag({name:"department_id"  }) %>
+          </div>
+      <div class="col-md-6 py-3">
+        <label class="form-label">First Name</label>
+        <%= f.InputTag({name:"first_name"  }) %>
+      </div>
+      <div class="col-md-6 py-3">
+        <label class="form-label">Last Name</label>
+        <%= f.InputTag({name:"last_name" }) %>
+      </div>
+      <div class="col-md-10 py-3 ">
+        <label class="form-label">Dni</label>
+        <%= f.InputTag({name:"dni" }) %>
+      </div>
+      <div class="col-md-2 pt-5 px-5">
+        <div class="dropdown">
+            <a class="btn btn-secondary dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-bs-toggle="dropdown" aria-expanded="false">
+             Department
+            </a>
+          
+            <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                <%= for (department) in departments { %>
+
+                    <li><a class="dropdown-item" href="#"><%= department.Name %></a></li>
+                    <% } %>
+
+            </ul>
+          </div>
+      </div>
+      <div class="col-md-6 py-3">
+        <label class="form-label">Email</label>
+        <%= f.InputTag({name:"email_address" }) %>
+      </div>
+      <div class="col-md-6 py-3">
+        <label class="form-label">Number</label>
+        <%= f.InputTag({name:"phone_number" }) %>
+      </div>
+    
+      
+
+    </div>
+    <button type="submit" class="btn btn-primary">send</button>
+	<%= linkTo(rootPath(), {class: "btn btn-warning", "data-confirm": "Are you sure?", body: "Cancel"}) %>
+<% } %>
+
+
+<div class="input-group">
+    <input type="text" class="form-control" name="codigoOrdenTrabajo" style="width: 65px" minlength="5" maxlength="5">
+    <div class="input-group-append">
+      <button class="btn btn-default dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></button>
+      <div class="dropdown-menu" id="opcionesCodigoOrdenTrabajo">
+        <a class="dropdown-item" href="#">Valor 1</a>
+        <a class="dropdown-item" href="#">Valor 2</a>
+      </div>
+    </div>
+  </div>
+
+<!-- <div class="py-4 mb-2">
+  	<h3 class="d-inline-block">New User</h3>
+</div>
+
+<%= formFor(user, {action: createUserPath(), method: "POST"}) { %>
+         <%= f.InputTag("DepartmentId") %>
+        <%= f.InputTag("FirstName") %>
+        <%= f.InputTag("LastName") %>
+        <%= f.InputTag("DNI") %>
+        <%= f.InputTag("EmailAddress") %>
+        <%= f.InputTag("PhoneNumber") %>
+		
+        <button type="submit" class="btn btn-primary">send</button>
+	<%= linkTo(rootPath(), {class: "btn btn-warning", "data-confirm": "Are you sure?", body: "Cancel"}) %>
+<% } %>
+
+ -->
+
+
+
+

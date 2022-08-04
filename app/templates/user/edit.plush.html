@@ -1,0 +1,16 @@
+<div class="py-4 mb-2">
+    <h3 class="d-inline-block">Edit User</h3>
+</div>
+
+<%= formFor(user, {action: updateUserPath({ user_id: user.ID }), method: "PUT"}) { %>
+	    <%= f.InputTag("DepartmentId") %>
+        <%= f.InputTag("CreatedAt") %>
+        <%= f.InputTag("UpdatedAt") %>
+        <%= f.InputTag("FirstName") %>
+        <%= f.InputTag("LastName") %>
+        <%= f.InputTag("DNI") %>
+        <%= f.InputTag("Email") %>
+        <%= f.InputTag("PhoneNumber") %>
+        <button class="btn btn-success " type="submit">Save</button>
+        <%= linkTo(usersPath({ user_id: user.ID }), {class: "btn btn-warning", "data-confirm": "Are you sure?", body: "Cancel"}) %>
+ <% } %>
