@@ -1,4 +1,4 @@
-<%= formFor(department, {id: "save", action: updateDepartmentsPath({department_id: department.ID}) ,method: "PUT"}) { %>
+<%= formFor(department, {id: "save", action: updateDepartmentPath({department_id: department.ID}) ,method: "PUT"}) { %>
     <%= f.InputTag("Name", {type:"text", placeholder:"Name", class:"number-add", value: department.Name}) %>
     <%= f.InputTag("Description", {type:"text", class:"mt-4", placeholder:"description", value: department.Description}) %>
 <% } %>

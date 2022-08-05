@@ -1,7 +1,7 @@
 <div class="py-4 mb-2">
 	<h3 class="d-inline-block">RequirementTypes</h3>
 	<div class="float-right">
-		<%= linkTo(newRequirementTypesPath(), {class: "btn btn-primary"}) { %>
+		<%= linkTo(newRequirementTypePath(), {class: "btn btn-primary"}) { %>
 		Create 
 		<% } %>
 	</div>
@@ -24,9 +24,9 @@
 			<td class="align-middle"><%= requirementType.Name %></td>
 			<td>
 				<div class="float-right">
-					<%= linkTo(showRequirementTypesPath({ requirement_type_id: requirementType.ID }), {class: "btn btn-info", body: "View"}) %>
-					<%= linkTo(editRequirementTypesPath({ requirement_type_id: requirementType.ID }), {class: "btn btn-warning", body: "Edit"}) %>
-					<%= linkTo(deleteRequirementTypesPath({ requirement_type_id: requirementType.ID }), {class: "btn btn-danger", data-method: "DELETE" ,"data-confirm": "Are you sure?", body: "Destroy"}) %>
+					<%= linkTo(showRequirementTypePath({ requirement_type_id: requirementType.ID }), {class: "btn btn-info", body: "View"}) %>
+					<%= linkTo(editRequirementTypePath({ requirement_type_id: requirementType.ID }), {class: "btn btn-warning", body: "Edit"}) %>
+					<%= linkTo(deleteRequirementTypePath({ requirement_type_id: requirementType.ID }), {class: "btn btn-danger", data-method: "DELETE" ,"data-confirm": "Are you sure?", body: "Destroy"}) %>
 				</div>
 			</td>
 		</tr>
