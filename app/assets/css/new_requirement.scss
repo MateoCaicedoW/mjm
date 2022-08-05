@@ -2,6 +2,7 @@
     border: solid 1px rgb(83, 0, 238);
     height: 500px;
     display: flex;
+    
     .back::after{
         font: var(--fa-font-solid);
         content: "\f060";
@@ -20,7 +21,7 @@
 .vertical-nav {
     min-width: 200px;
     width: 200px;
-    height: 100vh;
+    height: 100%;
     position: fixed;
     top: 0;
     left: 0;
