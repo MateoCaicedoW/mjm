@@ -17,14 +17,15 @@ type Department struct {
 	Requirements []Requirement `has_many:"requirements"`
 
 }
+
 type Departments []Department
 
 func (d Departments) Map() map[string]uuid.UUID {
 	departmentsMap := map[string]uuid.UUID{}
 	
 	for _, v := range d {
-
 		departmentsMap[v.Name] = v.ID
 	}
 	return departmentsMap
 }
+

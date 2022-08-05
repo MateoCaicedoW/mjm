@@ -5,15 +5,16 @@ import (
 
 	"mjm/app/actions/departments"
 	"mjm/app/actions/home"
+	requirement_type "mjm/app/actions/requeriment_type"
 	"mjm/app/actions/requirement"
-	"mjm/app/actions/user"
+	"mjm/app/actions/users"
+
 	"mjm/app/middleware"
 	"mjm/public"
 
 	"github.com/gobuffalo/buffalo"
 )
 
-// SetRoutes for the application
 func setRoutes(root *buffalo.App) {
 	root.Use(middleware.RequestID)
 	root.Use(middleware.Database)
@@ -21,24 +22,36 @@ func setRoutes(root *buffalo.App) {
 	root.Use(middleware.CSRF)
 
 	root.GET("/", home.Index)
-	root.GET("/departments/list", departments.List)
-	root.GET("/department/new", departments.New)
-	root.POST("/department/create", departments.Create)
-	root.GET("/edit/{department_id}", departments.Edit)
-	root.GET("/show/{department_id}", departments.Show)
-	root.PUT("/update/{department_id}", departments.Update)
-	root.DELETE("/destroy/{department_id}", departments.Destroy)
+	requirementType := root.Group("/requirement-types")
+	requirementType.GET("/", requirement_type.List)
+	requirementType.GET("/new", requirement_type.New).Name("newRequirementType")
+	requirementType.POST("/create", requirement_type.Create).Name("createRequirementType")
+	requirementType.GET("/show/{requirement_type_id}", requirement_type.Show).Name("showRequirementType")
+	requirementType.GET("/edit/{requirement_type_id}", requirement_type.Edit).Name("editRequirementType")
+	requirementType.PUT("/update/{requirement_type_id}", requirement_type.Update).Name("updateRequirementType")
+	requirementType.DELETE("/delete/{requirement_type_id}", requirement_type.Delete).Name("deleteRequirementType")
 
-	root.GET("/users", user.List)
-	root.GET("/new-users", user.New)
-	root.POST("/create-user", user.Create)
-	root.GET("/edit-user/{user_id}", user.Edit)
-	root.PUT("/update-user/{user_id}", user.Update)
-	root.DELETE("/delete-user/{user_id}", user.Delete)
-	root.GET("/view-user/{user_id}", user.View)
+	department := root.Group("/departments")
+	department.GET("/", departments.List)
+	department.GET("/new", departments.New).Name("newDepartment")
+	department.POST("/create", departments.Create).Name("createDepartment")
+	department.GET("/edit/{department_id}", departments.Edit).Name("editDepartment")
+	department.GET("/show/{department_id}", departments.Show).Name("showDepartment")
+	department.PUT("/update/{department_id}", departments.Update).Name("updateDepartment")
+	department.DELETE("/delete/{department_id}", departments.Delete).Name("deleteDepartment")
 
-	root.GET("/new/requirement", requirement.New)
-	root.POST("/create/requirement", requirement.Create)
+	user := root.Group("/users")
+	user.GET("/", users.List)
+	user.GET("/new", users.New).Name("newUser")
+	user.POST("/create", users.Create).Name("createUser")
+	user.GET("/show/{user_id}", users.View).Name("showUser")
+	user.GET("/edit/{user_id}", users.Edit).Name("editUser")
+	user.PUT("/update/{user_id}", users.Update).Name("updateUser")
+	user.DELETE("/delete/{user_id}", users.Delete).Name("deleteUser")
+
+	requirements := root.Group("/requirment")
+	requirements.GET("/new/requirement", requirement.New).Name("newRequirement")
+	requirements.POST("/create/requirement", requirement.Create).Name("CreateRequirement")
 
 	root.ServeFiles("/", http.FS(public.FS()))
 }
