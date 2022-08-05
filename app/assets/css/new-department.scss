@@ -1,22 +1,3 @@
-new-requirements{
-    border: solid 1px rgb(83, 0, 238);
-    height: 500px;
-    display: flex;
-    .back::after{
-        font: var(--fa-font-solid);
-        content: "\f060";
-        border-top: 0px;
-    }
-
-    .back:focus{
-        box-shadow: none;
-    }
-
-    .back {
-        border: none;
-    }
-}
-
 .vertical-nav {
     min-width: 200px;
     width: 200px;
@@ -59,64 +40,6 @@ new-requirements{
     height: 500px;
     display: flex;
     padding: 35px;
-
-    .font-margin{
-        font-size: 16px;
-        margin-bottom: 4px;
-    }
-
-    .requirement-area{
-        font-size: 16px;
-        margin-bottom: 4px;
-    }
-
-    .boder-r{
-        border-radius: 4px;
-        color: #969696;
-    }
-
-    .back::after{
-        font: var(--fa-font-solid);
-        content: "\f060";
-        border-top: 0px;
-    }
-
-    .back:focus{
-        box-shadow: none;
-    }
-
-    .back {
-        border: none;
-    }
-
-    .title-service{
-        justify-content: space-between;
-        margin-bottom: 45px;
-    
-        .input-title{
-            width: 48%;
-            height: 39px;
-        }
-    
-        .input-service{
-            width: 48%;
-            height: 39px;
-        }
-    }
-
-    .type-subtype{
-        justify-content: space-between;
-    
-        .input-type{
-            width: 48%;
-            height: 39px;
-        }
-    
-        .input-subtype{
-            width: 48%;
-            height: 39px;
-        }
-    }
 
     .btns-new-requirement{
         justify-content: end;
