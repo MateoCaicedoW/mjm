@@ -56,7 +56,7 @@ func setRoutes(root *buffalo.App) {
 	requirement.GET("/show/{requirement_id}", requirements.Show).Name("showRequirement")
 	requirement.GET("/edit/{requirement_id}", requirements.Edit).Name("editRequirement")
 	requirement.PUT("/update/{requirement_id}", requirements.Update).Name("updateRequirement")
-	requirement.DELETE("/delete/{requirement_id}", requirements.Destroy).Name("deleteRequirement")
+	requirement.DELETE("/delete/{requirement_id}", requirements.Delete).Name("deleteRequirement")
 
 	root.ServeFiles("/", http.FS(public.FS()))
 }
