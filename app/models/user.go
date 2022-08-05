@@ -21,7 +21,3 @@ type User struct {
 	Department   *Department   `belongs_to:"departments"`
 	Requirements []Requirement `has_many:"requirements"`
 }
-
-
-
-
