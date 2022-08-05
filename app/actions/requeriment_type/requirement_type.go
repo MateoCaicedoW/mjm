@@ -101,6 +101,7 @@ func Create(c buffalo.Context) error {
 
 func Edit(c buffalo.Context) error {
 
+	fmt.Println("/[----------------------------------")
 	tx, ok := c.Value("tx").(*pop.Connection)
 	if !ok {
 		return fmt.Errorf("no transaction found")

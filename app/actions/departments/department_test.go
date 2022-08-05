@@ -25,7 +25,7 @@ func (as ActionSuite) Test_List() {
 
 	err := as.DB.Create(&deparment)
 	as.NoError(err)
-	res := as.HTML("/departments/list").Get()
+	res := as.HTML("/departments").Get()
 	body := res.Body.String()
 	as.Contains(body, deparment.Name)
 	as.Contains(body, deparment.Description)
@@ -35,10 +35,10 @@ func (as *ActionSuite) Test_Create() {
 	department := &models.Department{}
 	fako.Fill(department)
 
-	res := as.HTML("/department/create/").Post(department)
+	res := as.HTML("/departments/create/").Post(department)
 
 	as.Equal(res.Code, http.StatusSeeOther)
-	as.Equal("/departments/list", res.Location())
+	as.Equal("/departments", res.Location())
 
 	list := []models.Department{}
 	as.DB.All(&list)
@@ -60,10 +60,10 @@ func (as *ActionSuite) Test_Update() {
 	fako.Fill(departmentUpdate)
 	departmentUpdate.ID = deparment.ID
 
-	res := as.HTML("/update/%s", departmentUpdate.ID).Put(departmentUpdate)
+	res := as.HTML("/departments/update/%s", departmentUpdate.ID).Put(departmentUpdate)
 
 	as.Equal(res.Code, http.StatusSeeOther)
-	as.Equal("/departments/list", res.Location())
+	as.Equal("/departments", res.Location())
 	as.DB.Reload(deparment)
 	as.Equal(deparment.Name, departmentUpdate.Name)
 }
@@ -74,10 +74,10 @@ func (as *ActionSuite) Test_Destroy() {
 	err := as.DB.Create(deparment)
 	as.NoError(err)
 
-	res := as.HTML("/destroy/%s", deparment.ID).Delete()
+	res := as.HTML("/departments/destroy/%s", deparment.ID).Delete()
 
 	as.Equal(res.Code, http.StatusSeeOther)
-	as.Equal("/departments/list", res.Location())
+	as.Equal("/departments", res.Location())
 
 	body := res.Body.String()
 	as.NotContains(body, deparment.Name)
@@ -85,7 +85,7 @@ func (as *ActionSuite) Test_Destroy() {
 }
 
 func (as *ActionSuite) Test_New() {
-	res := as.HTML("/department/new").Get()
+	res := as.HTML("/departments/new").Get()
 
 	as.Equal(res.Code, http.StatusOK)
 	body := res.Body.String()
@@ -98,7 +98,7 @@ func (as *ActionSuite) Test_Edit() {
 	err := as.DB.Create(deparment)
 	as.NoError(err)
 
-	res := as.HTML("/edit/" + deparment.ID.String()).Get()
+	res := as.HTML("/departments/edit/" + deparment.ID.String()).Get()
 	as.Equal(http.StatusOK, res.Code)
 
 	body := res.Body.String()
@@ -112,7 +112,7 @@ func (as *ActionSuite) Test_View() {
 	err := as.DB.Create(deparment)
 	as.NoError(err)
 
-	res := as.HTML("/show/" + deparment.ID.String()).Get()
+	res := as.HTML("/departments/show/" + deparment.ID.String()).Get()
 	as.Equal(http.StatusOK, res.Code)
 
 	body := res.Body.String()

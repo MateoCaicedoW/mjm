@@ -10,7 +10,7 @@
     <tbody>
         <%= for (department) in departments { %>
             <tr>
-                <th scope="row"><a href="/show/<%=department.ID %>"><%= department.ID %> </a></th>
+                <th scope="row"><a href="/departments/show/<%=department.ID %>"><%= department.ID %> </a></th>
                 <td><%= department.Name %></td>
                 <td><%= department.Description %></td>
                 <td>
@@ -19,8 +19,8 @@
                           ...
                         </button>
                         <ul class="dropdown-menu">
-                            <li><a class="dropdown-item" href="/edit/<%= department.ID %>">Edit</a></li>
-                            <li><%= linkTo(	destroyDepartmentIDPath({department_id: department.ID}), {class: "dropdown-item", data-method:"DELETE", data-confirm:"Are you sure?"}) { %> Remove <% } %></li>
+                            <li><a class="dropdown-item" href="/departments/edit/<%= department.ID %>">Edit</a></li>
+                            <li><%= linkTo(	destroyDepartmentsPath({department_id: department.ID}), {class: "dropdown-item", data-method:"DELETE", data-confirm:"Are you sure?"}) { %> Remove <% } %></li>
                         </ul>
                     </div>
                 </td>
@@ -28,4 +28,4 @@
         <% } %>
     </tbody>
 </table>
-<a class="btn btn-primary" href="/department/new">Add Line</a>
+<a class="btn btn-primary" href="/departments/new">Add Line</a>

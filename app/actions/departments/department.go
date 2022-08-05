@@ -46,7 +46,7 @@ func Create(c buffalo.Context) error {
 		return err
 	}
 
-	return c.Redirect(http.StatusSeeOther, "/departments/list")
+	return c.Redirect(http.StatusSeeOther, "/departments")
 }
 
 func Show(c buffalo.Context) error {
@@ -101,7 +101,7 @@ func Update(c buffalo.Context) error {
 		return err
 	}
 
-	return c.Redirect(http.StatusSeeOther, "/departments/list")
+	return c.Redirect(http.StatusSeeOther, "/departments")
 }
 
 func Destroy(c buffalo.Context) error {
@@ -120,5 +120,5 @@ func Destroy(c buffalo.Context) error {
 		return err
 	}
 
-	return c.Redirect(http.StatusSeeOther, "/departments/list")
+	return c.Redirect(http.StatusSeeOther, "/departments")
 }
