@@ -110,13 +110,13 @@ func (as *ActionSuite) Test_Edit() {
 	requirements.ServiceDepartmentID = department.ID
 
 	fako.Fill(&requirements)
-	err := as.DB.Create(&requirements, "modified_by", "approved_by", "declined_by", "accepted_by", "finished_by", "proccessed_by", "assigned_to", "assigned_by")
+	err := as.DB.Create(&requirements)
 	as.NoError(err)
 	res := as.HTML("/requirements/update/" + requirements.ID.String()).Get()
 	as.Equal(http.StatusOK, res.Code)
 	body := res.Body.String()
-
 	as.Contains(body, "Edit Requirement")
+	as.NotContains(body, "New Requirement")
 
 }
 
@@ -132,7 +132,7 @@ func (as *ActionSuite) Test_Update() {
 	requirements.ServiceDepartmentID = department.ID
 
 	fako.Fill(requirements)
-	err := as.DB.Create(requirements, "modified_by", "approved_by", "declined_by", "accepted_by", "finished_by", "proccessed_by", "assigned_to", "assigned_by")
+	err := as.DB.Create(requirements)
 	as.NoError(err)
 
 	requirementsUpdate := &models.Requirement{}
@@ -164,7 +164,7 @@ func (as *ActionSuite) Test_Destroy() {
 	requirements.ServiceDepartmentID = department.ID
 
 	fako.Fill(requirements)
-	err := as.DB.Create(requirements, "modified_by", "approved_by", "declined_by", "accepted_by", "finished_by", "proccessed_by", "assigned_to", "assigned_by")
+	err := as.DB.Create(requirements)
 	as.NoError(err)
 
 	res := as.HTML("/requirements/delete/" + requirements.ID.String()).Delete()
