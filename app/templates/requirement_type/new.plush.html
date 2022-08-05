@@ -1,0 +1,21 @@
+<div class="py-4 mb-2">
+  	<h3 class="d-inline-block">New RequirementType</h3>
+</div>
+
+<%= formFor(requirementType, {action: createRequirementTypePath(), method: "POST"}) { %>
+	<div class="row">
+
+		<div class="col-md-6 py-3">
+			<%= f.InputTag("Name") %>
+		</div>
+		
+		<div class="col-md-6 pt-3">
+		  <%= f.SelectTag("DepartmentID", {options: departments}) %>
+
+		</div>
+  
+	  </div>
+
+	<button class="btn btn-success" type="submit">Save</button>
+	<%= linkTo(requirementTypesPath(), {class: "btn btn-warning", "data-confirm": "Are you sure?", body: "Cancel"}) %>
+<% } %>

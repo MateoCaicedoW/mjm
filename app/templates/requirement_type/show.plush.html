@@ -1,0 +1,27 @@
+<div class="py-4 mb-2">
+	<h3 class="d-inline-block">RequirementType Details</h3>
+	<div class="float-right">
+		<%= linkTo(requirementTypesPath(), {class: "btn btn-info"}) { %> Back to all RequirementTypes <% } %>
+		<%= linkTo(editRequirementTypePath({ requirement_type_id: requirementType.ID }), {class: "btn btn-warning", body: "Edit"}) %>
+		<%= linkTo(deleteRequirementTypePath({ requirement_type_id: requirementType.ID }), {class: "btn btn-danger", "data-method": "DELETE", "data-confirm": "Are you sure?", body: "Destroy"}) %>
+	</div>
+</div>
+
+<ul class="list-group mb-2 ">
+	<li class="list-group-item pb-1">
+		<label class="small d-block">ID</label>
+		<p class="d-inline-block"><%= requirementType.ID %></p>
+	</li>
+	<li class="list-group-item pb-1">
+		<label class="small d-block">CreatedAt</label>
+		<p class="d-inline-block"><%= requirementType.CreatedAt %></p>
+	</li>
+	<li class="list-group-item pb-1">
+		<label class="small d-block">UpdatedAt</label>
+		<p class="d-inline-block"><%= requirementType.UpdatedAt %></p>
+	</li>
+	<li class="list-group-item pb-1">
+		<label class="small d-block">Name</label>
+		<p class="d-inline-block"><%= requirementType.Name %></p>
+	</li>
+</ul>
