@@ -74,7 +74,7 @@ func (as *ActionSuite) Test_Destroy() {
 	err := as.DB.Create(deparment)
 	as.NoError(err)
 
-	res := as.HTML("/departments/destroy/%s", deparment.ID).Delete()
+	res := as.HTML("/departments/delete/%s", deparment.ID).Delete()
 
 	as.Equal(res.Code, http.StatusSeeOther)
 	as.Equal("/departments", res.Location())

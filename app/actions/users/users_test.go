@@ -194,7 +194,7 @@ func (as *ActionSuite) Test_View() {
 
 	as.NoError(as.DB.Create(user))
 
-	res := as.HTML("/users/view/" + user.ID.String()).Get()
+	res := as.HTML("/users/show/" + user.ID.String()).Get()
 	as.Equal(http.StatusOK, res.Code)
 	body := res.Body.String()
 	as.Contains(body, user.FirstName)
