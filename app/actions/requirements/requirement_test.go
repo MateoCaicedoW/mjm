@@ -56,7 +56,7 @@ func (as *ActionSuite) Test_Create() {
 
 	fako.Fill(&requirement)
 
-	req := as.HTML("/requirements/new").Post(requirement)
+	req := as.HTML("/requirements/create").Post(requirement)
 
 	req2 := as.HTML("/requirements").Get()
 
@@ -85,7 +85,7 @@ func (as *ActionSuite) Test_Create_Failed() {
 	requirements.ServiceDepartmentID = department.ID
 
 	fako.Fill(&requirements)
-	req := as.HTML("/requirements/new").Post(requirements)
+	req := as.HTML("/requirements/create").Post(requirements)
 	as.Equal(http.StatusInternalServerError, req.Code)
 }
 
@@ -112,7 +112,7 @@ func (as *ActionSuite) Test_Edit() {
 	fako.Fill(&requirements)
 	err := as.DB.Create(&requirements)
 	as.NoError(err)
-	res := as.HTML("/requirements/update/" + requirements.ID.String()).Get()
+	res := as.HTML("/requirements/edit/" + requirements.ID.String()).Get()
 	as.Equal(http.StatusOK, res.Code)
 	body := res.Body.String()
 	as.Contains(body, "Edit Requirement")

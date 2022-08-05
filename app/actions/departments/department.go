@@ -46,7 +46,7 @@ func Create(c buffalo.Context) error {
 		return err
 	}
 
-	return c.Redirect(http.StatusSeeOther, "/departments/list")
+	return c.Redirect(http.StatusSeeOther, "/departments")
 }
 
 func Show(c buffalo.Context) error {
@@ -101,10 +101,10 @@ func Update(c buffalo.Context) error {
 		return err
 	}
 
-	return c.Redirect(http.StatusSeeOther, "/departments/list")
+	return c.Redirect(http.StatusSeeOther, "/departments")
 }
 
-func Destroy(c buffalo.Context) error {
+func Delete(c buffalo.Context) error {
 	tx := c.Value("tx").(*pop.Connection)
 
 	department := models.Department{}
@@ -120,5 +120,5 @@ func Destroy(c buffalo.Context) error {
 		return err
 	}
 
-	return c.Redirect(http.StatusSeeOther, "/departments/list")
+	return c.Redirect(http.StatusSeeOther, "/departments")
 }

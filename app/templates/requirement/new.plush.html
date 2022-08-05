@@ -2,7 +2,7 @@
   	<h3 class="d-inline-block">New Requirement</h3>
 </div>
 
-<%= formFor(requirement, {action: "/requirements/new", method: "POST"}) { %>
+<%= formFor(requirement, {action: "/requirements/create", method: "POST"}) { %>
 	<%= partial("requirement/form.plush.html") %>
 	<%= linkTo(requirementsPath(), {class: "btn btn-warning mt-3", "data-confirm": "Are you sure?", body: "Cancel"}) %>
 <% } %>

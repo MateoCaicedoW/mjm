@@ -24,7 +24,9 @@
 	<tbody>
 		<%= for (requirement) in requirements { %>
 		<tr>
-			<td class="align-middle"><%= requirement.Title %></td>
+
+			<td class="align-middle">
+				<a href="/requirements/show/<%= requirement.ID %>"><%= requirement.Title %></a></td>
 			<td class="align-middle"><%= requirement.Description %></td>
 			<td class="align-middle"><%= requirement.CreatedByUser.FirstName %></td>
 			<td class="align-middle"><%= requirement.RequestingDepartment.Name %></td>
@@ -33,7 +35,7 @@
 			<td class="align-middle"><%= requirement.RequirementType.Name %></td>
 			<td>
 				<div class="float-right">
-					<a href="/requirements/update/<%= requirement.ID %>">
+					<a href="/requirements/edit/<%= requirement.ID %>">
 						<button class="btn btn-primary">
 							<i class="fa fa-edit"></i>
 						</button>

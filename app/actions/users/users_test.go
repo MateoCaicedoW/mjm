@@ -1,4 +1,4 @@
-package user_test
+package users_test
 
 import (
 	"mjm/app"
@@ -65,10 +65,10 @@ func (as *ActionSuite) Test_Create() {
 		DepartmentID: department.ID,
 	}
 
-	res := as.HTML("/create-user").Post(user)
+	res := as.HTML("/users/create").Post(user)
 	as.Equal(res.Code, http.StatusSeeOther)
 	as.Equal("/users/", res.Location())
-	res2 := as.HTML("/create-user").Post(user2)
+	res2 := as.HTML("/users/create").Post(user2)
 	as.Equal(res2.Code, http.StatusSeeOther)
 	as.Equal("/users/", res2.Location())
 
@@ -105,7 +105,7 @@ func (as *ActionSuite) Test_Update() {
 	userUpdate.ID = user.ID
 	userUpdate.DepartmentID = department.ID
 
-	res := as.HTML("/update-user/" + user.ID.String()).Put(userUpdate)
+	res := as.HTML("/users/update/" + user.ID.String()).Put(userUpdate)
 	as.Equal(res.Code, http.StatusSeeOther)
 	as.Equal("/users/", res.Location())
 	as.DB.Reload(&user)
@@ -129,7 +129,7 @@ func (as *ActionSuite) Test_Delete() {
 	}
 	as.NoError(as.DB.Create(&user))
 
-	res := as.HTML("/delete-user/" + user.ID.String()).Delete()
+	res := as.HTML("/users/delete/" + user.ID.String()).Delete()
 	as.Equal(res.Code, http.StatusSeeOther)
 	as.Equal("/users/", res.Location())
 	res = as.HTML("/users/").Get()
@@ -158,7 +158,7 @@ func (as *ActionSuite) Test_Edit() {
 
 	as.NoError(as.DB.Create(user))
 
-	res := as.HTML("/edit-user/" + user.ID.String()).Get()
+	res := as.HTML("/users/edit/" + user.ID.String()).Get()
 	as.Equal(http.StatusOK, res.Code)
 	body := res.Body.String()
 	as.Contains(body, user.FirstName)
@@ -169,7 +169,7 @@ func (as *ActionSuite) Test_Edit() {
 
 func (as *ActionSuite) Test_New() {
 
-	res := as.HTML("/new-users/").Get()
+	res := as.HTML("/users/new/").Get()
 	as.Equal(http.StatusOK, res.Code)
 	body := res.Body.String()
 	as.Contains(body, "New User")
@@ -194,7 +194,7 @@ func (as *ActionSuite) Test_View() {
 
 	as.NoError(as.DB.Create(user))
 
-	res := as.HTML("/view-user/" + user.ID.String()).Get()
+	res := as.HTML("/users/show/" + user.ID.String()).Get()
 	as.Equal(http.StatusOK, res.Code)
 	body := res.Body.String()
 	as.Contains(body, user.FirstName)

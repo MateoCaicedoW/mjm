@@ -53,25 +53,25 @@ func List(c buffalo.Context) error {
 
 // Show gets the data for one Requirement. This function is mapped to
 // the path GET /requirements/{requirement_id}
-// func  Show(c buffalo.Context) error {
-// 	// Get the DB connection from the context
-// 	tx, ok := c.Value("tx").(*pop.Connection)
-// 	if !ok {
-// 		return fmt.Errorf("no transaction found")
-// 	}
+func Show(c buffalo.Context) error {
+	// Get the DB connection from the context
+	tx, ok := c.Value("tx").(*pop.Connection)
+	if !ok {
+		return fmt.Errorf("no transaction found")
+	}
 
-// 	// Allocate an empty Requirement
-// 	requirement := &models.Requirement{}
+	// Allocate an empty Requirement
+	requirement := &models.Requirement{}
 
-// 	// To find the Requirement the parameter requirement_id is used.
-// 	if err := tx.Find(requirement, c.Param("requirement_id")); err != nil {
-// 		return c.Error(http.StatusNotFound, err)
-// 	}
+	// To find the Requirement the parameter requirement_id is used.
+	if err := tx.Eager().Find(requirement, c.Param("requirement_id")); err != nil {
+		return c.Error(http.StatusNotFound, err)
+	}
 
-// 	c.Set("requirement", requirement)
+	c.Set("requirement", requirement)
 
-// 	return c.Render(http.StatusOK, r.HTML("/requirements/show.plush.html"))
-// }
+	return c.Render(http.StatusOK, r.HTML("/requirement/show.plush.html"))
+}
 
 // New renders the form for creating a new Requirement.
 // This function is mapped to the path GET /requirements/new
@@ -147,7 +147,7 @@ func Edit(c buffalo.Context) error {
 	// Allocate an empty Requirement
 	requirement := &models.Requirement{}
 
-	if err := tx.Find(requirement, c.Param("id")); err != nil {
+	if err := tx.Find(requirement, c.Param("requirement_id")); err != nil {
 		return c.Error(http.StatusNotFound, err)
 	}
 
@@ -168,7 +168,7 @@ func Update(c buffalo.Context) error {
 	// Allocate an empty Requirement
 	requirement := &models.Requirement{}
 
-	if err := tx.Find(requirement, c.Param("id")); err != nil {
+	if err := tx.Find(requirement, c.Param("requirement_id")); err != nil {
 		return c.Error(http.StatusNotFound, err)
 	}
 
@@ -214,7 +214,7 @@ func Destroy(c buffalo.Context) error {
 	requirement := &models.Requirement{}
 
 	// To find the Requirement the parameter requirement_id is used.
-	if err := tx.Find(requirement, c.Param("id")); err != nil {
+	if err := tx.Find(requirement, c.Param("requirement_id")); err != nil {
 		return c.Error(http.StatusNotFound, err)
 	}
 
