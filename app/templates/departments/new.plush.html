@@ -1,6 +1,17 @@
-<%= formFor(department, {id: "save", action: createDepartmentPath() ,method: "POST"}) { %>
-    <%= f.InputTag("Name", {type:"text", class:"mb-2", placeholder:"Name"}) %>
-    <%= f.InputTag("Description", {type:"text", class:"mt-1", placeholder:"Description"}) %>
-<% } %>
-<button class="btn btn-primary mt-3" form="save">Save Line</button>
-<a class="btn btn-danger ms-3 mt-3" href="/departments">cancel</a>
+<div class="vertical-nav bg-white">
+
+</div>
+<div class="page-content mt-3">
+    <a href="/departments" class="btn back mt-1"></a>
+    <h5 class="ms-2 mb-0 title">New Description</h5>
+</div>
+<div class="form-requirement">
+    <%= formFor(department, {action: createDepartmentPath() ,method: "POST", class:"size-box"}) { %>
+        <%= f.InputTag("Name", {type:"text", class:"mb-2", placeholder:"Type your title here..."}) %>
+        <%= f.TextArea("Description", {rows: 5, placeholder:"Add more details about this requirements here", class:"description-message"}) %>
+        <div class="d-flex btns-new-requirement mt-4">
+            <a href="/departments" class="cancel btn">Cancel</a>
+            <button class="btn d-flex save ms-2" type="submit">Save Department</button>
+        </div>
+    <% } %>
+</div>
