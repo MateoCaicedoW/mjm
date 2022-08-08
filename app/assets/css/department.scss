@@ -1,8 +1,4 @@
 .page-content {
-    width: calc(100% - 12.5rem);
-    margin-left: 200px;
-    padding-left: 26px;
-
     .back::after{
         font: var(--fa-font-solid);
         content: "\f060";
@@ -12,19 +8,13 @@
 }
 
 .form-department {
-    width: calc(100% - 12.5rem);
-    margin-left: 200px;
-    padding: 5px 35px 35px 35px;
+    .cancel{
+        border: solid 1px #D0D0D0;
+        color: #393939;
+    }
 
-    .btns-department{
-        .cancel{
-            border: solid 1px #D0D0D0;
-            color: #393939;
-        }
-
-        .save{
-            background-color: #00AD9B;
-        }
+    .save{
+        background-color: #00AD9B;
     }
 }
 
