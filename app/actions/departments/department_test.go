@@ -89,7 +89,7 @@ func (as *ActionSuite) Test_New() {
 
 	as.Equal(res.Code, http.StatusOK)
 	body := res.Body.String()
-	as.Contains(body, "Save Line")
+	as.Contains(body, "Save Department")
 }
 
 func (as *ActionSuite) Test_Edit() {
@@ -103,7 +103,7 @@ func (as *ActionSuite) Test_Edit() {
 
 	body := res.Body.String()
 	as.Contains(body, deparment.Name)
-	as.Contains(body, "Save Line")
+	as.Contains(body, "Save Changes")
 }
 
 func (as *ActionSuite) Test_View() {
