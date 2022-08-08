@@ -1,0 +1,23 @@
+
+.back::after{
+    font: var(--fa-font-solid);
+    content: "\f060";
+}
+.h-500px{
+    height: 500px;
+}
+.w-48{
+    width: 48% !important;
+}
+.h-115px{
+    height: 115px;
+}
+.bg-green-ligth{
+    background-color: #00AD9B;
+}
+.size-box{
+    width: 100%;
+}
+.resize-none{
+    resize: none !important;
+  }
