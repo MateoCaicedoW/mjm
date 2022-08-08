@@ -43,7 +43,6 @@ func List(c buffalo.Context) error {
 		return err
 	}
 
-	fmt.Println("requirements: ", requirements)
 	// Add the paginator to the context so it can be used in the template.
 	c.Set("pagination", q.Paginator)
 	c.Set("requirements", requirements)
