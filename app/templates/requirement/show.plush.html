@@ -1,0 +1,46 @@
+<div class="py-4 mb-2">
+	<h3 class="d-inline-block">Requirement Details</h3>
+	<div class="float-right">
+		<%= linkTo(requirementsPath(), {class: "btn btn-info"}) { %>
+		Back to all Requirements
+		<% } %>
+		<%= linkTo(editRequirementPath({ requirement_id: requirement.ID }), {class: "btn btn-warning", body: "Edit"}) %>
+		<%= linkTo(requirementsPath({ requirement_id: requirement.ID }), {class: "btn btn-danger", "data-method": "DELETE", "data-confirm": "Are you sure?", body: "Destroy"}) %>
+	</div>
+</div>
+
+<ul class="list-group mb-2 ">
+	<li class="list-group-item pb-1">
+		<label class="small d-block">ID</label>
+		<p class="d-inline-block"><%= requirement.ID %></p>
+	</li>
+	<li class="list-group-item pb-1">
+		<label class="small d-block">Title</label>
+		<p class="d-inline-block"><%= requirement.Title %></p>
+	</li>
+	<li class="list-group-item pb-1">
+		<label class="small d-block">Description</label>
+		<p class="d-inline-block"><%= requirement.Description %></p>
+	</li>
+	<li class="list-group-item pb-1">
+		<label class="small d-block">User</label>
+		<p class="d-inline-block"><%= requirement.CreatedByUser.FirstName %></p>
+	</li>
+	<li class="list-group-item pb-1">
+		<label class="small d-block">Requesting Department</label>
+		<p class="d-inline-block"><%= requirement.RequestingDepartment.Name %></p>
+	</li>
+	<li class="list-group-item pb-1">
+		<label class="small d-block">Service Department</label>
+		<p class="d-inline-block"><%= requirement.ServiceDepartment.Name %></p>
+	</li>
+	<li class="list-group-item pb-1">
+		<label class="small d-block">Subtype</label>
+		<p class="d-inline-block"><%= requirement.RequirementSubType.Name %></p>
+	</li>
+	<li class="list-group-item pb-1">
+		<label class="small d-block">type</label>
+		<p class="d-inline-block"><%= requirement.RequirementType.Name %></p>
+	</li>
+
+</ul>

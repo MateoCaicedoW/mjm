@@ -1,16 +1,20 @@
 package models
 
 import (
+	"regexp"
 	"time"
 
 	"github.com/gobuffalo/nulls"
+	"github.com/gobuffalo/pop/v6"
+	"github.com/gobuffalo/validate/v3"
+	"github.com/gobuffalo/validate/v3/validators"
 	"github.com/gofrs/uuid"
 )
 
 type Requirement struct {
 	ID                     uuid.UUID           `db:"id"`
-	Title                  string              `db:"title" `
-	Description            string              `db:"description" `
+	Title                  string              `db:"title" fako:"job_title"`
+	Description            string              `db:"description" fako:"sentence"`
 	CreatedByUserID        uuid.UUID           `db:"created_by"`
 	CreatedAt              time.Time           `db:"created_at"`
 	RequestingDepartmentID uuid.UUID           `db:"requesting_department_id"`
@@ -47,4 +51,54 @@ type Requirement struct {
 	AssignedToUser         *User               `belongs_to:"users"`
 	AssignedByUser         *User               `belongs_to:"users"`
 	FinishedByUser         *User               `belongs_to:"users"`
+}
+
+var Requirements []Requirement
+
+func (r *Requirement) Validate(tx *pop.Connection) (*validate.Errors, error) {
+	return validate.Validate(
+		&validators.StringIsPresent{
+			Field:   r.Title,
+			Name:    "Title",
+			Message: "Title is required.",
+		},
+		&validators.StringIsPresent{
+			Field:   r.Description,
+			Name:    "Description",
+			Message: "Description is required.",
+		},
+		&validators.FuncValidator{
+			Fn: func() bool {
+				if r.Title != "" && len(r.Title) > 255 {
+					return false
+				}
+				return true
+			},
+			Field:   "",
+			Name:    "Title",
+			Message: "%s Title must be less than 255 characters.",
+		},
+		&validators.FuncValidator{
+			Fn: func() bool {
+				if r.Description != "" && len(r.Description) > 255 {
+					return false
+				}
+				return true
+			},
+			Field:   "",
+			Name:    "Description",
+			Message: "%s Description must be less than 255 characters.",
+		},
+		&validators.FuncValidator{
+			Fn: func() bool {
+				if r.Title != "" && !regexp.MustCompile(`^[a-zA-Z ]+$`).MatchString(r.Title) {
+					return false
+				}
+				return true
+			},
+			Name:    "Title",
+			Message: "%s Title must be letters only.",
+		},
+	), nil
+
 }
