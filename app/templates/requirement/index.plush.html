@@ -1,0 +1,59 @@
+<div class="py-4 mb-2">
+	<h3 class="d-inline-block">Requirements</h3>
+	<div class="float-right">
+		<a href="/requirements/new">
+			<button class="btn btn-success">
+				<i class="fa fa-plus"></i>
+				New Requirement
+			</button>
+		</a>
+	</div>
+</div>
+
+<table class="table table-hover table-bordered">
+	<thead class="thead-light">
+		<th>Title</th>
+		<th>Description</th>
+		<th>Created By</th>
+		<th>Requesting Department</th>
+		<th>Service Department</th>
+		<th>Requirement Type</th>
+		<th>Requirement Sub Type</th>
+		<th>Actions</th>
+	</thead>
+	<tbody>
+		<%= for (requirement) in requirements { %>
+		<tr>
+
+			<td class="align-middle">
+				<a href="/requirements/show/<%= requirement.ID %>"><%= requirement.Title %></a></td>
+			<td class="align-middle"><%= requirement.Description %></td>
+			<td class="align-middle"><%= requirement.CreatedByUser.FirstName %></td>
+			<td class="align-middle"><%= requirement.RequestingDepartment.Name %></td>
+			<td class="align-middle"><%= requirement.ServiceDepartment.Name %></td>
+			<td class="align-middle"><%= requirement.RequirementSubType.Name %></td>
+			<td class="align-middle"><%= requirement.RequirementType.Name %></td>
+			<td>
+				<div class="float-right">
+					<a href="/requirements/edit/<%= requirement.ID %>">
+						<button class="btn btn-primary">
+							<i class="fa fa-edit"></i>
+						</button>
+					</a>
+					<%= form({action: "/requirements/delete/"+requirement.ID , method:"DELETE",  class: "py-2 py-md-0"}) { %>
+						<button class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#A<%=requirement.ID%>" type="button">
+							<i class="fa fa-trash"></i>
+						</button>
+						<%= partial("requirement/modal.plush.html", {ID : requirement.ID}) %>
+				<% } %> 	
+					
+				</div>
+			</td>
+		</tr>
+		<% } %>
+	</tbody>
+</table>
+
+<div class="text-center">
+	<%= paginator(pagination) %>
+</div>
