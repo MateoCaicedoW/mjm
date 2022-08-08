@@ -1,39 +1,36 @@
-<div class="vertical-nav bg-white">
+<div class="py-4 mb-2">
+  	<h3 class="d-inline-block">New Requirement</h3>
+</div>
+<%= form({id:"save", action: createRequirementPath() ,method: "POST"}) { %>
+    <div class="d-flex title-service">
+        <div class="input-title">
+            <p class="font-margin">Title</p>
+            <%= f.InputTag({type:"text", class:"boder-r", placeholder:"Type your title here..."}) %>
+        </div>
+        <div class="input-service">
+            <p class="font-margin">Service Area</p>
+            <%= f.SelectTag({ options: serviceArea, class:"form-select boder-r"}) %>
+        </div>
+    </div>
+    <div class="d-flex type-subtype">
+        <div class="input-type">
+            <p class="font-margin">Type</p>
+            <%= f.SelectTag({ options: typeOptions, class:"form-select boder-r"}) %>
+        </div>
+        <div class="input-subtype">
+            <p class="font-margin">Subtype</p>
+            <%= f.SelectTag({ options: subtypesOptions, value: 3 ,class:"form-select boder-r"}) %>
+        </div>
+    </div>
+    <div class="description">
+        <label class="mt-5">Description</label>
+        <textarea class="description-message form-control mt-2" placeholder="Add more details about this requirements here."></textarea>
+    </div> 
+    <div class="d-flex btns-new-requirement mt-4">
+        <a href="#" class="cancel btn">Cancel</a>
+        <button class="btn d-flex save ms-2" form="save">Save Requirement</button>
+    </div>
+<% } %>
 
-</div>
-<div class="page-content mt-3">
-    <a href="#" class="btn back mt-1"></a>
-    <h5 class="ms-2 mb-0 title">New Requirement</h5>
-</div>
-<div class="form-requirement">
-    <%= form({id:"save", action: createRequirementPath() ,method: "POST", class:"size-box"}) { %>
-        <div class="d-flex title-service">
-            <div class="input-title">
-                <p class="font-margin">Title</p>
-                <%= f.InputTag({type:"text", class:"boder-r", placeholder:"Type your title here..."}) %>
-            </div>
-            <div class="input-service">
-                <p class="font-margin">Service Area</p>
-                <%= f.SelectTag({ options: serviceArea, class:"form-select boder-r"}) %>
-            </div>
-        </div>
-        <div class="d-flex type-subtype">
-            <div class="input-type">
-                <p class="font-margin">Type</p>
-                <%= f.SelectTag({ options: typeOptions, class:"form-select boder-r"}) %>
-            </div>
-            <div class="input-subtype">
-                <p class="font-margin">Subtype</p>
-                <%= f.SelectTag({ options: subtypesOptions, value: 3 ,class:"form-select boder-r"}) %>
-            </div>
-        </div>
-        <div class="description">
-            <label class="mt-5">Description</label>
-            <textarea class="description-message form-control mt-2" placeholder="Add more details about this requirements here."></textarea>
-        </div> 
-        <div class="d-flex btns-new-requirement mt-4">
-            <a href="#" class="cancel btn">Cancel</a>
-            <button class="btn d-flex save ms-2" form="save">Save Requirement</button>
-        </div>
-    <% } %>
-</div>
+<%= partial("requirement/form.plush.html") %>
+<%= linkTo(requirementsPath(), {class: "btn btn-warning mt-3", "data-confirm": "Are you sure?", body: "Cancel"}) %>
