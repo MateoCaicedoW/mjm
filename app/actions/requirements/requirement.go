@@ -115,14 +115,6 @@ func Create(c buffalo.Context) error {
 		return err
 	}
 
-	fmt.Println("================================================", requirement.Title)
-	fmt.Println("================================================", requirement.ServiceDepartmentID)
-	fmt.Println("================================================", requirement.RequirementTypeID)
-	fmt.Println("================================================", requirement.RequirementSubTypeID)
-	fmt.Println("================================================", requirement.Description)
-	fmt.Println("================================================", requirement.RequestingDepartmentID)
-	fmt.Println("================================================", requirement.CreatedByUserID)
-
 	// Get the DB connection from the context
 	tx, ok := c.Value("tx").(*pop.Connection)
 	if !ok {
