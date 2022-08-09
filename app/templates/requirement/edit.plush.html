@@ -1,39 +1,12 @@
-<div class="container">   
-<div class="d-flex align-items-center mt-3">
-    <a href="#" class="btn back border-0 fs-4 "></a>
+<div class="p-5">   
+<div class="d-flex my-4">
+    <%= linkTo(requirementsPath(), {class: "back fs-4 text-end text-decoration-none text-dark"}) %>
     <h5 class="ms-2 m-auto fs-4">Edit Requirement</h5>
 </div>
-<div class="form-requirement h-500px d-flex">
-    <%= form({action: usersPath() ,method: "GET", class:"size-box"}) { %>
-        <div class="d-flex justify-content-between mb-4">
-            <div class="w-48">
-                <p class="mb-1">Title</p>
-                <%= f.InputTag({type:"text", class:"boder-r", placeholder:"..."}) %>
-            </div>
-            <div class="w-48" >
-                <p class="mb-1">Service Area</p>
-                <%= f.SelectTag({ class:"form-select boder-r"}) %>
-            </div>
-        </div>
-        <div class="d-flex justify-content-between mb-4">
-            <div class="input-type w-48">
-                <p class="mb-1">Type</p>
-                <%= f.SelectTag({class:"form-select boder-r"}) %>
-            </div>
-            <div class="w-48">
-                <p class="mb-1">Subtype</p>
-                <%= f.SelectTag({value: 3 ,class:"form-select boder-r"}) %>
-            </div>
-        </div>
-        <div>
-            <label class="">Description</label>
-            <textarea class="h-115px form-control mt-2 resize-none" placeholder="..."></textarea>
-        </div> 
-        <div class="d-flex  justify-content-end mt-4 ">
-            <a href="#" class="btn border rounded-pill">Cancel</a>
-            <button class="btn rounded-pill bg-green-ligth text-white ms-2 btn-save-requirement" type="submit">Save Requirement</button>
-        </div>
-    <% } %>
-</div>
+<div class="h-500px">
+    <%= formFor(requirement, {action:"/requirements/update/"+requirement.ID, method: "PUT"}) { %>
+        <%= partial("requirement/form.plush.html") %>
+        <% } %>
+    </div>
 </div>
 
