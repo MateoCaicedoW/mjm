@@ -4,9 +4,9 @@ import (
 	"net/http"
 
 	"mjm/app/actions/departments"
+	"mjm/app/actions/home"
+	"mjm/app/actions/requirement_type"
 	"mjm/app/actions/requirements"
-
-	requirement_type "mjm/app/actions/requeriment_type"
 	"mjm/app/actions/users"
 
 	"mjm/app/middleware"
@@ -21,6 +21,7 @@ func setRoutes(root *buffalo.App) {
 	root.Use(middleware.ParameterLogger)
 	root.Use(middleware.CSRF)
 
+	root.GET("/", home.Index)
 	requirementType := root.Group("/requirement-types")
 	requirementType.GET("/", requirement_type.List)
 	requirementType.GET("/new", requirement_type.New).Name("newRequirementType")
@@ -55,7 +56,7 @@ func setRoutes(root *buffalo.App) {
 	requirement.GET("/show/{requirement_id}", requirements.Show).Name("showRequirement")
 	requirement.GET("/edit/{requirement_id}", requirements.Edit).Name("editRequirement")
 	requirement.PUT("/update/{requirement_id}", requirements.Update).Name("updateRequirement")
-	requirement.DELETE("/delete/{requirement_id}", requirements.Destroy).Name("deleteRequirement")
+	requirement.DELETE("/delete/{requirement_id}", requirements.Delete).Name("deleteRequirement")
 
 	root.ServeFiles("/", http.FS(public.FS()))
 }

@@ -1,4 +1,4 @@
-package requerimenttype_test
+package requirement_type_test
 
 import (
 	"mjm/app"
