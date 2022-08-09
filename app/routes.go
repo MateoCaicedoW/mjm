@@ -5,7 +5,8 @@ import (
 
 	"mjm/app/actions/departments"
 	"mjm/app/actions/home"
-	requirement_type "mjm/app/actions/requeriment_type"
+	"mjm/app/actions/requirement_type"
+	"mjm/app/actions/requirements"
 	"mjm/app/actions/users"
 
 	"mjm/app/middleware"
@@ -47,6 +48,15 @@ func setRoutes(root *buffalo.App) {
 	user.GET("/edit/{user_id}", users.Edit).Name("editUser")
 	user.PUT("/update/{user_id}", users.Update).Name("updateUser")
 	user.DELETE("/delete/{user_id}", users.Delete).Name("deleteUser")
+
+	requirement := root.Group("/requirements")
+	requirement.GET("/", requirements.List)
+	requirement.GET("/new", requirements.New).Name("newRequirement")
+	requirement.POST("/create", requirements.Create).Name("createRequirement")
+	requirement.GET("/show/{requirement_id}", requirements.Show).Name("showRequirement")
+	requirement.GET("/edit/{requirement_id}", requirements.Edit).Name("editRequirement")
+	requirement.PUT("/update/{requirement_id}", requirements.Update).Name("updateRequirement")
+	requirement.DELETE("/delete/{requirement_id}", requirements.Delete).Name("deleteRequirement")
 
 	root.ServeFiles("/", http.FS(public.FS()))
 }
