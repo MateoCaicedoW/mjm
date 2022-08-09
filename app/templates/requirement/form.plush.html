@@ -3,15 +3,15 @@
         <%= f.InputTag("Title") %>
     </div>
     <div class="w-48" >
-        <%= f.SelectTag("ServiceDepartmentID", {options: departments , label: "Service Department",class:"form-select" }) %>
+        <%= f.SelectTag("ServiceDepartmentID", {options: departments , label: "Service Area",class:"form-select" }) %>
     </div>
 </div>
 <div class="d-flex justify-content-between mb-4">
     <div class="input-type w-48">
-        <%= f.SelectTag("RequirementTypeID", {options: requirementTypes, label:"Requirement Type", class:"form-select" }) %>
+        <%= f.SelectTag("RequirementTypeID", {options: requirementTypes, label:"Type", class:"form-select" }) %>
     </div>
     <div class="w-48">
-        <%= f.SelectTag("RequirementSubTypeID", {options: requirementSubTypes, label: "Requirement Sub Type", class:"form-select" }) %>
+        <%= f.SelectTag("RequirementSubTypeID", {options: requirementSubTypes, label: "Subtype", class:"form-select" }) %>
     </div>
 </div>
 <div>
