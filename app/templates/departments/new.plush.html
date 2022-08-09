@@ -6,6 +6,10 @@
 <%= formFor(department, {action: createDepartmentPath() ,method: "POST"}) { %>
     <%= f.InputTag("Name", {type:"text", class:"mb-2", placeholder:"Type your title here..."}) %>
     <%= f.TextArea("Description", {rows: 5, placeholder:"Add more details about this requirements here", class:"height-115"}) %>
+    <p class="mt-3"><strong>Select below the type of requirements for this area</strong></p>
+    <%= for ()  { %>
+       <%= f.CheckboxTag("IsPublic") %>
+    <% } %>
     <div class="d-flex justify-content-end mt-4">
         <a href="/departments" class="btn-cancel btn rounded-pill">Cancel</a>
         <button class="btn btn-bg-green ms-2 text-white border-0 rounded-pill" type="submit">Save Department</button>
