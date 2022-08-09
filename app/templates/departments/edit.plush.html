@@ -1,12 +1,12 @@
 <div class="page-content d-flex align-items-center mt-3">
-    <a href="/departments" class="btn back mt-1 ps-2 border-0 fs-4"></a>
+    <a href="/departments" class="btn back mt-1 ps-1 border-0 fs-3 pt-1"></a>
     <h5 class="ms-2 mb-0 fs-4">Edit Department</h5>
 </div>
 <%= formFor(department, {action: updateDepartmentPath({department_id: department.ID}), method: "PUT"}) { %>
     <%= f.InputTag("Name", {type:"text", class:"mb-2", placeholder:"Type your title here..."}) %>
     <%= f.TextArea("Description", {rows: 5, placeholder:"Add more details about this requirements here", class:"height-115"}) %>
     <div class="d-flex justify-content-end mt-4">
-        <a href="/departments" class="cancel btn rounded-pill">Cancel</a>
-        <button class="btn save ms-2 text-white border-0 rounded-pill" type="submit">Save Changes</button>
+        <a href="/departments" class="btn-cancel btn rounded-pill">Cancel</a>
+        <button class="btn btn-bg-green ms-2 text-white border-0 rounded-pill" type="submit">Save Changes</button>
     </div>
 <% } %>
