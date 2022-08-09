@@ -1,8 +1,7 @@
 <div class="py-4 mb-2 page-content">
-    <a href="#" class="back btn"></a>
+    <a href="#" class="back btn border-0"></a>
   	<h3 class="d-inline-block">New Requirement</h3>
 </div>
-<%= formFor({id:"save", action: createRequirementPath() ,method: "POST", class:"size-box"}) { %>
+<%= formFor(requirement, {action: createRequirementPath(), method: "POST", class:"size-box"}) { %>
     <%= partial("requirement/form.plush.html") %>
-    <%= linkTo(requirementsPath(), {class: "btn btn-warning mt-3", "data-confirm": "Are you sure?", body: "Cancel"}) %>
 <% } %>

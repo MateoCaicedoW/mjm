@@ -22,7 +22,6 @@ type RequirementTypes []RequirementType
 func (rt RequirementTypes) Map() map[string]uuid.UUID {
 
 	serviceArea := map[string]uuid.UUID{}
-	serviceArea["Select  a type"] = uuid.Nil
 
 	for _, e := range rt {
 		serviceArea[e.Name] = e.ID
