@@ -202,7 +202,7 @@ func Update(c buffalo.Context) error {
 
 // Destroy deletes a Requirement from the DB. This function is mapped
 // to the path DELETE /requirements/{requirement_id}
-func Destroy(c buffalo.Context) error {
+func Delete(c buffalo.Context) error {
 	// Get the DB connection from the context
 	tx, ok := c.Value("tx").(*pop.Connection)
 	if !ok {

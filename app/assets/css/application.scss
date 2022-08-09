@@ -1,6 +1,6 @@
 @import "~bootstrap/scss/bootstrap.scss";
 @import "~@fortawesome/fontawesome-free/css/all.min.css";
-
+@import "navigation.scss";
 // This is just some CSS for the welcome home landing page, feel free to 
 // remove it.
 .welcome {
@@ -14,4 +14,11 @@
     h1 {
         font-size: 2rem;
     }
+}
+
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Lato', sans-serif;
 }
