@@ -1,1 +1,0 @@
-INSERT INTO departments values('668eca48-bc11-49ff-81ea-2665d3130b42','sistems','department Sistmes', '2022-08-04 16:59:03.570355', '2022-08-04 16:59:03.570355')
