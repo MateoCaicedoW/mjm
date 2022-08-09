@@ -1,0 +1,1 @@
+INSERT INTO users values('175afda1-82ef-4950-b8db-6dab15740d63','668eca48-bc11-49ff-81ea-2665d3130b42', 'Jhon', 'Smith', '1a2b3c4d5f6g','jsmith@wawand.co','3012347898','2022-08-04 16:59:03.570355', '2022-08-04 16:59:03.570355')
