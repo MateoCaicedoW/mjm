@@ -15,3 +15,15 @@ type RequirementSubType struct {
 	RequirementType   *RequirementType `belongs_to:"requirement_types"`
 	Requirements      []Requirement    `has_many:"requirements"`
 }
+
+type RequirementSubTypes []RequirementSubType
+
+func (rs RequirementSubTypes) Map() map[string]uuid.UUID {
+	subtypesOptions := map[string]uuid.UUID{}
+
+	for _, e := range rs {
+		subtypesOptions[e.Name] = e.ID
+	}
+
+	return subtypesOptions
+}

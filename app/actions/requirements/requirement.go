@@ -82,11 +82,24 @@ func New(c buffalo.Context) error {
 		return fmt.Errorf("no transaction found")
 	}
 
+	requirementType := models.RequirementTypes{}
+	if err := tx.All(&requirementType); err != nil {
+		return err
+	}
+
+	requirementSubType := models.RequirementSubTypes{}
+	if err := tx.All(&requirementSubType); err != nil {
+		return err
+	}
+
 	//set all dropdown
 	setDropdowns(tx, c)
 
 	requirement.CreatedAt = time.Now()
+
 	c.Set("requirement", requirement)
+	c.Set("requirementType", requirementType.Map())
+	c.Set("requirementSubType", requirementSubType.Map())
 
 	return c.Render(http.StatusOK, r.HTML("/requirement/new.plush.html"))
 }
@@ -123,7 +136,6 @@ func Create(c buffalo.Context) error {
 		// correct the input.
 		c.Set("requirement", requirement)
 		setDropdowns(tx, c)
-
 		return c.Render(http.StatusUnprocessableEntity, r.HTML("/requirement/new.plush.html"))
 	}
 

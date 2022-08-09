@@ -28,12 +28,6 @@
 }
   
 .page-content {
-    width: calc(100% - 12.5rem);
-    margin-left: 200px;
-    display: flex;
-    align-items: center;
-    padding-left: 26px;
-
     .back::after{
         font: var(--fa-font-solid);
         content: "\f060";
@@ -41,26 +35,12 @@
         font-size: 24px;
     }
 
-    .back:focus{
-        box-shadow: none;
-    }
-
     .back {
         border: none;
     }
-
-    .title{
-        font-size: 24px;
-    }
 }
 
-.form-requirement {
-    width: calc(100% - 12.5rem);
-    margin-left: 200px;
-    height: 500px;
-    display: flex;
-    padding: 35px;
-
+.size-box {
     .font-margin{
         font-size: 16px;
         margin-bottom: 4px;
@@ -144,6 +124,3 @@
 .size-box{
     width: 100%;
 }
-
-
-
