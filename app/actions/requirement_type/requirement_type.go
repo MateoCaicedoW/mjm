@@ -1,4 +1,4 @@
-package requerimenttype
+package requirement_type
 
 import (
 	"fmt"
