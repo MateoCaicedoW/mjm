@@ -24,12 +24,12 @@
     }
     .nav-item{
         font-weight: 400 !important;
-        color: #393939 !important;
+        color: #393939 ;
     }
     
 }
 .custom-active{
-    color:#E06F3F;
+    color:#E06F3F !important;
 }
 
 .nav-item:hover{
@@ -40,7 +40,5 @@
     gap:6px
 }
 
-.home{
-    width: calc(100% - 200px);
-    margin-left: 200px;
-}
+
+
