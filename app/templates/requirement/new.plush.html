@@ -3,6 +3,13 @@
 </div>
 
 <%= formFor(requirement, {action: "/requirements/create", method: "POST"}) { %>
-	<%= partial("requirement/form.plush.html") %>
+	<%= f.InputTag("Title") %>
+	<%= f.TextArea("Description", {rows: 5}) %>
+	<%= f.SelectTag("CreatedByUserID", {options: users, label: "User" }) %>
+	<%= f.SelectTag("RequestingDepartmentID", {options: departments, label: "Department"  }) %>
+	<%= f.SelectTag("ServiceDepartmentID", {options: departments , label: "Service Department" }) %>
+	<%= f.SelectTag("RequirementTypeID", {options: requirementTypes, label:"Requirement Type" }) %>
+	<%= f.SelectTag("RequirementSubTypeID", {options: requirementSubTypes, label: "Requirement Sub Type" }) %>
+	<button class="btn btn-success mt-3" role="submit">Save</button>
 	<%= linkTo(requirementsPath(), {class: "btn btn-warning mt-3", "data-confirm": "Are you sure?", body: "Cancel"}) %>
 <% } %>
