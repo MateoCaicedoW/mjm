@@ -1,6 +1,3 @@
-:root{
-    --gren-ligth : #00AD9B;
-}
 
 .back::after{
     font: var(--fa-font-solid);
@@ -15,12 +12,6 @@
 .h-115px{
     height: 115px;
 }
-.bg-green-ligth{
-    background-color: var(--gren-ligth);
-}
 .resize-none{
     resize: none !important;
   }
-.btn-save-requirement:hover{
-    background-color: var(--gren-ligth);
-}  
