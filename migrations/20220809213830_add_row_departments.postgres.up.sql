@@ -1,0 +1,1 @@
+INSERT INTO departments values('668eca48-bc11-49ff-81ea-2665d3130b42','System','System', NOW() , NOW() )
