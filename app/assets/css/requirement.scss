@@ -1,3 +1,6 @@
+:root{
+    --gren-ligth : #00AD9B;
+}
 
 .back::after{
     font: var(--fa-font-solid);
@@ -13,14 +16,11 @@
     height: 115px;
 }
 .bg-green-ligth{
-    background-color: #00AD9B;
-}
-.size-box{
-    width: 100%;
+    background-color: var(--gren-ligth);
 }
 .resize-none{
     resize: none !important;
   }
 .btn-save-requirement:hover{
-    background-color: #00AD9B;
+    background-color: var(--gren-ligth);
 }  
