@@ -5,6 +5,7 @@ import (
 	"net/http"
 
 	"github.com/gobuffalo/buffalo"
+	"github.com/gofrs/uuid"
 
 	"github.com/gobuffalo/pop/v6"
 
@@ -76,16 +77,17 @@ func New(c buffalo.Context) error {
 
 func Create(c buffalo.Context) error {
 
+	tx, ok := c.Value("tx").(*pop.Connection)
+	if !ok {
+		return fmt.Errorf("no transaction found")
+	}
 	requirementType := &models.RequirementType{}
 
 	if err := c.Bind(requirementType); err != nil {
 		return err
 	}
 
-	tx, ok := c.Value("tx").(*pop.Connection)
-	if !ok {
-		return fmt.Errorf("no transaction found")
-	}
+	requirementType.CreatedByUserID = uuid.Must(uuid.FromString("175afda1-82ef-4950-b8db-6dab15740d63"))
 
 	verrs, err := tx.ValidateAndCreate(requirementType)
 	if err != nil {
@@ -112,12 +114,8 @@ func Edit(c buffalo.Context) error {
 	}
 
 	requirementType := &models.RequirementType{}
-	users := models.Users{}
 	departments := models.Departments{}
 	if err := tx.All(&departments); err != nil {
-		return err
-	}
-	if err := tx.All(&users); err != nil {
 		return err
 	}
 
@@ -125,7 +123,6 @@ func Edit(c buffalo.Context) error {
 		return c.Error(http.StatusNotFound, err)
 	}
 
-	c.Set("users", users.Map())
 	c.Set("departments", departments.Map())
 	c.Set("requirementType", requirementType)
 
@@ -148,6 +145,8 @@ func Update(c buffalo.Context) error {
 	if err := c.Bind(requirementType); err != nil {
 		return err
 	}
+
+	 requirementType.CreatedByUserID = uuid.Must(uuid.FromString("175afda1-82ef-4950-b8db-6dab15740d63"))
 
 	verrs, err := tx.ValidateAndUpdate(requirementType)
 	if err != nil {

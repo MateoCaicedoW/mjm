@@ -6,7 +6,6 @@
         <%= f.InputTag("Name") %>
         <%= f.SelectTag("DepartmentID", {options: departments}) %>
         <%= f.InputTag("Description") %>
-        <%= f.SelectTag("CreatedByUserID", {options: users}) %>
         <button class="btn btn-success" role="submit">Save</button>
     <%= linkTo(requirementTypesPath({ requirement_type_id: requirementType.ID }), {class: "btn btn-warning", "data-confirm": "Are you sure?", body: "Cancel"}) %>
 <% } %>
