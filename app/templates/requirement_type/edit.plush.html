@@ -1,11 +1,32 @@
+<div class="p-4">
 <div class="py-4 mb-2">
     <h3 class="d-inline-block">Edit RequirementType</h3>
 </div>
-
 <%= formFor(requirementType, {action: updateRequirementTypePath({ requirement_type_id: requirementType.ID }), method: "PUT"}) { %>
-        <%= f.InputTag("Name") %>
-        <%= f.SelectTag("DepartmentID", {options: departments}) %>
-        <%= f.InputTag("Description") %>
-        <button class="btn btn-success" role="submit">Save</button>
-    <%= linkTo(requirementTypesPath({ requirement_type_id: requirementType.ID }), {class: "btn btn-warning", "data-confirm": "Are you sure?", body: "Cancel"}) %>
+    <div class="mb-4">
+        <div class="row ">
+            <div class="col-6 ">
+                <%= f.InputTag("Name") %>
+            </div>
+            <div class="col-6">
+                <%= f.SelectTag("DepartmentID", {options: departments}) %>
+            </div>
+        </div>
+        </div>
+        <div class="mb-4">
+         <div class="row">
+           
+            <div class="col-12" >
+                <%= f.TextArea("Description", {rows: 5}) %>
+            </div>
+         </div>
+        </div>
+        <div>
+        </div> 
+        <div class="d-flex  justify-content-end mt-4 ">
+                <%= linkTo(requirementsPath(), {class: "btn btn border rounded-pill", "data-confirm": "Are you sure?", body: "Cancel"}) %>
+                <button class="btn rounded-pill text-white ms-2 btn-save" type="submit">Save Requirement</button>
+        </div>
 <% } %>
+</div>
+
