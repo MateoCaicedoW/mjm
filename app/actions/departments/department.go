@@ -7,6 +7,7 @@ import (
 
 	"github.com/gobuffalo/buffalo"
 	"github.com/gobuffalo/pop/v6"
+	"github.com/gofrs/uuid"
 )
 
 var (
@@ -28,22 +29,40 @@ func List(c buffalo.Context) error {
 }
 
 func New(c buffalo.Context) error {
+	tx := c.Value("tx").(*pop.Connection)
 	c.Set("department", &models.Department{})
 
+	requirements := models.RequirementTypes{}
+	if err := tx.All(&requirements); err != nil {
+		return err
+	}
+
+	c.Set("requirements", requirements.Map())
 	return c.Render(http.StatusOK, r.HTML("/departments/new.plush.html"))
 }
 
 func Create(c buffalo.Context) error {
 	tx := c.Value("tx").(*pop.Connection)
 
-	deparment := models.Department{}
-	if err := c.Bind(&deparment); err != nil {
+	department := models.Department{}
+	if err := c.Bind(&department); err != nil {
 		return err
 	}
 
-	err := tx.Create(&deparment)
+	err := tx.Create(&department)
 	if err != nil {
 		return err
+	}
+
+	for i := range department.RequirementsTypes {
+		areaRequirementType := models.AreasRequirementsTypes{}
+		areaRequirementType.DepartmentID = department.ID
+		areaRequirementType.RequirementTypeID = uuid.Must(uuid.FromString(i))
+		err := tx.Create(&areaRequirementType)
+
+		if err != nil {
+			return err
+		}
 	}
 
 	return c.Redirect(http.StatusSeeOther, "/departments")

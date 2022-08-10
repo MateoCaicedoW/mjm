@@ -1,0 +1,3 @@
+drop_foreign_key("requirement_types", "requirement_types_department_id_fkey", {"if_exists": true})
+change_column("requirement_types", "department_id", "uuid", {"null": true})
+drop_column("requirement_types", "department_id")

@@ -1,0 +1,7 @@
+create_table("areas_requirements_types") {
+    t.Column("id", "uuid", {primary: true})
+    t.Column("area_id", "uuid", {})
+    t.Column("requirement_type_id", "uuid", {})
+    t.ForeignKey("area_id", {"departments": ["id"]}, {"on_delete": "cascade"})
+    t.ForeignKey("requirement_type_id", {"requirement_types": ["id"]}, {"on_delete": "cascade"})
+}

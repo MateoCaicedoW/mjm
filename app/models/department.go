@@ -7,13 +7,14 @@ import (
 )
 
 type Department struct {
-	ID           uuid.UUID     `db:"id"`
-	Name         string        `db:"name" fako:"first_name"`
-	Description  string        `db:"description" fako:"paragraph"`
-	CreatedAt    time.Time     `db:"created_at"`
-	UpdatedAt    time.Time     `db:"updated_at"`
-	Users        []User        `has_many:"users"`
-	Requirements []Requirement `has_many:"requirements"`
+	ID                uuid.UUID       `db:"id"`
+	Name              string          `db:"name" fako:"first_name"`
+	Description       string          `db:"description" fako:"paragraph"`
+	CreatedAt         time.Time       `db:"created_at"`
+	UpdatedAt         time.Time       `db:"updated_at"`
+	Users             []User          `has_many:"users"`
+	Requirements      []Requirement   `has_many:"requirements"`
+	RequirementsTypes map[string]bool `db:"-" form:"requirements_type"`
 }
 
 type Departments []Department
@@ -25,4 +26,3 @@ func (d Departments) Map() map[string]uuid.UUID {
 	}
 	return departmentsMap
 }
-
