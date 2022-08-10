@@ -20,3 +20,11 @@ type User struct {
 	Department   *Department   `belongs_to:"departments"`
 	Requirements []Requirement `has_many:"requirements"`
 }
+
+func (u Users) Map() map[string]uuid.UUID {
+	departmentsMap := map[string]uuid.UUID{}
+	for _, v := range u {
+		departmentsMap[v.FirstName] = v.ID
+	}
+	return departmentsMap
+}

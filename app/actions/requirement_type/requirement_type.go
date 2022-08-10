@@ -27,7 +27,7 @@ func List(c buffalo.Context) error {
 
 	q := tx.PaginateFromParams(c.Params())
 
-	if err := q.All(requirementTypes); err != nil {
+	if err := q.Eager().All(requirementTypes); err != nil {
 		return err
 	}
 
@@ -59,10 +59,15 @@ func New(c buffalo.Context) error {
 	if !ok {
 		return fmt.Errorf("no transaction found")
 	}
+	users := models.Users{}
 	departments := models.Departments{}
 	if err := tx.All(&departments); err != nil {
 		return err
 	}
+	if err := tx.All(&users); err != nil {
+		return err
+	}
+	c.Set("users", users.Map())
 	c.Set("departments", departments.Map())
 	c.Set("requirementType", &models.RequirementType{})
 
@@ -101,15 +106,18 @@ func Create(c buffalo.Context) error {
 
 func Edit(c buffalo.Context) error {
 
-	fmt.Println("/[----------------------------------")
 	tx, ok := c.Value("tx").(*pop.Connection)
 	if !ok {
 		return fmt.Errorf("no transaction found")
 	}
 
 	requirementType := &models.RequirementType{}
+	users := models.Users{}
 	departments := models.Departments{}
 	if err := tx.All(&departments); err != nil {
+		return err
+	}
+	if err := tx.All(&users); err != nil {
 		return err
 	}
 
@@ -117,6 +125,7 @@ func Edit(c buffalo.Context) error {
 		return c.Error(http.StatusNotFound, err)
 	}
 
+	c.Set("users", users.Map())
 	c.Set("departments", departments.Map())
 	c.Set("requirementType", requirementType)
 
