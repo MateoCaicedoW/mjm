@@ -1,1 +1,0 @@
-ALTER TABLE "requirements_sub_types" RENAME TO "requeriments_sub_types"

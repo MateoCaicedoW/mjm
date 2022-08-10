@@ -1,5 +1,0 @@
-add_foreign_key("requirements", "requirement_type_id", {"requirement_types": ["id"]}, {
-    "requirementsTypeFK": "requirementsTypeFK",
-    "on_delete": "cascade",
-    "on_update": "cascade",
-})

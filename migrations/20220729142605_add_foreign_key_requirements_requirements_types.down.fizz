@@ -1,1 +1,0 @@
-drop_foreign_key("requeriments", "requerimentsTypeFK", {"if_exists": true})
