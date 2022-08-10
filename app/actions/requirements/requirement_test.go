@@ -20,26 +20,103 @@ func Test_ActionSuite(t *testing.T) {
 }
 
 func (as *ActionSuite) Test_List() {
-	requirements := [2]models.Requirement{}
+
 	department, user, requirementType, requirementSubType := Create(*as)
 
-	for i := 0; i < len(requirements); i++ {
-		requirements[i].RequirementTypeID = requirementType.ID
-		requirements[i].RequirementSubTypeID = requirementSubType.ID
-		requirements[i].CreatedByUserID = user.ID
-		requirements[i].RequestingDepartmentID = department.ID
-		requirements[i].ServiceDepartmentID = department.ID
+	test := []struct {
+		requirement          []models.Requirement
+		elementsContained    []string
+		elementNotContained  []string
+		numberOfRequirements int
+	}{
 
-		fako.Fill(&requirements[i])
-		err5 := as.DB.Create(&requirements[i], "modified_by", "approved_by", "declined_by", "accepted_by", "finished_by", "proccessed_by", "assigned_to", "assigned_by")
-		as.NoError(err5)
-		res := as.HTML("/requirements").Get()
-		body := res.Body.String()
-		as.Contains(body, requirements[i].Title)
+		{
+			requirement: []models.Requirement{
+				{
+					Title:       "Test",
+					Description: "Test",
+				},
+			},
+			elementsContained:    []string{"Test"},
+			elementNotContained:  []string{},
+			numberOfRequirements: 1,
+		},
+
+		{
+			requirement: []models.Requirement{
+				{
+					Title:       "Test1",
+					Description: "Test",
+				},
+				{
+					Title:       "Test2",
+					Description: "Test",
+				},
+				{
+					Title:       "Test3",
+					Description: "Test",
+				},
+			},
+			elementsContained:    []string{"Test1", "Test2", "Test3"},
+			elementNotContained:  []string{},
+			numberOfRequirements: 3,
+		},
+
+		{
+			requirement: []models.Requirement{
+				{
+					Title:       "",
+					Description: "",
+				},
+			},
+			elementsContained:    []string{},
+			elementNotContained:  []string{"Test"},
+			numberOfRequirements: 0,
+		},
 	}
 
-	as.DB.Reload(&requirements)
-	as.Equal(len(requirements), 2)
+	for _, t := range test {
+		as.DB.Reload(&t.requirement)
+		for _, r := range t.requirement {
+			if t.numberOfRequirements == 0 {
+				as.Error(as.DB.Create(&r))
+			}
+			if r.Title != "" {
+				r.RequirementTypeID = requirementType.ID
+				r.RequirementSubTypeID = requirementSubType.ID
+				r.CreatedByUserID = user.ID
+				r.RequestingDepartmentID = department.ID
+				r.ServiceDepartmentID = department.ID
+				as.NoError(as.DB.Create(&r))
+			}
+
+		}
+
+		requirements := []models.Requirement{}
+		as.NoError(as.DB.All(&requirements))
+
+		as.Equal(t.numberOfRequirements, len(requirements))
+
+		res := as.HTML("/requirements").Get()
+		as.Equal(http.StatusOK, res.Code)
+		body := res.Body.String()
+
+		if len(t.elementsContained) > 0 {
+			for _, e := range t.elementsContained {
+				as.Contains(body, e)
+			}
+
+		}
+		if len(t.elementNotContained) > 0 {
+			for _, e := range t.elementNotContained {
+				as.NotContains(body, e)
+			}
+
+		}
+
+		as.NoError(as.DB.Destroy(&requirements))
+
+	}
 
 }
 
@@ -71,22 +148,6 @@ func (as *ActionSuite) Test_Create() {
 	as.DB.All(&requirementArray)
 	as.Equal(1, len(requirementArray))
 
-}
-
-func (as *ActionSuite) Test_Create_Failed() {
-	requirements := models.Requirement{}
-
-	department, _, requirementType, requirementSubType := Create(*as)
-
-	requirements.RequirementTypeID = requirementType.ID
-	requirements.RequirementSubTypeID = requirementSubType.ID
-
-	requirements.RequestingDepartmentID = department.ID
-	requirements.ServiceDepartmentID = department.ID
-
-	fako.Fill(&requirements)
-	req := as.HTML("/requirements/create").Post(requirements)
-	as.Equal(http.StatusInternalServerError, req.Code)
 }
 
 func (as *ActionSuite) Test_New() {
@@ -183,20 +244,31 @@ func Create(as ActionSuite) (models.Department, models.User, models.RequirementT
 	err := as.DB.Create(&deparment)
 	as.NoError(err)
 
-	user := models.User{}
-	user.DepartmentID = deparment.ID
-	fako.Fill(&user)
+	user := models.User{
+		DepartmentID: deparment.ID,
+		FirstName:    "John",
+		LastName:     "Doe",
+		EmailAddress: "johndoe@wawand.co",
+		DNI:          "12345678",
+		PhoneNumber:  "12345678",
+	}
+
 	err2 := as.DB.Create(&user)
 	as.NoError(err2)
 
-	requirementType := models.RequirementType{}
-	fako.Fill(&requirementType)
+	requirementType := models.RequirementType{
+		Name:         "Requirement Type",
+		DepartmentID: deparment.ID,
+	}
+
 	err3 := as.DB.Create(&requirementType)
 	as.NoError(err3)
 
-	requirementSubType := models.RequirementSubType{}
-	requirementSubType.RequirementTypeID = requirementType.ID
-	fako.Fill(&requirementSubType)
+	requirementSubType := models.RequirementSubType{
+		Name:              "Requirement Sub Type",
+		RequirementTypeID: requirementType.ID,
+	}
+
 	err4 := as.DB.Create(&requirementSubType)
 	as.NoError(err4)
 

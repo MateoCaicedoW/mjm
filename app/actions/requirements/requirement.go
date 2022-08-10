@@ -141,7 +141,6 @@ func Create(c buffalo.Context) error {
 		setDropdowns(tx, c)
 		return c.Render(http.StatusUnprocessableEntity, r.HTML("/requirement/new.plush.html"))
 	}
-	fmt.Println("ddddd")
 
 	// If there are no errors set a success message
 	c.Flash().Add("success", "requirement.created.success")
