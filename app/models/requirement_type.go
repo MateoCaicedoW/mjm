@@ -18,3 +18,11 @@ type RequirementType struct {
 }
 
 type RequirementTypes []RequirementType
+
+func (r RequirementTypes) Map() map[string]uuid.UUID {
+	requirementTypesMap := map[string]uuid.UUID{}
+	for _, v := range r {
+		requirementTypesMap[v.Name] = v.ID
+	}
+	return requirementTypesMap
+}

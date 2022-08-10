@@ -7,6 +7,7 @@ import (
 )
 
 type Users []User
+
 type User struct {
 	ID           uuid.UUID     `db:"id" `
 	FirstName    string        `db:"first_name" `
@@ -19,4 +20,12 @@ type User struct {
 	DepartmentID uuid.UUID     `db:"department_id"`
 	Department   *Department   `belongs_to:"departments"`
 	Requirements []Requirement `has_many:"requirements"`
+}
+
+func (u Users) Map() map[string]uuid.UUID {
+	userMap := map[string]uuid.UUID{}
+	for _, v := range u {
+		userMap[v.FirstName+" "+v.LastName] = v.ID
+	}
+	return userMap
 }
