@@ -1,12 +1,14 @@
 package requirement_type_test
 
 import (
+	"fmt"
 	"mjm/app"
 	"mjm/app/models"
 	"net/http"
 	"testing"
 
 	"github.com/gobuffalo/suite/v4"
+	"github.com/gofrs/uuid"
 	"github.com/wawandco/fako"
 )
 
@@ -20,23 +22,53 @@ func Test_ActionSuite(t *testing.T) {
 }
 
 func (as *ActionSuite) Test_List() {
+
+	user := models.User{
+		FirstName: "jhon",
+		LastName:  "Smith",
+	}
+	department := models.Department{
+		Name:        "name ",
+		Description: "description",
+	}
+	as.NoError(as.DB.Create(&department))
+	user.DepartmentID = department.ID
+	as.NoError(as.DB.Create(&user))
+
 	requirementType := models.RequirementType{}
 	fako.Fill(&requirementType)
+	requirementType.DepartmentID = department.ID
+	requirementType.CreatedByUserID = user.ID
 	as.NoError(as.DB.Create(&requirementType))
 
 	res := as.HTML("/requirement-types/").Get()
 	body := res.Body.String()
 	as.Contains(body, requirementType.Name)
+
 }
 
 func (as *ActionSuite) Test_Create() {
-	requirementType := models.RequirementType{}
-	fako.Fill(&requirementType)
+	user := models.User{
+		ID:        uuid.Must(uuid.FromString("175afda1-82ef-4950-b8db-6dab15740d63")),
+		FirstName: "jhon",
+		LastName:  "Smith",
+	}
+	department := models.Department{
+		Name:        "name ",
+		Description: "description",
+	}
+	as.NoError(as.DB.Create(&department))
+	user.DepartmentID = department.ID
+	as.NoError(as.DB.Create(&user))
 
+	requirementType := &models.RequirementType{}
+	fako.Fill(requirementType)
+	requirementType.CreatedByUserID = user.ID
+	requirementType.DepartmentID = department.ID
+
+	fmt.Println(requirementType)
 	res := as.HTML("/requirement-types/create/").Post(requirementType)
-
-	as.Equal(res.Code, http.StatusSeeOther)
-
+	as.Equal(http.StatusSeeOther, res.Code)
 	as.Equal("/requirement-types/", res.Location())
 
 	requirementTypes := models.RequirementTypes{}
@@ -47,12 +79,29 @@ func (as *ActionSuite) Test_Create() {
 }
 
 func (as *ActionSuite) Test_Update() {
+	user := models.User{
+		ID:        uuid.Must(uuid.FromString("175afda1-82ef-4950-b8db-6dab15740d63")),
+		FirstName: "jhon",
+		LastName:  "Smith",
+	}
+	department := models.Department{
+		Name:        "name ",
+		Description: "description",
+	}
+	as.NoError(as.DB.Create(&department))
+	user.DepartmentID = department.ID
+	as.NoError(as.DB.Create(&user))
+
 	requirementType := &models.RequirementType{}
+	requirementType.DepartmentID = department.ID
+	requirementType.CreatedByUserID = user.ID
 	fako.Fill(requirementType)
 	as.NoError(as.DB.Create(requirementType))
 
 	requirementTypeUpdate := &models.RequirementType{}
 	fako.Fill(requirementTypeUpdate)
+	requirementTypeUpdate.CreatedByUserID = user.ID
+	requirementTypeUpdate.DepartmentID = department.ID
 	requirementTypeUpdate.ID = requirementType.ID
 
 	res := as.HTML("/requirement-types/update/%v", requirementTypeUpdate.ID).Put(requirementTypeUpdate)
@@ -60,10 +109,25 @@ func (as *ActionSuite) Test_Update() {
 	as.Equal("/requirement-types/", res.Location())
 	as.DB.Reload(requirementType)
 	as.Equal(requirementTypeUpdate.Name, requirementType.Name)
-}
 
+}
 func (as *ActionSuite) Test_Delete() {
+	user := models.User{
+		ID:        uuid.Must(uuid.FromString("175afda1-82ef-4950-b8db-6dab15740d63")),
+		FirstName: "jhon",
+		LastName:  "Smith",
+	}
+	department := models.Department{
+		Name:        "name ",
+		Description: "description",
+	}
+	as.NoError(as.DB.Create(&department))
+	user.DepartmentID = department.ID
+	as.NoError(as.DB.Create(&user))
+
 	requirementType := &models.RequirementType{}
+	requirementType.CreatedByUserID = user.ID
+	requirementType.DepartmentID = department.ID
 	fako.Fill(requirementType)
 	as.NoError(as.DB.Create(requirementType))
 
@@ -78,10 +142,25 @@ func (as *ActionSuite) Test_Delete() {
 	res = as.HTML("/requirement-types/").Get()
 	body := res.Body.String()
 	as.NotContains(body, requirementType.Name)
-}
 
+}
 func (as *ActionSuite) Test_Edit() {
+	user := models.User{
+		ID:        uuid.Must(uuid.FromString("175afda1-82ef-4950-b8db-6dab15740d63")),
+		FirstName: "jhon",
+		LastName:  "Smith",
+	}
+	department := models.Department{
+		Name:        "name ",
+		Description: "description",
+	}
+	as.NoError(as.DB.Create(&department))
+	user.DepartmentID = department.ID
+	as.NoError(as.DB.Create(&user))
+
 	requirementType := &models.RequirementType{}
+	requirementType.DepartmentID = department.ID
+	requirementType.CreatedByUserID = user.ID
 	fako.Fill(requirementType)
 	as.NoError(as.DB.Create(requirementType))
 
@@ -94,8 +173,23 @@ func (as *ActionSuite) Test_Edit() {
 }
 
 func (as *ActionSuite) Test_Show() {
+	user := models.User{
+		ID:        uuid.Must(uuid.FromString("175afda1-82ef-4950-b8db-6dab15740d63")),
+		FirstName: "jhon",
+		LastName:  "Smith",
+	}
+	department := models.Department{
+		Name:        "name ",
+		Description: "description",
+	}
+	as.NoError(as.DB.Create(&department))
+	user.DepartmentID = department.ID
+	as.NoError(as.DB.Create(&user))
+
 	requirementType := &models.RequirementType{}
 	fako.Fill(requirementType)
+	requirementType.DepartmentID = department.ID
+	requirementType.CreatedByUserID = user.ID
 	as.NoError(as.DB.Create(requirementType))
 
 	res := as.HTML("/requirement-types/show/" + requirementType.ID.String()).Get()
