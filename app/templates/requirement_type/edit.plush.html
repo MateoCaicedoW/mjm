@@ -1,6 +1,7 @@
 <div class="p-4">
-<div class="py-4 mb-2">
-    <h3 class="d-inline-block">Edit RequirementType</h3>
+<div class="py-4 mb-2 d-flex">
+    <%= linkTo(requirementTypesPath(), {class: "back fs-4 text-decoration-none me-3 text-dark"}) %>
+    <h3>Edit RequirementType</h3>
 </div>
 <%= formFor(requirementType, {action: updateRequirementTypePath({ requirement_type_id: requirementType.ID }), method: "PUT"}) { %>
     <div class="mb-4">
@@ -24,7 +25,7 @@
         <div>
         </div> 
         <div class="d-flex  justify-content-end mt-4 ">
-                <%= linkTo(requirementsPath(), {class: "btn btn border rounded-pill", "data-confirm": "Are you sure?", body: "Cancel"}) %>
+                <%= linkTo(requirementTypesPath(), {class: "btn btn border rounded-pill", "data-confirm": "Are you sure?", body: "Cancel"}) %>
                 <button class="btn rounded-pill text-white ms-2 btn-save" type="submit">Save Requirement</button>
         </div>
 <% } %>
