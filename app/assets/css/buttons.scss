@@ -1,4 +1,20 @@
 .btn-save,
 .btn-save:hover{
     background-color: var(--green-ligth);
-}  
+}
+
+.btn-cancel,
+.btn-new,
+.btn-new:hover,
+.btn-cancel:hover{
+    border: solid 1px #D0D0D0;
+    color: var(--dark);
+}
+
+.btn-more,
+.btn-more:hover{
+    border: solid 1px #D0D0D0;
+    color: var(--dark);
+    display: flex;
+    justify-content: end;
+}

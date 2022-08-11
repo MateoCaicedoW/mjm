@@ -1,23 +1,24 @@
 .back::after{
     font: var(--fa-font-solid);
     content: "\f060";
+    
 }
 
-.btn-cancel{
-    border: solid 1px #D0D0D0;
-    color: #393939;
+.btn-new::before{
+    font: var(--fa-font-solid);
+    content: "\2b";
+    margin-right: 10px;
 }
 
+.title-area{
+    color: var(--dark) !important;
+
+}
+
+.btn-cancel,
 .btn-cancel:hover{
     border: solid 1px #D0D0D0;
-}
-
-.btn-bg-green{
-    background-color: #00AD9B;
-}
-
-.btn-bg-green:hover{
-    background-color: #00AD9B;
+    color: #393939;
 }
 
 .height-115{
@@ -25,6 +26,6 @@
 }
 
 .form-check-input:checked {
-    background-color: #00ad9b;
-    border-color: #00ad9b;
+    background-color: var(--green-ligth) !important;
+    border-color: var(--green-ligth) !important;
 }

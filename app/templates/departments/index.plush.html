@@ -1,23 +1,34 @@
+<div class="pt-3 mb-2 hstack">
+    <h3 class="ps-1 title-area">Areas</h3>
+    <a class="btn btn-new ms-auto rounded-pill" href="/departments/new">Add Line</a>
+</div>
 <table class="table">
     <thead>
       <tr>
-        <th scope="col">ID</th>
-        <th scope="col">Name</th>
-        <th scope="col">Description</th>
-        <th scope="col">Actions</th>
+        <td scope="col" class="w-15">NAME</td>
+        <td scope="col">DESCRIPTION</td>
+        <td scope="col" class="w-27">Type</td>
+        <td scope="col">USERS</td>
+        <td></td>
       </tr>
     </thead>
     <tbody>
         <%= for (department) in departments { %>
             <tr>
-                <th scope="row"><a href="/departments/show/<%=department.ID %>"><%= department.ID %> </a></th>
-                <td><%= department.Name %></td>
+                <th><%= department.Name %></th>
                 <td><%= department.Description %></td>
+                <td><%= for (requirement) in requirements { %>
+                        <%= if (department.ID.String() == requirement.DepartmentID.String()) { %>
+                            <span class=" p-1 px-2 pb-2 rounded-pill bg-info bg-opacity-25 fw-light text-muted"><%= requirement.RequirementType.Name %></span>
+                        <% } %>
+                    <% } %>
+                </td>
+                <td>USERS</td>
                 <td>
-                    <div class="btn-group">
-                        <button type="button" class="more-options btn border-0" data-bs-toggle="dropdown" aria-expanded="false">
-                          ...
-                        </button>
+                    <div class="dropdown d-flex justify-content-end">
+                        <a class="border rounded-circle circle d-flex text-end justify-content-center text-decoration-none align-items-center" href="#"  id="dropdownMenuLink" data-bs-toggle="dropdown" aria-expanded="false">
+                            <i class="fa-solid fs-5 fa-ellipsis  text-dark"></i>
+                        </a>
                         <ul class="dropdown-menu">
                             <li><a class="dropdown-item" href="/departments/edit/<%= department.ID %>">Edit</a></li>
                             <li><%= linkTo(	deleteDepartmentPath({department_id: department.ID}), {class: "dropdown-item", data-method:"DELETE", data-confirm:"Are you sure?"}) { %> Remove <% } %></li>
@@ -28,4 +39,3 @@
         <% } %>
     </tbody>
 </table>
-<a class="btn btn-primary" href="/departments/new">Add Line</a>
