@@ -90,11 +90,17 @@ func Edit(c buffalo.Context) error {
 	department := models.Department{}
 	departmentID := c.Param("department_id")
 
+	requirements := models.RequirementTypes{}
+	if err := tx.All(&requirements); err != nil {
+		return err
+	}
+
 	err := tx.Find(&department, departmentID)
 	if err != nil {
 		return err
 	}
 
+	c.Set("requirements", requirements.Map())
 	c.Set("department", department)
 
 	return c.Render(http.StatusOK, r.HTML("/department/edit.plush.html"))
@@ -103,19 +109,30 @@ func Edit(c buffalo.Context) error {
 func Update(c buffalo.Context) error {
 	tx := c.Value("tx").(*pop.Connection)
 
-	deparment := models.Department{}
+	department := models.Department{}
 	departmentID := c.Param("department_id")
 
-	err := tx.Find(&deparment, departmentID)
+	err := tx.Find(&department, departmentID)
 	if err != nil {
 		return err
 	}
 
-	if err := c.Bind(&deparment); err != nil {
+	if err := c.Bind(&department); err != nil {
 		return err
 	}
 
-	err = tx.Update(&deparment)
+	for i := range department.RequirementsTypes {
+		areaRequirementType := models.AreaRequirementType{}
+		areaRequirementType.DepartmentID = department.ID
+		areaRequirementType.RequirementTypeID = uuid.Must(uuid.FromString(i))
+		err := tx.Update(&areaRequirementType)
+
+		if err != nil {
+			return err
+		}
+	}
+
+	err = tx.Update(&department)
 	if err != nil {
 		return err
 	}
