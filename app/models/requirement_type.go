@@ -3,6 +3,9 @@ package models
 import (
 	"time"
 
+	"github.com/gobuffalo/pop/v6"
+	"github.com/gobuffalo/validate/v3"
+	"github.com/gobuffalo/validate/v3/validators"
 	"github.com/gofrs/uuid"
 )
 
@@ -26,12 +29,25 @@ type RequirementType struct {
 
 type RequirementTypes []RequirementType
 
-func (rt RequirementTypes) Map() map[string]uuid.UUID {
+func (r *RequirementType) Validate(tx *pop.Connection) (*validate.Errors, error) {
+	return validate.Validate(
+		&validators.StringIsPresent{
+			Field:   r.Name,
+			Name:    "Name",
+			Message: "Name is required.",
+		},
+		&validators.StringIsPresent{
+			Field:   r.Description,
+			Name:    "Description",
+			Message: "Description is required.",
+		},
+	), nil
 
-	serviceArea := map[string]uuid.UUID{}
-
-	for _, e := range rt {
-		serviceArea[e.Name] = e.ID
+}
+func (r RequirementTypes) Map() map[string]uuid.UUID {
+	requirementTypesMap := map[string]uuid.UUID{}
+	for _, v := range r {
+		requirementTypesMap[v.Name] = v.ID
 	}
 
 	return serviceArea
