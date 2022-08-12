@@ -1,6 +1,7 @@
 package departments
 
 import (
+	"fmt"
 	"mjm/app/models"
 	"mjm/app/render"
 	"net/http"
@@ -90,8 +91,8 @@ func Edit(c buffalo.Context) error {
 	department := models.Department{}
 	departmentID := c.Param("department_id")
 
-	requirements := models.RequirementTypes{}
-	if err := tx.All(&requirements); err != nil {
+	requirementTypes := models.RequirementTypes{}
+	if err := tx.All(&requirementTypes); err != nil {
 		return err
 	}
 
@@ -99,6 +100,8 @@ func Edit(c buffalo.Context) error {
 	if err != nil {
 		return err
 	}
+
+	fmt.Println("Requirements", requirementTypes)
 
 	areaRequirements := []models.AreaRequirementType{}
 	if err := tx.Eager().All(&areaRequirements); err != nil {
@@ -113,7 +116,7 @@ func Edit(c buffalo.Context) error {
 
 	c.Set("departments", departments)
 	c.Set("areaRequirements", areaRequirements)
-	c.Set("requirements", requirements.Map())
+	c.Set("requirements", requirementTypes.Map())
 	c.Set("department", department)
 
 	return c.Render(http.StatusOK, r.HTML("/department/edit.plush.html"))

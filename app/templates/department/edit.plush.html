@@ -9,9 +9,6 @@
     <div class="row ms-1">
         <%= for (key, values) in requirements { %>
             <div class="col-md-4 mb-2">
-                <%= if ( ) { %>
-                    
-                <% } %>
                 <%= f.CheckboxTag(values, {name: "requirements_type["+ key.String() +"]", value: "j" , checked: "j"}) %>
             </div>
         <% } %>
