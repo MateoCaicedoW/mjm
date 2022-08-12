@@ -190,7 +190,6 @@ func Create(as ActionSuite) (models.Department, models.User, models.RequirementT
 	as.NoError(err2)
 
 	requirementType := models.RequirementType{}
-	requirementType.DepartmentID = deparment.ID
 	fako.Fill(&requirementType)
 	err3 := as.DB.Create(&requirementType)
 	as.NoError(err3)

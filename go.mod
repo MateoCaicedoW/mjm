@@ -9,14 +9,17 @@ require (
 	github.com/gobuffalo/mw-paramlogger v1.0.1
 	github.com/gobuffalo/pop/v6 v6.0.6
 	github.com/gobuffalo/suite/v4 v4.0.3
-	github.com/gofrs/uuid v4.2.0+incompatible
-	github.com/wawandco/ox v0.12.2
+	github.com/wawandco/ox v0.12.3
 )
 
 require (
 	github.com/corpix/uarand v0.0.0-20170723150923-031be390f409 // indirect
 	github.com/icrowley/fake v0.0.0-20220625154756-3c7517006344 // indirect
+	github.com/markbates/grift v1.5.0 // indirect
 	github.com/markbates/inflect v1.0.4 // indirect
+	github.com/markbates/refresh v1.12.0 // indirect
+	golang.org/x/mod v0.6.0-dev.0.20220419223038-86c51ed26bb4 // indirect
+	golang.org/x/tools v0.1.11 // indirect
 )
 
 require (
@@ -39,10 +42,12 @@ require (
 	github.com/gobuffalo/httptest v1.5.1 // indirect
 	github.com/gobuffalo/logger v1.0.6 // indirect
 	github.com/gobuffalo/meta v0.3.2 // indirect
-	github.com/gobuffalo/nulls v0.4.1 
+	github.com/gobuffalo/nulls v0.4.1 // indirect
 	github.com/gobuffalo/plush/v4 v4.1.13 // indirect
 	github.com/gobuffalo/refresh v1.13.1 // indirect
 	github.com/gobuffalo/tags/v3 v3.1.3 // indirect
+	github.com/gobuffalo/validate/v3 v3.3.2 // indirect
+	github.com/gofrs/uuid v4.2.0+incompatible // indirect
 	github.com/gobuffalo/validate/v3 v3.3.2 
 	github.com/gorilla/css v1.0.0 // indirect
 	github.com/gorilla/handlers v1.5.1 // indirect
@@ -62,9 +67,7 @@ require (
 	github.com/joho/godotenv v1.4.0 // indirect
 	github.com/kballard/go-shellquote v0.0.0-20180428030007-95032a82bc51 // indirect
 	github.com/luna-duclos/instrumentedsql v1.1.3 // indirect
-	github.com/markbates/grift v1.5.0 // indirect
 	github.com/markbates/oncer v1.0.0 // indirect
-	github.com/markbates/refresh v1.12.0 // indirect
 	github.com/mattn/go-colorable v0.1.9 // indirect
 	github.com/mattn/go-isatty v0.0.14 // indirect
 	github.com/mattn/go-sqlite3 v1.14.14 // indirect
@@ -83,13 +86,11 @@ require (
 	github.com/stretchr/testify v1.8.0 // indirect
 	github.com/wawandco/fako v0.0.0-20180828010250-c36a0bc97398
 	golang.org/x/crypto v0.0.0-20220622213112-05595931fe9d // indirect
-	golang.org/x/mod v0.6.0-dev.0.20220419223038-86c51ed26bb4 // indirect
 	golang.org/x/net v0.0.0-20211112202133-69e39bad7dc2 // indirect
 	golang.org/x/sync v0.0.0-20220601150217-0de741cfad7f // indirect
 	golang.org/x/sys v0.0.0-20220412211240-33da011f77ad // indirect
 	golang.org/x/term v0.0.0-20210927222741-03fcf44c2211 // indirect
 	golang.org/x/text v0.3.7 // indirect
-	golang.org/x/tools v0.1.11 // indirect
 	gopkg.in/yaml.v2 v2.4.0 // indirect
 	gopkg.in/yaml.v3 v3.0.1 // indirect
 )
