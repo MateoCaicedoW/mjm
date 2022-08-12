@@ -100,6 +100,19 @@ func Edit(c buffalo.Context) error {
 		return err
 	}
 
+	areaRequirements := []models.AreaRequirementType{}
+	if err := tx.Eager().All(&areaRequirements); err != nil {
+		return err
+	}
+
+	departments := []models.Department{}
+	err = tx.All(&departments)
+	if err != nil {
+		return err
+	}
+
+	c.Set("departments", departments)
+	c.Set("areaRequirements", areaRequirements)
 	c.Set("requirements", requirements.Map())
 	c.Set("department", department)
 
@@ -130,6 +143,12 @@ func Update(c buffalo.Context) error {
 		if err != nil {
 			return err
 		}
+	}
+
+	departments := []models.Department{}
+	err = tx.All(&departments)
+	if err != nil {
+		return err
 	}
 
 	err = tx.Update(&department)
