@@ -43,7 +43,7 @@ require (
 	github.com/gobuffalo/plush/v4 v4.1.13 // indirect
 	github.com/gobuffalo/refresh v1.13.1 // indirect
 	github.com/gobuffalo/tags/v3 v3.1.3 // indirect
-	github.com/gobuffalo/validate/v3 v3.3.2 
+	github.com/gobuffalo/validate/v3 v3.3.2
 	github.com/gorilla/css v1.0.0 // indirect
 	github.com/gorilla/handlers v1.5.1 // indirect
 	github.com/gorilla/mux v1.8.0 // indirect

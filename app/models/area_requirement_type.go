@@ -6,7 +6,7 @@ import (
 	"github.com/gofrs/uuid"
 )
 
-type AreasRequirementsTypes struct {
+type AreaRequirementType struct {
 	ID                uuid.UUID        `db:"id"`
 	DepartmentID      uuid.UUID        `db:"area_id"`
 	RequirementTypeID uuid.UUID        `db:"requirement_type_id"`
