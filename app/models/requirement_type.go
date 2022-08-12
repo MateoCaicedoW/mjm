@@ -3,6 +3,9 @@ package models
 import (
 	"time"
 
+	"github.com/gobuffalo/pop/v6"
+	"github.com/gobuffalo/validate/v3"
+	"github.com/gobuffalo/validate/v3/validators"
 	"github.com/gofrs/uuid"
 )
 
@@ -22,3 +25,18 @@ type RequirementType struct {
 
 type RequirementTypes []RequirementType
 
+func (r *RequirementType) Validate(tx *pop.Connection) (*validate.Errors, error) {
+	return validate.Validate(
+		&validators.StringIsPresent{
+			Field:   r.Name,
+			Name:    "Name",
+			Message: "Name is required.",
+		},
+		&validators.StringIsPresent{
+			Field:   r.Description,
+			Name:    "Description",
+			Message: "Description is required.",
+		},
+	), nil
+
+}

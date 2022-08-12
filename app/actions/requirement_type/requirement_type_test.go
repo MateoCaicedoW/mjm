@@ -1,7 +1,6 @@
 package requirement_type_test
 
 import (
-	"fmt"
 	"mjm/app"
 	"mjm/app/models"
 	"net/http"
@@ -63,10 +62,10 @@ func (as *ActionSuite) Test_Create() {
 
 	requirementType := &models.RequirementType{}
 	fako.Fill(requirementType)
+	requirementType.Description = "Description"
 	requirementType.CreatedByUserID = user.ID
 	requirementType.DepartmentID = department.ID
 
-	fmt.Println(requirementType)
 	res := as.HTML("/requirement-types/create/").Post(requirementType)
 	as.Equal(http.StatusSeeOther, res.Code)
 	as.Equal("/requirement-types/", res.Location())
@@ -79,6 +78,7 @@ func (as *ActionSuite) Test_Create() {
 }
 
 func (as *ActionSuite) Test_Update() {
+	
 	user := models.User{
 		ID:        uuid.Must(uuid.FromString("175afda1-82ef-4950-b8db-6dab15740d63")),
 		FirstName: "jhon",
@@ -96,6 +96,7 @@ func (as *ActionSuite) Test_Update() {
 	requirementType.DepartmentID = department.ID
 	requirementType.CreatedByUserID = user.ID
 	fako.Fill(requirementType)
+	requirementType.Description = "Descriptions"
 	as.NoError(as.DB.Create(requirementType))
 
 	requirementTypeUpdate := &models.RequirementType{}
@@ -103,6 +104,7 @@ func (as *ActionSuite) Test_Update() {
 	requirementTypeUpdate.CreatedByUserID = user.ID
 	requirementTypeUpdate.DepartmentID = department.ID
 	requirementTypeUpdate.ID = requirementType.ID
+	requirementTypeUpdate.Description = requirementType.Description
 
 	res := as.HTML("/requirement-types/update/%v", requirementTypeUpdate.ID).Put(requirementTypeUpdate)
 	as.Equal(res.Code, http.StatusSeeOther)
