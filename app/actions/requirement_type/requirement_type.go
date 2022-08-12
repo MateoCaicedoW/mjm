@@ -5,6 +5,7 @@ import (
 	"net/http"
 
 	"github.com/gobuffalo/buffalo"
+	"github.com/gofrs/uuid"
 
 	"github.com/gobuffalo/pop/v6"
 
@@ -27,7 +28,7 @@ func List(c buffalo.Context) error {
 
 	q := tx.PaginateFromParams(c.Params())
 
-	if err := q.All(requirementTypes); err != nil {
+	if err := q.Eager().All(requirementTypes); err != nil {
 		return err
 	}
 
@@ -59,10 +60,15 @@ func New(c buffalo.Context) error {
 	if !ok {
 		return fmt.Errorf("no transaction found")
 	}
+	users := models.Users{}
 	departments := models.Departments{}
 	if err := tx.All(&departments); err != nil {
 		return err
 	}
+	if err := tx.All(&users); err != nil {
+		return err
+	}
+	c.Set("users", users.Map())
 	c.Set("departments", departments.Map())
 	c.Set("requirementType", &models.RequirementType{})
 
@@ -71,17 +77,22 @@ func New(c buffalo.Context) error {
 
 func Create(c buffalo.Context) error {
 
+	tx, ok := c.Value("tx").(*pop.Connection)
+	if !ok {
+		return fmt.Errorf("no transaction found")
+	}
+
 	requirementType := &models.RequirementType{}
 
 	if err := c.Bind(requirementType); err != nil {
 		return err
 	}
 
-	tx, ok := c.Value("tx").(*pop.Connection)
-	if !ok {
-		return fmt.Errorf("no transaction found")
+	requirementType.CreatedByUserID = uuid.Must(uuid.FromString("175afda1-82ef-4950-b8db-6dab15740d63"))
+	departments := models.Departments{}
+	if err := tx.All(&departments); err != nil {
+		return err
 	}
-
 	verrs, err := tx.ValidateAndCreate(requirementType)
 	if err != nil {
 		return err
@@ -90,6 +101,7 @@ func Create(c buffalo.Context) error {
 	if verrs.HasAny() {
 		c.Set("errors", verrs)
 		c.Set("requirementType", requirementType)
+		c.Set("departments", departments.Map())
 
 		return c.Render(http.StatusUnprocessableEntity, r.HTML("/requirement_type/new.plush.html"))
 	}
@@ -101,7 +113,6 @@ func Create(c buffalo.Context) error {
 
 func Edit(c buffalo.Context) error {
 
-	fmt.Println("/[----------------------------------")
 	tx, ok := c.Value("tx").(*pop.Connection)
 	if !ok {
 		return fmt.Errorf("no transaction found")
@@ -140,14 +151,18 @@ func Update(c buffalo.Context) error {
 		return err
 	}
 
+	departments := models.Departments{}
+	if err := tx.All(&departments); err != nil {
+		return err
+	}
 	verrs, err := tx.ValidateAndUpdate(requirementType)
 	if err != nil {
 		return err
 	}
 
 	if verrs.HasAny() {
-
 		c.Set("errors", verrs)
+		c.Set("departments", departments.Map())
 		c.Set("requirementType", requirementType)
 
 		return c.Render(http.StatusUnprocessableEntity, r.HTML("/requirement_type/edit.plush.html"))

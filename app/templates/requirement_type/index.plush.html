@@ -1,39 +1,54 @@
-<div class="py-4 mb-2">
-	<h3 class="d-inline-block">RequirementTypes</h3>
-	<div class="float-right">
-		<%= linkTo(newRequirementTypePath(), {class: "btn btn-primary"}) { %>
-		Create 
-		<% } %>
+<div class="p-4">
+<div class="row">
+	<div class="col-6 fs-4 fw-bold"> Types  </div>
+	<div class="col-6 text-end">
+		<%= linkTo(newRequirementTypePath(), {class: "btn border rounded-pill px-3"}) { %>
+			<i class="fa fa-plus"></i> New Type
+			<% } %>
 	</div>
 </div>
+<div class="row pt-4">
+	<div class="col-12">
+		<table class="table align-middle">
+			<thead class="bg-gray-ligth">
+			  <tr >
+				<th scope="col" class="text-secondary fw-normal w-15">NAME</th>
+				<th scope="col" class="text-secondary fw-normal w-35">DESCRITPION</th>
+				<th scope="col" class="text-secondary fw-normal w-25">Create By:</th>
+				<th scope="col" class="text-secondary fw-normal"></th>
+			</tr>
+			</thead>
+			<tbody>
+				<%= for (requirementType) in requirementTypes { %>
+					<tr>
+						<td class="align-middle py-4"><span class=" p-1 px-2 rounded-pill bg-info bg-opacity-25 fw-light text-muted "><%= requirementType.Name %></span></td>
+						<td class="align-middle fw-light fs-6"><%= requirementType.Description %></td>
+						<td class="align-middle green-ligth"><%= requirementType.CreatedByUser.FirstName %> <%= requirementType.CreatedByUser.LastName %></td>
+						<td class="text-end">
+							<div class="dropdown d-flex justify-content-end">
+								<a class="border rounded-circle circle d-flex text-end justify-content-center text-decoration-none align-items-center" href="#"  id="dropdownMenuLink" data-bs-toggle="dropdown" aria-expanded="false">
+									<i class="fa-solid fs-5 fa-ellipsis  text-dark"></i>
+								  </a>
 
-<table class="table table-hover table-bordered">
-	<thead class="thead-light">
-		<th>ID</th>
-		<th>CreatedAt</th>
-		<th>UpdatedAt</th>
-		<th>Name</th>
-		<th>&nbsp;</th>
-	</thead>
-	<tbody>
-		<%= for (requirementType) in requirementTypes { %>
-		<tr>
-			<td class="align-middle"><%= requirementType.ID %></td>
-			<td class="align-middle"><%= requirementType.CreatedAt %></td>
-			<td class="align-middle"><%= requirementType.UpdatedAt %></td>
-			<td class="align-middle"><%= requirementType.Name %></td>
-			<td>
-				<div class="float-right">
-					<%= linkTo(showRequirementTypePath({ requirement_type_id: requirementType.ID }), {class: "btn btn-info", body: "View"}) %>
-					<%= linkTo(editRequirementTypePath({ requirement_type_id: requirementType.ID }), {class: "btn btn-warning", body: "Edit"}) %>
-					<%= linkTo(deleteRequirementTypePath({ requirement_type_id: requirementType.ID }), {class: "btn btn-danger", data-method: "DELETE" ,"data-confirm": "Are you sure?", body: "Destroy"}) %>
-				</div>
-			</td>
-		</tr>
-		<% } %>
-	</tbody>
-</table>
+								<ul class="dropdown-menu">
+								  <li><%= linkTo(editRequirementTypePath({requirement_type_id: requirementType.ID }), {class:"dropdown-item", body: "Edit"}) %></li>
+								  <li><%= linkTo(deleteRequirementTypePath({requirement_type_id: requirementType.ID }), {class:"dropdown-item", data-method: "DELETE" ,"data-confirm": "Are you sure?", body: "Delete"}) %></li>
+								</ul>
+							  </div>
+						</td>
+					</tr>
 
-<div class="text-center">
-	<%= paginator(pagination) %>
+					<% } %>
+			
+			</tbody>
+		  </table>
+
+			<div class="text-center">
+				<%= paginator(pagination) %>
+			</div>
+	</div>
 </div>
+</div>
+
+
+
