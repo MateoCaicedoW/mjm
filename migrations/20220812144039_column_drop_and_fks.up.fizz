@@ -1,0 +1,4 @@
+drop_foreign_key("requirement_types", "requirement_types_departments_id_fk", {"if_exists": true})
+change_column("requirement_types", "department_id", "uuid", {"null": true})
+sql("update requirement_types set department_id = '00000000-0000-0000-0000-000000000000' where department_id is null;")
+drop_column("requirement_types", "department_id")
