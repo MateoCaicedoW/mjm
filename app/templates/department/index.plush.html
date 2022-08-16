@@ -15,16 +15,16 @@
     <tbody>
         <%= for (department) in departments { %>
             <tr>
-                <th><%= department.Name %></th>
-                <td><%= department.Description %></td>
-                <td><%= for (requirement) in requirements { %>
+                <th class="align-middle"><%= department.Name %></th>
+                <td class="align-middle"><%= department.Description %></td>
+                <td class="align-middle"><%= for (requirement) in requirements { %>
                         <%= if (department.ID.String() == requirement.DepartmentID.String()) { %>
-                            <span class=" p-1 px-2 pb-2 rounded-pill bg-info bg-opacity-25 fw-light text-muted"><%= requirement.RequirementType.Name %></span>
+                            <span class=" p-1 px-2 rounded-pill bg-info bg-opacity-25 fw-light text-muted"><%= requirement.RequirementType.Name %></span>
                         <% } %>
                     <% } %>
                 </td>
-                <td>USERS</td>
-                <td>
+                <td class="align-middle">User</td>
+                <td class="align-middle">
                     <div class="dropdown d-flex justify-content-end">
                         <a class="border rounded-circle circle d-flex text-end justify-content-center text-decoration-none align-items-center" href="#"  id="dropdownMenuLink" data-bs-toggle="dropdown" aria-expanded="false">
                             <i class="fa-solid fs-5 fa-ellipsis  text-dark"></i>
@@ -39,4 +39,3 @@
         <% } %>
     </tbody>
 </table>
-<a class="btn btn-primary" href="/departments/new">Add Line</a
