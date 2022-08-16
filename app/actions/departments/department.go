@@ -23,6 +23,12 @@ func List(c buffalo.Context) error {
 		return err
 	}
 
+	areaRequirements := []models.AreaRequirementType{}
+	if err := tx.Eager().All(&areaRequirements); err != nil {
+		return err
+	}
+
+	c.Set("requirements", areaRequirements)
 	c.Set("departments", departments)
 
 	return c.Render(http.StatusOK, r.HTML("/department/index.plush.html"))
