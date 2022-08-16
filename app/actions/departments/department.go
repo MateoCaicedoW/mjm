@@ -1,7 +1,6 @@
 package departments
 
 import (
-	"fmt"
 	"mjm/app/models"
 	"mjm/app/render"
 	"net/http"
@@ -50,12 +49,28 @@ func Create(c buffalo.Context) error {
 		return err
 	}
 
-	err := tx.Create(&department)
+	verrs, err := tx.Eager().ValidateAndCreate(&department)
 	if err != nil {
 		return err
 	}
 
-	for i := range department.RequirementsTypes {
+	if verrs.HasAny() {
+		c.Set("errors", verrs)
+		requirements := models.RequirementTypes{}
+		if err := tx.All(&requirements); err != nil {
+			return err
+		}
+
+		if len(department.RequirementsType) == 0 {
+			c.Flash().Add("danger", "Departments must have at least one type.")
+		}
+
+		c.Set("department", department)
+		c.Set("requirements", requirements.Map())
+		return c.Render(http.StatusUnprocessableEntity, r.HTML("/department/new.plush.html"))
+	}
+
+	for i := range department.RequirementsType {
 		areaRequirementType := models.AreaRequirementType{}
 		areaRequirementType.DepartmentID = department.ID
 		areaRequirementType.RequirementTypeID = uuid.Must(uuid.FromString(i))
@@ -96,25 +111,16 @@ func Edit(c buffalo.Context) error {
 		return err
 	}
 
-	err := tx.Find(&department, departmentID)
-	if err != nil {
-		return err
-	}
-
-	fmt.Println("Requirements", requirementTypes)
-
 	areaRequirements := []models.AreaRequirementType{}
 	if err := tx.Eager().All(&areaRequirements); err != nil {
 		return err
 	}
 
-	departments := []models.Department{}
-	err = tx.All(&departments)
+	err := tx.Eager("RequirementsTypes").Find(&department, departmentID)
 	if err != nil {
 		return err
 	}
 
-	c.Set("departments", departments)
 	c.Set("areaRequirements", areaRequirements)
 	c.Set("requirements", requirementTypes.Map())
 	c.Set("department", department)
@@ -128,7 +134,7 @@ func Update(c buffalo.Context) error {
 	department := models.Department{}
 	departmentID := c.Param("department_id")
 
-	err := tx.Find(&department, departmentID)
+	err := tx.Eager("RequirementsTypes").Find(&department, departmentID)
 	if err != nil {
 		return err
 	}
@@ -137,12 +143,23 @@ func Update(c buffalo.Context) error {
 		return err
 	}
 
-	for i := range department.RequirementsTypes {
+	tempAreaRequirementType := []models.AreaRequirementType{}
+	if err := tx.Where("department_id = ?", departmentID).All(&tempAreaRequirementType); err != nil {
+		return err
+	}
+
+	err = tx.Destroy(&tempAreaRequirementType)
+	if err != nil {
+		return err
+	}
+
+	for i := range department.RequirementsType {
+
 		areaRequirementType := models.AreaRequirementType{}
 		areaRequirementType.DepartmentID = department.ID
 		areaRequirementType.RequirementTypeID = uuid.Must(uuid.FromString(i))
-		err := tx.Update(&areaRequirementType)
 
+		err = tx.Save(&areaRequirementType)
 		if err != nil {
 			return err
 		}
@@ -154,9 +171,25 @@ func Update(c buffalo.Context) error {
 		return err
 	}
 
-	err = tx.Update(&department)
+	verrs, err := tx.ValidateAndUpdate(&department)
 	if err != nil {
 		return err
+	}
+
+	if verrs.HasAny() {
+		c.Set("errors", verrs)
+		requirements := models.RequirementTypes{}
+		if err := tx.All(&requirements); err != nil {
+			return err
+		}
+
+		if len(department.RequirementsType) == 0 {
+			c.Flash().Add("danger", "Departments must have at least one type.")
+		}
+
+		c.Set("department", department)
+		c.Set("requirements", requirements.Map())
+		return c.Render(http.StatusUnprocessableEntity, r.HTML("/department/new.plush.html"))
 	}
 
 	return c.Redirect(http.StatusSeeOther, "/departments")

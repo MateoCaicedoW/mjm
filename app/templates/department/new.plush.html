@@ -10,7 +10,12 @@
     <div class="row ms-1">
         <%= for (key, value) in requirements { %>
             <div class="col-md-4 mb-2">
-                <%= f.CheckboxTag(value, {name: "requirements_type["+ key.String() +"]"}) %>
+                <div class="form-check">
+                    <input class="form-check-input" type="checkbox" value="" id="<%= key.String() %>" name="requirements_type[<%=key.String() %>]">
+                    <label class="form-check-label" for="<%= key.String() %>">
+                      <%= value %>
+                    </label>
+                </div>
             </div>
         <% } %>
     </div>

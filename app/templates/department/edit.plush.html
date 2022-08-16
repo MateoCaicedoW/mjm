@@ -9,7 +9,19 @@
     <div class="row ms-1">
         <%= for (key, values) in requirements { %>
             <div class="col-md-4 mb-2">
-                <%= f.CheckboxTag(values, {name: "requirements_type["+ key.String() +"]", value: "j" , checked: "j"}) %>
+                <div class="form-check">
+                    <input class="form-check-input" type="checkbox" value="" id="<%= key.String() %>" name="requirements_type[<%=key.String() %>]"
+                    <%= for (item) in department.RequirementsTypes { %>
+                        <%= if (item.ID.String() == key.String()) { %>
+                          checked
+                        
+                        <% } %>
+                     <% } %>
+                    >
+                    <label class="form-check-label" for="<%= key.String() %>">
+                      <%= values %>
+                    </label>
+                </div>
             </div>
         <% } %>
     </div>
