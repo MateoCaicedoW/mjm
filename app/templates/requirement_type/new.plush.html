@@ -5,7 +5,7 @@
 <%= formFor(requirementType, {action: createRequirementTypePath(), method: "POST"}) { %>
 	<div class="row">
 
-		<div class="col-md-6 py-3">
+		<div class="col-md-12 py-3">
 			<%= f.InputTag("Name") %>
 		</div>
 		
@@ -13,7 +13,11 @@
 		  <%= f.SelectTag("DepartmentID", {options: departments}) %>
 
 		</div>
-  
+
+		  
+		  <div class="col-md-6 py-3">
+			<%= f.InputTag("Description") %>
+		</div>
 	  </div>
 
 	<button class="btn btn-success" type="submit">Save</button>
