@@ -28,7 +28,7 @@ func List(c buffalo.Context) error {
 
 	q := tx.PaginateFromParams(c.Params())
 
-	if err := q.All(requirementTypes); err != nil {
+	if err := q.Eager().All(requirementTypes); err != nil {
 		return err
 	}
 
@@ -56,6 +56,20 @@ func Show(c buffalo.Context) error {
 }
 
 func New(c buffalo.Context) error {
+	tx, ok := c.Value("tx").(*pop.Connection)
+	if !ok {
+		return fmt.Errorf("no transaction found")
+	}
+	users := models.Users{}
+	departments := models.Departments{}
+	if err := tx.All(&departments); err != nil {
+		return err
+	}
+	if err := tx.All(&users); err != nil {
+		return err
+	}
+	c.Set("users", users.Map())
+	c.Set("departments", departments.Map())
 	c.Set("requirementType", &models.RequirementType{})
 
 	return c.Render(http.StatusOK, r.HTML("/requirement_type/new.plush.html"))
@@ -98,6 +112,7 @@ func Create(c buffalo.Context) error {
 }
 
 func Edit(c buffalo.Context) error {
+
 	tx, ok := c.Value("tx").(*pop.Connection)
 	if !ok {
 		return fmt.Errorf("no transaction found")

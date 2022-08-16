@@ -11,20 +11,16 @@ import (
 
 // RequirementType model struct.
 type RequirementType struct {
-<<<<<<< HEAD
-	ID           uuid.UUID   `db:"id"`
-	DepartmentID uuid.UUID   `db:"department_id"`
-	Name         string      `db:"name"`
-	CreatedAt    time.Time   `db:"created_at"`
-	UpdatedAt    time.Time   `db:"updated_at"`
-	Department   *Department `belongs_to:"departments"`
-	Requirements []Requirement
-=======
-	ID           uuid.UUID     `db:"id"`
-	Name         string        `db:"name" fako:"brand"`
-	CreatedAt    time.Time     `db:"created_at"`
-	UpdatedAt    time.Time     `db:"updated_at"`
-	Requirements []Requirement `has_many:"requirements"`
+	ID              uuid.UUID     `db:"id"`
+	DepartmentID    uuid.UUID     `db:"department_id"`
+	Name            string        `db:"name" fako:"brand"`
+	Description     string        `db:"description"`
+	CreatedByUserID uuid.UUID     `db:"user_id"`
+	CreatedAt       time.Time     `db:"created_at"`
+	UpdatedAt       time.Time     `db:"updated_at"`
+	Department      *Department   `belongs_to:"departments"`
+	CreatedByUser   *User         `belongs_to:"users"`
+	Requirements    []Requirement `has_many:"requirements"`
 }
 
 type RequirementTypes []RequirementType
