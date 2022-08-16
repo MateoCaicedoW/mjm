@@ -45,6 +45,5 @@ func (r RequirementTypes) Map() map[string]uuid.UUID {
 	for _, v := range r {
 		requirementTypesMap[v.Name] = v.ID
 	}
-
-	return serviceArea
+	return requirementTypesMap
 }

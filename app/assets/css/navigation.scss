@@ -25,12 +25,12 @@
     }
     .nav-item{
         font-weight: 400 !important;
-        color: var(--dark)!important;
+        color: var(--dark);
     }
     
 }
 .custom-active{
-    color: var(--orange);
+    color: var(--orange) !important;
 }
 
 .nav-item:hover{

@@ -1,8 +1,8 @@
 <div class="pt-4 mt-1 pb-1 mb-2 d-flex justify-content-between">
-	<h3 class="d-inline-block">Requirements</h3>
+	<h3 class="d-inline-block semi-bold">Requirements</h3>
 	<div class="float-right">
-		<a href="/requirements/new">
-			<button class="btn btn-warning">
+		<a href="<%= newRequirementPath() %>">
+			<button class="btn-white">
 				<i class="fa fa-plus"></i>
 				New Requirement
 			</button>
@@ -12,81 +12,157 @@
 
 
 <div class="d-flex gap-3 items-navigation">
-	<div class="item-active">
+	<a href="<%=  approvedRequirementPath() %>" class="text-decoration-none text-dark <%= activeTab("approvedRequirementPath") %>">
+		<div >
+			<h3 class="fs-6">
+				Approved (<%= approved %>)
+			</h3>
+		</div>
+	</a>
 
-		<h3 class="fs-6">
-			Approved(2)
-		</h3>
-	</div>
-	<div>
-		<h3 class="fs-6">
-			Pending(2)
-		</h3>
-	</div>
+	<a href="<%=  pendingRequirementPath() %>" class="text-decoration-none text-dark <%= activeTab("pendingRequirementPath") %> <%= path %> <%= if ( path == "requirementsPath") { %> item-active  <% } %>">
+		<div>
+			<h3 class="fs-6">
+				Pending (<%= pending %>)
+			</h3>
+		</div>
+	</a>
+
+
+	<a href="<%=  deniedRequirementPath() %>" class="text-decoration-none text-dark <%= activeTab("deniedRequirementPath") %>">
+		<div>
+			<h3 class="fs-6">
+				Denied (<%= denied %>)
+			</h3>
+		</div>
+	</a>
 </div>
 
-<div>
-	<%= for (requirement) in requirements { %>
-		<div class="requirement-container">
-			<div class="d-flex justify-content-between ">
-				<h1 >
-					<%= requirement.Title %>
-				</h1>
-				<div class="d-flex justify-content-center align-content-center ">
-					<div class="d-flex flex-column justify-content-center">
-						<div class="d-flex options">
-							<div class="d-flex flex-column justify-content-center pe-3 deny "> <h3 class="fw-light m-0">DENY</h3></div>
-							<div class="d-flex flex-column justify-content-center px-3 approve "><h3 class="fw-light  m-0">APPROVE</h3></div>
-						</div>
-					</div>
-					
-					<div>
-						<div class="btn-group">
-							<button type="button" class="btn" data-bs-toggle="dropdown" aria-expanded="false">
-								<i class="fa-solid fa-ellipsis"></i>
-							</button>
-							<ul class="dropdown-menu dropdown-menu-end">
-							  <li><a class="text-decoration-none " href="/requirements/update/<%= requirement.ID %>">
-								<button class="dropdown-item">
-								Edit
-								</button>
-							</a></li>
-							  <li>
-								<button class="dropdown-item" data-bs-toggle="modal" data-bs-target="#A<%=requirement.ID%>" type="button">
-								Delete
-							</button>
-							</li>
-							</ul>
-						  </div>
-					</div>
-				</div>
-	
-				
-			</div>
-			<div>
-				<span class="text-muted">
-					<%= requirement.CreatedByUser.FirstName %> - Created at <%= requirement.CreatedAt %>
-				</span>
-			</div>
-			<div>
-				<p>
-					<%= requirement.Description %>
-				</p>
-			</div>
-			<div class="d-flex flex-column justify-content-center">
-				<div class="d-flex options">
-					<div class="d-flex flex-column justify-content-center pe-3 "> <h3 class=" m-0">Type: <span class="fw-light text-decoration-underline"><%= requirement.RequirementType.Name %></span></h3></div>
-					<div class="d-flex flex-column justify-content-center px-3 "><h3 class=" m-0">Area: <span class="fw-light text-decoration-underline"><%= requirement.ServiceDepartment.Name %></span></h3></div>
-				</div>
-			</div>
 
+<div>
+	<div class="d-flex flex-column gap-2">
+		<div class="requirement-content ">
+			
+		
+		<%= for (requirement) in requirements { %>
+			<div class="requirement-container mb-3">
+				<div class="d-flex justify-content-between align-items-center head-requirement">
+					<h1 class="m-0 " >
+						<%= requirement.Title %>
+					</h1>
+					<div class="d-flex justify-content-center align-content-center ">
+						<div class="d-flex flex-row justify-content-center align-items-center">
+							
+
+							
+						
+							<%= if (requirement.ApprovedByUser ) { %>
+								<div class="d-flex approved gap-2 me-2">
+									<div>
+										<img src="https://raw.githubusercontent.com/MateoCaicedoW/mjm/list-requirements/app/assets/images/check.png" alt="check">
+									</div>
+									<div>
+										<span >Approved</span>
+									</div>
+								</div>
+
+						
+								
+							<% } else if (requirement.DeclinedByUser) {	%>
+								<div class="d-flex declined gap-2 me-2">
+                                    <div>
+                                        <i class="fa-solid fa-circle-xmark"></i>
+                                    </div>
+                                    <div>
+                                        <span >Denied</span>
+                                    </div>
+                                </div>
+
+							<% } else { %>
+								<div class="d-flex options">
+									
+									<div class="d-flex flex-column justify-content-center pe-3 deny "> 
+										<%= form({action: denyRequirementPath({requirement_id: requirement.ID}) ,method:"PUT", id:"form-status"}) { %>
+										
+												<button class="button p-0 fw-light" type="submit">DENY</button>
+											
+										 <% } %>
+									</div>
+									<div class="d-flex flex-column justify-content-center px-3 approve ">
+										<%= form({action: approveRequirementPath({requirement_id: requirement.ID}) ,method:"PUT", id:"form-status"}) { %>
+										
+											<button class="button p-0 fw-light" type="submit">APPROVE</button>
+										
+									 <% } %>
+									</div>
+								</div>
+								<div>
+									<div class="btn-group">
+										<button type="button" class="btn" data-bs-toggle="dropdown" aria-expanded="false">
+											<i class="fa-solid fa-ellipsis"></i>
+										</button>
+										<ul class="dropdown-menu dropdown-menu-end">
+										  <li><a class="text-decoration-none " href="/requirements/edit/<%= requirement.ID %>">
+											<button class="dropdown-item">
+											Edit
+											</button>
+										</a></li>
+										  <li>
+											<button class="dropdown-item" data-bs-toggle="modal" data-bs-target="#A<%=requirement.ID%>" type="button">
+											Delete
+										</button>
+										</li>
+										</ul>
+									  </div>
+								</div>
+							<% } %>
+							
+						</div>
+						
+						
+					</div>
+		
+					
+				</div>
+				<div>
+					<span class="text-muted fw-light">
+						<%= requirement.CreatedByUser.FirstName %> - Created at <%= requirement.CreatedAt.Format("01/02/2006 - 3:4pm") %>  
+					</span>
+				</div>
+				<div>
+					<p>
+						<%= requirement.Description %>
+					</p>
+				</div>
+				<div class="d-flex flex-row justify-content-between">
+					<div class="d-flex options">
+						<div class="d-flex flex-column justify-content-center pe-3 "> <h3 class=" m-0 cursor-pointer">Type: <a href="<%= showRequirementTypePath({requirement_type_id : requirement.RequirementType.ID }) %>" class="fw-light text-decoration-underline text-dark"><%= requirement.RequirementType.Name %></a></h3></div>
+						<div class="d-flex flex-column justify-content-center px-3 "><h3 class=" m-0 cursor-pointer ">Area: <a href="<%= showDepartmentPath({department_id : requirement.ServiceDepartment.ID }) %>"  class="fw-light text-decoration-underline text-dark"><%= requirement.ServiceDepartment.Name %></a></h3></div>
+					</div>
+					<%= if (requirement.ApprovedByUser ) { %>
+						<div class="approved-data">
+							<span class="text-muted fw-light">Approved by <span class="fw-bold"><%= requirement.CreatedByUser.FirstName %> </span>at <%= requirement.ApprovedAt.Time.Format("01/02/2006 - 3:4pm") %></span>
+						</div>
+					<% } %>
+					<%= if (requirement.DeclinedByUser ) { %>
+						<div class="approved-data">
+							<span class="text-muted fw-light">Declined by <span class="fw-bold"><%= requirement.DeclinedByUser.FirstName %> </span>at <%= requirement.DeclinedAt.Time.Format("01/02/2006 - 3:4pm") %></span>
+						</div>
+					<% } %>
+					
+					
+				</div>
+
+			</div>
+			
+			
+			<%= form({action: "/requirements/delete/"+requirement.ID , method:"DELETE",  class: "py-2 py-md-0"}) { %>
+				<%= partial("requirement/modal.plush.html", {ID : requirement.ID}) %>
+			<% } %> 
+		<% } %>
 		</div>
-		
-		
-		<%= form({action: "/requirements/delete/"+requirement.ID , method:"DELETE",  class: "py-2 py-md-0"}) { %>
-			<%= partial("requirement/modal.plush.html", {ID : requirement.ID}) %>
-		<% } %> 
-	<% } %>
+
+	</div>	
 </div>
 
 

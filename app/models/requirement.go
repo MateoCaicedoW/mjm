@@ -119,11 +119,6 @@ func (r *Requirement) Validate(tx *pop.Connection) (*validate.Errors, error) {
 			Name:    "RequirementTypeID",
 			Message: "Type is required.",
 		},
-		&validators.UUIDIsPresent{
-			Field:   r.RequirementSubTypeID,
-			Name:    "RequirementSubTypeID",
-			Message: "Subtype is required.",
-		},
 	), nil
 
 }

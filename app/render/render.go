@@ -4,7 +4,9 @@ import (
 	"mjm/app/templates"
 	"mjm/public"
 
+	"github.com/gobuffalo/buffalo"
 	"github.com/gobuffalo/buffalo/render"
+	"github.com/gobuffalo/plush/v4"
 	"github.com/wawandco/ox/pkg/buffalotools"
 )
 
@@ -25,4 +27,30 @@ var Helpers = map[string]interface{}{
 	// partialFeeder is the helper used by the render engine
 	// to find the partials that will be used, this is important
 	"partialFeeder": buffalotools.NewPartialFeeder(templates.FS()),
+	"activeTab":     activeTab,
+	"activeClass":   activeClass,
+}
+
+func activeTab(n string, c plush.HelperContext) string {
+
+	if p, ok := c.Value("current_route").(buffalo.RouteInfo); ok {
+
+		if p.PathName == n {
+			return "item-active"
+		}
+	}
+	return ""
+
+}
+
+func activeClass(n string, c plush.HelperContext) string {
+
+	if p, ok := c.Value("current_route").(buffalo.RouteInfo); ok {
+
+		if p.PathName == n {
+			return "custom-active"
+		}
+	}
+	return ""
+
 }

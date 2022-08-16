@@ -119,11 +119,16 @@ func Edit(c buffalo.Context) error {
 	}
 
 	requirementType := &models.RequirementType{}
+	departments := models.Departments{}
+	if err := tx.All(&departments); err != nil {
+		return err
+	}
 
 	if err := tx.Find(requirementType, c.Param("requirement_type_id")); err != nil {
 		return c.Error(http.StatusNotFound, err)
 	}
 
+	c.Set("departments", departments.Map())
 	c.Set("requirementType", requirementType)
 
 	return c.Render(http.StatusOK, r.HTML("/requirement_type/edit.plush.html"))
