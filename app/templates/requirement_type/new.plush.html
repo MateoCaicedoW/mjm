@@ -1,13 +1,30 @@
-<div class="py-4 mb-2">
-  	<h3 class="d-inline-block">New RequirementType</h3>
-</div>
+<div>
+	<div class="py-4 mb-2 d-flex">
+		<%= linkTo(requirementTypesPath(), {class: "back fs-4 text-decoration-none me-3 text-dark"}) %>
+		<h3>New RequirementType</h3>
+	</div>
 
 <%= formFor(requirementType, {action: createRequirementTypePath(), method: "POST"}) { %>
 	<div class="row">
-		<div class="col-md-6 py-3">
+
+		<div class="col-md-12 py-3">
 			<%= f.InputTag("Name") %>
 		</div>
+		
+		<div class="col-md-6 pt-3">
+		  <%= f.SelectTag("DepartmentID", {options: departments}) %>
+
+		</div>
+
+		  
+		  <div class="col-md-6 py-3">
+			<%= f.InputTag("Description") %>
+		</div>
+		
+		<div class="d-flex justify-content-end mt-4 ">
+		  <%= linkTo(requirementTypesPath(), {class: "btn btn border rounded-pill", "data-confirm": "Are you sure?", body: "Cancel"}) %>
+		  <button class="btn rounded-pill text-white ms-2 btn-save" type="submit">Save Requirement</button>
+		</div>
 	  </div>
-	<button class="btn btn-success" type="submit">Save</button>
-	<%= linkTo(requirementTypesPath(), {class: "btn btn-warning", "data-confirm": "Are you sure?", body: "Cancel"}) %>
 <% } %>
+</div>

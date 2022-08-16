@@ -99,6 +99,26 @@ func (r *Requirement) Validate(tx *pop.Connection) (*validate.Errors, error) {
 			Name:    "Title",
 			Message: "%s Title must be letters only.",
 		},
+		&validators.UUIDIsPresent{
+			Field:   r.CreatedByUserID,
+			Name:    "CreatedByUserID",
+			Message: "User is required.",
+		},
+		&validators.UUIDIsPresent{
+			Field:   r.RequestingDepartmentID,
+			Name:    "RequestingDepartmentID",
+			Message: "Area is required.",
+		},
+		&validators.UUIDIsPresent{
+			Field:   r.ServiceDepartmentID,
+			Name:    "ServiceDepartmentID",
+			Message: "Service Area is required.",
+		},
+		&validators.UUIDIsPresent{
+			Field:   r.RequirementTypeID,
+			Name:    "RequirementTypeID",
+			Message: "Type is required.",
+		},
 	), nil
 
 }

@@ -1,0 +1,22 @@
+.page-content{
+    .back::after{
+        font: var(--fa-font-solid);
+        content: "\f060";
+        border-top: 0px;
+    }
+}
+.w-48{
+    width: 48% !important;
+}
+.h-115px{
+    height: 115px;
+}
+.bg-green-ligth{
+    background-color: #00AD9B;
+}
+.resize-none{
+    resize: none !important;
+}
+.btn-save-requirement:hover{
+    background-color: #00AD9B;
+}  

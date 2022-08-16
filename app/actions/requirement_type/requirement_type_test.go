@@ -35,9 +35,7 @@ func (as *ActionSuite) Test_Create() {
 	fako.Fill(&requirementType)
 
 	res := as.HTML("/requirement-types/create/").Post(requirementType)
-
-	as.Equal(res.Code, http.StatusSeeOther)
-
+	as.Equal(http.StatusSeeOther, res.Code)
 	as.Equal("/requirement-types/", res.Location())
 
 	requirementTypes := models.RequirementTypes{}
@@ -50,11 +48,13 @@ func (as *ActionSuite) Test_Create() {
 func (as *ActionSuite) Test_Update() {
 	requirementType := &models.RequirementType{}
 	fako.Fill(requirementType)
+	requirementType.Description = "Descriptions"
 	as.NoError(as.DB.Create(requirementType))
 
 	requirementTypeUpdate := &models.RequirementType{}
 	fako.Fill(requirementTypeUpdate)
 	requirementTypeUpdate.ID = requirementType.ID
+	requirementTypeUpdate.Description = requirementType.Description
 
 	res := as.HTML("/requirement-types/update/%v", requirementTypeUpdate.ID).Put(requirementTypeUpdate)
 	as.Equal(res.Code, http.StatusSeeOther)
@@ -94,7 +94,6 @@ func (as *ActionSuite) Test_Edit() {
 	as.Contains(body, requirementType.Name)
 	as.Contains(body, requirementType.ID.String())
 	as.Contains(body, "Edit RequirementType")
-
 }
 
 func (as *ActionSuite) Test_Show() {

@@ -1,15 +1,7 @@
-<div class="py-4 mb-2">
+<div class="py-4 mb-2 page-content">
+    <a href="/requirements" class="back btn border-0 pt-0 fs-4 ps-1"></a>
   	<h3 class="d-inline-block">New Requirement</h3>
 </div>
-
-<%= formFor(requirement, {action: "/requirements/create", method: "POST"}) { %>
-	<%= f.InputTag("Title") %>
-	<%= f.TextArea("Description", {rows: 5}) %>
-	<%= f.SelectTag("CreatedByUserID", {options: users, label: "User" }) %>
-	<%= f.SelectTag("RequestingDepartmentID", {options: departments, label: "Department"  }) %>
-	<%= f.SelectTag("ServiceDepartmentID", {options: departments , label: "Service Department" }) %>
-	<%= f.SelectTag("RequirementTypeID", {options: requirementTypes, label:"Requirement Type" }) %>
-	<%= f.SelectTag("RequirementSubTypeID", {options: requirementSubTypes, label: "Requirement Sub Type" }) %>
-	<button class="btn btn-success mt-3" role="submit">Save</button>
-	<%= linkTo(requirementsPath(), {class: "btn btn-warning mt-3", "data-confirm": "Are you sure?", body: "Cancel"}) %>
+<%= formFor(requirement, {action: createRequirementPath(), method: "POST", class:"size-box"}) { %>
+    <%= partial("requirement/form.plush.html") %>
 <% } %>
