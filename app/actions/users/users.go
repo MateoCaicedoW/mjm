@@ -96,7 +96,7 @@ func Create(c buffalo.Context) error {
 		return c.Render(http.StatusUnprocessableEntity, r.HTML("/user/new.plush.html"))
 	}
 
-	c.Flash().Add("success", "user.created.success")
+	c.Flash().Add("success", "User was created successfully")
 
 	return c.Redirect(http.StatusSeeOther, "usersPath()")
 }
@@ -152,7 +152,7 @@ func Update(c buffalo.Context) error {
 		return c.Render(http.StatusUnprocessableEntity, r.HTML("/user/edit.plush.html"))
 	}
 
-	c.Flash().Add("success", "user.updated.success")
+	c.Flash().Add("success", "User was updated successfully")
 
 	return c.Redirect(http.StatusSeeOther, "usersPath()")
 }
@@ -174,7 +174,7 @@ func Delete(c buffalo.Context) error {
 		return err
 	}
 
-	c.Flash().Add("success", "user.destroyed.success")
+	c.Flash().Add("success", "User was successfully destoyed")
 
 	return c.Redirect(http.StatusSeeOther, "usersPath()")
 }

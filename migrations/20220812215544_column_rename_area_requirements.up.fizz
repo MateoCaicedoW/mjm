@@ -1,0 +1,1 @@
+rename_column("area_requirement_types", "area_id", "department_id")

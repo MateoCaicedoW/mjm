@@ -85,7 +85,7 @@ func Create(c buffalo.Context) error {
 		return c.Render(http.StatusUnprocessableEntity, r.HTML("/requirement_type/new.plush.html"))
 	}
 
-	c.Flash().Add("success", "requirementType.created.success")
+	c.Flash().Add("success", "Type was created successfully")
 
 	return c.Redirect(http.StatusSeeOther, "requirementTypesPath()")
 }
@@ -137,7 +137,7 @@ func Update(c buffalo.Context) error {
 		return c.Render(http.StatusUnprocessableEntity, r.HTML("/requirement_type/edit.plush.html"))
 	}
 
-	c.Flash().Add("success", "requirementType.updated.success")
+	c.Flash().Add("success", "Type was updated successfully")
 
 	return c.Redirect(http.StatusSeeOther, "requirementTypesPath()")
 }
@@ -159,7 +159,7 @@ func Delete(c buffalo.Context) error {
 		return err
 	}
 
-	c.Flash().Add("success", "requirementType.destroyed.success")
+	c.Flash().Add("success", "Type was deleted successfully")
 
 	return c.Redirect(http.StatusSeeOther, "requirementTypesPath()")
 }
