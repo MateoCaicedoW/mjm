@@ -1,8 +1,0 @@
-<%= formFor(department, {id: "save", action: updateDepartmentPath({department_id: department.ID}) ,method: "PUT"}) { %>
-    <%= f.InputTag("Name", {type:"text", placeholder:"Name", class:"number-add", value: department.Name}) %>
-    <%= f.InputTag("Description", {type:"text", class:"mt-4", placeholder:"description", value: department.Description}) %>
-<% } %>
-<div class="d-flex">
-    <button class="btn d-flex btn-primary mt-3" form="save">Save Line</button>
-    <a class="btn btn-danger ms-3 mt-3" href="/departments">cancel</a>
-</div>

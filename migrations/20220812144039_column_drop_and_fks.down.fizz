@@ -1,0 +1,9 @@
+add_column("requirement_types", "department_id", "uuid", {"null": true})
+
+change_column("requirement_types", "department_id", "uuid", {"null": true})
+
+add_foreign_key("requirement_types", "department_id", {"departments": ["id"]}, {
+    "departmentFK": "departmentFK",
+    "on_delete": "cascade",
+    "on_update": "cascade",
+})

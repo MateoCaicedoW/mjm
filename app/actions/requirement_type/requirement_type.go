@@ -55,15 +55,6 @@ func Show(c buffalo.Context) error {
 }
 
 func New(c buffalo.Context) error {
-	tx, ok := c.Value("tx").(*pop.Connection)
-	if !ok {
-		return fmt.Errorf("no transaction found")
-	}
-	departments := models.Departments{}
-	if err := tx.All(&departments); err != nil {
-		return err
-	}
-	c.Set("departments", departments.Map())
 	c.Set("requirementType", &models.RequirementType{})
 
 	return c.Render(http.StatusOK, r.HTML("/requirement_type/new.plush.html"))
@@ -94,30 +85,23 @@ func Create(c buffalo.Context) error {
 		return c.Render(http.StatusUnprocessableEntity, r.HTML("/requirement_type/new.plush.html"))
 	}
 
-	c.Flash().Add("success", "requirementType.created.success")
+	c.Flash().Add("success", "Type was created successfully")
 
 	return c.Redirect(http.StatusSeeOther, "requirementTypesPath()")
 }
 
 func Edit(c buffalo.Context) error {
-
-	fmt.Println("/[----------------------------------")
 	tx, ok := c.Value("tx").(*pop.Connection)
 	if !ok {
 		return fmt.Errorf("no transaction found")
 	}
 
 	requirementType := &models.RequirementType{}
-	departments := models.Departments{}
-	if err := tx.All(&departments); err != nil {
-		return err
-	}
 
 	if err := tx.Find(requirementType, c.Param("requirement_type_id")); err != nil {
 		return c.Error(http.StatusNotFound, err)
 	}
 
-	c.Set("departments", departments.Map())
 	c.Set("requirementType", requirementType)
 
 	return c.Render(http.StatusOK, r.HTML("/requirement_type/edit.plush.html"))
@@ -153,7 +137,7 @@ func Update(c buffalo.Context) error {
 		return c.Render(http.StatusUnprocessableEntity, r.HTML("/requirement_type/edit.plush.html"))
 	}
 
-	c.Flash().Add("success", "requirementType.updated.success")
+	c.Flash().Add("success", "Type was updated successfully")
 
 	return c.Redirect(http.StatusSeeOther, "requirementTypesPath()")
 }
@@ -175,7 +159,7 @@ func Delete(c buffalo.Context) error {
 		return err
 	}
 
-	c.Flash().Add("success", "requirementType.destroyed.success")
+	c.Flash().Add("success", "Type was deleted successfully")
 
 	return c.Redirect(http.StatusSeeOther, "requirementTypesPath()")
 }

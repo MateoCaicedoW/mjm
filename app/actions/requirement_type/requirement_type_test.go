@@ -20,17 +20,8 @@ func Test_ActionSuite(t *testing.T) {
 }
 
 func (as *ActionSuite) Test_List() {
-
-	department := models.Department{
-		Name:        "name ",
-		Description: "description",
-	}
-
-	as.NoError(as.DB.Create(&department))
-
 	requirementType := models.RequirementType{}
 	fako.Fill(&requirementType)
-	requirementType.DepartmentID = department.ID
 	as.NoError(as.DB.Create(&requirementType))
 
 	res := as.HTML("/requirement-types/").Get()
@@ -38,16 +29,9 @@ func (as *ActionSuite) Test_List() {
 	as.Contains(body, requirementType.Name)
 
 }
+
 func (as *ActionSuite) Test_Create() {
-	department := models.Department{
-		Name:        "name ",
-		Description: "description",
-	}
-
-	as.NoError(as.DB.Create(&department))
-
 	requirementType := models.RequirementType{}
-	requirementType.DepartmentID = department.ID
 	fako.Fill(&requirementType)
 
 	res := as.HTML("/requirement-types/create/").Post(requirementType)
@@ -64,21 +48,12 @@ func (as *ActionSuite) Test_Create() {
 }
 
 func (as *ActionSuite) Test_Update() {
-	department := models.Department{
-		Name:        "name ",
-		Description: "description",
-	}
-
-	as.NoError(as.DB.Create(&department))
-
 	requirementType := &models.RequirementType{}
-	requirementType.DepartmentID = department.ID
 	fako.Fill(requirementType)
 	as.NoError(as.DB.Create(requirementType))
 
 	requirementTypeUpdate := &models.RequirementType{}
 	fako.Fill(requirementTypeUpdate)
-	requirementTypeUpdate.DepartmentID = department.ID
 	requirementTypeUpdate.ID = requirementType.ID
 
 	res := as.HTML("/requirement-types/update/%v", requirementTypeUpdate.ID).Put(requirementTypeUpdate)
@@ -88,17 +63,9 @@ func (as *ActionSuite) Test_Update() {
 	as.Equal(requirementTypeUpdate.Name, requirementType.Name)
 
 }
+
 func (as *ActionSuite) Test_Delete() {
-
-	department := models.Department{
-		Name:        "name ",
-		Description: "description",
-	}
-
-	as.NoError(as.DB.Create(&department))
-
 	requirementType := &models.RequirementType{}
-	requirementType.DepartmentID = department.ID
 	fako.Fill(requirementType)
 	as.NoError(as.DB.Create(requirementType))
 
@@ -115,17 +82,9 @@ func (as *ActionSuite) Test_Delete() {
 	as.NotContains(body, requirementType.Name)
 
 }
+
 func (as *ActionSuite) Test_Edit() {
-
-	department := models.Department{
-		Name:        "name ",
-		Description: "description",
-	}
-
-	as.NoError(as.DB.Create(&department))
-
 	requirementType := &models.RequirementType{}
-	requirementType.DepartmentID = department.ID
 	fako.Fill(requirementType)
 	as.NoError(as.DB.Create(requirementType))
 
@@ -139,16 +98,8 @@ func (as *ActionSuite) Test_Edit() {
 }
 
 func (as *ActionSuite) Test_Show() {
-	department := models.Department{
-		Name:        "name ",
-		Description: "description",
-	}
-
-	as.NoError(as.DB.Create(&department))
-
 	requirementType := &models.RequirementType{}
 	fako.Fill(requirementType)
-	requirementType.DepartmentID = department.ID
 	as.NoError(as.DB.Create(requirementType))
 
 	res := as.HTML("/requirement-types/show/" + requirementType.ID.String()).Get()
@@ -156,7 +107,6 @@ func (as *ActionSuite) Test_Show() {
 	body := res.Body.String()
 	as.Contains(body, requirementType.Name)
 	as.Contains(body, requirementType.ID.String())
-
 }
 
 func (as *ActionSuite) Test_New() {

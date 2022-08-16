@@ -33,6 +33,7 @@ func (as *ActionSuite) Test_List() {
 		fako.Fill(&requirements[i])
 		err5 := as.DB.Create(&requirements[i], "modified_by", "approved_by", "declined_by", "accepted_by", "finished_by", "proccessed_by", "assigned_to", "assigned_by")
 		as.NoError(err5)
+
 		res := as.HTML("/requirements").Get()
 		body := res.Body.String()
 		as.Contains(body, requirements[i].Title)
@@ -40,7 +41,6 @@ func (as *ActionSuite) Test_List() {
 
 	as.DB.Reload(&requirements)
 	as.Equal(len(requirements), 2)
-
 }
 
 func (as *ActionSuite) Test_Create() {
@@ -70,7 +70,6 @@ func (as *ActionSuite) Test_Create() {
 	as.DB.Reload(&requirement)
 	as.DB.All(&requirementArray)
 	as.Equal(1, len(requirementArray))
-
 }
 
 func (as *ActionSuite) Test_Create_Failed() {
@@ -96,7 +95,6 @@ func (as *ActionSuite) Test_New() {
 	body := res.Body.String()
 
 	as.Contains(body, "New Requirement")
-
 }
 
 func (as *ActionSuite) Test_Edit() {
@@ -117,7 +115,6 @@ func (as *ActionSuite) Test_Edit() {
 	body := res.Body.String()
 	as.Contains(body, "Edit Requirement")
 	as.NotContains(body, "New Requirement")
-
 }
 
 func (as *ActionSuite) Test_Update() {
@@ -150,7 +147,6 @@ func (as *ActionSuite) Test_Update() {
 	as.Equal("/requirements", res.Location())
 	as.DB.Reload(requirements)
 	as.Equal(requirementsUpdate.Title, requirements.Title)
-
 }
 
 func (as *ActionSuite) Test_Destroy() {
@@ -174,7 +170,6 @@ func (as *ActionSuite) Test_Destroy() {
 	as.DB.Reload(requirements)
 	count, _ := as.DB.Count(requirements)
 	as.Equal(0, count)
-
 }
 
 func Create(as ActionSuite) (models.Department, models.User, models.RequirementType, models.RequirementSubType) {
@@ -190,7 +185,6 @@ func Create(as ActionSuite) (models.Department, models.User, models.RequirementT
 	as.NoError(err2)
 
 	requirementType := models.RequirementType{}
-	requirementType.DepartmentID = deparment.ID
 	fako.Fill(&requirementType)
 	err3 := as.DB.Create(&requirementType)
 	as.NoError(err3)

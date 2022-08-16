@@ -1,0 +1,22 @@
+.back::after{
+    font: var(--fa-font-solid);
+    content: "\f060";
+}
+
+.btn-cancel{
+    border: solid 1px #D0D0D0;
+    color: var(--dark);
+}
+
+.btn-cancel:hover{
+    border: solid 1px #D0D0D0;
+}
+
+.height-115{
+    height: 115px !important;
+}
+
+.form-check-input:checked {
+    background-color: var(--green-ligth);
+    border-color: var(--green-ligth);
+}

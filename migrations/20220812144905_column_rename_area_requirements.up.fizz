@@ -1,0 +1,1 @@
+rename_table("areas_requirements_types", "area_requirement_types")

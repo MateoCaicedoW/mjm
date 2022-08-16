@@ -1,6 +1,0 @@
-<%= formFor(department, {id: "save", action: createDepartmentPath() ,method: "POST"}) { %>
-    <%= f.InputTag("Name", {type:"text", class:"mb-2", placeholder:"Name"}) %>
-    <%= f.InputTag("Description", {type:"text", class:"mt-1", placeholder:"Description"}) %>
-<% } %>
-<button class="btn btn-primary mt-3" form="save">Save Line</button>
-<a class="btn btn-danger ms-3 mt-3" href="/departments">cancel</a>
