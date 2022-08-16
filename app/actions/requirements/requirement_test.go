@@ -252,8 +252,7 @@ func Create(as ActionSuite) (models.Department, models.User, models.RequirementT
 	as.NoError(err2)
 
 	requirementType := models.RequirementType{
-		Name:         "Requirement Type",
-		DepartmentID: deparment.ID,
+		Name: "Requirement Type",
 	}
 
 	err3 := as.DB.Create(&requirementType)

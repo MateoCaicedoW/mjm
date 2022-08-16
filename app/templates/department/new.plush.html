@@ -11,9 +11,9 @@
         <%= for (key, value) in requirements { %>
             <div class="col-md-4 mb-2">
                 <div class="form-check">
-                    <input class="form-check-input" type="checkbox" id="<%= key.String() %>" name="requirements_type[<%=key.String() %>]">
-                    <label class="form-check-label" for="<%= key.String() %>">
-                      <%= value %>
+                    <input class="form-check-input" type="checkbox" id="<%= value.String() %>" name="requirements_type[<%=value.String() %>]">
+                    <label class="form-check-label" for="<%= value.String() %>">
+                      <%= key %>
                     </label>
                 </div>
             </div>

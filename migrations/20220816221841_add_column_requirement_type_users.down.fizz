@@ -1,0 +1,1 @@
+drop_column("requirement_types", "user_id")

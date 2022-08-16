@@ -10,16 +10,16 @@
         <%= for (key, values) in requirements { %>
             <div class="col-md-4 mb-2">
                 <div class="form-check">
-                    <input class="form-check-input" type="checkbox" id="<%= key.String() %>" name="requirements_type[<%=key.String() %>]"
+                    <input class="form-check-input" type="checkbox" id="<%= values.String() %>" name="requirements_type[<%=values.String() %>]"
                     <%= for (item) in department.RequirementsTypes { %>
-                        <%= if (item.ID.String() == key.String()) { %>
+                        <%= if (item.ID.String() == values.String()) { %>
                           checked
                         
                         <% } %>
                      <% } %>
                     >
-                    <label class="form-check-label" for="<%= key.String() %>">
-                      <%= values %>
+                    <label class="form-check-label" for="<%= values.String() %>">
+                      <%= key %>
                     </label>
                 </div>
             </div>

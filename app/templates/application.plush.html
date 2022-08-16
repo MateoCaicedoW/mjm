@@ -18,6 +18,7 @@
   </aside>
 	<main class="home px-4">
 		<%= yield %>
+    <%= partial("partials/flash.plush.html") %>
 	</main>
 <%= javascriptTag("application.js", {defer: true}) %>
 </body>

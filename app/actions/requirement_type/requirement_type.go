@@ -61,15 +61,12 @@ func New(c buffalo.Context) error {
 		return fmt.Errorf("no transaction found")
 	}
 	users := models.Users{}
-	departments := models.Departments{}
-	if err := tx.All(&departments); err != nil {
-		return err
-	}
+
 	if err := tx.All(&users); err != nil {
 		return err
 	}
 	c.Set("users", users.Map())
-	c.Set("departments", departments.Map())
+
 	c.Set("requirementType", &models.RequirementType{})
 
 	return c.Render(http.StatusOK, r.HTML("/requirement_type/new.plush.html"))
@@ -88,11 +85,8 @@ func Create(c buffalo.Context) error {
 		return err
 	}
 
-	requirementType.CreatedByUserID = uuid.Must(uuid.FromString("175afda1-82ef-4950-b8db-6dab15740d63"))
-	departments := models.Departments{}
-	if err := tx.All(&departments); err != nil {
-		return err
-	}
+	requirementType.CreatedByUserID = uuid.FromStringOrNil("175afda1-82ef-4950-b8db-6dab15740d63")
+
 	verrs, err := tx.ValidateAndCreate(requirementType)
 	if err != nil {
 		return err
@@ -101,7 +95,6 @@ func Create(c buffalo.Context) error {
 	if verrs.HasAny() {
 		c.Set("errors", verrs)
 		c.Set("requirementType", requirementType)
-		c.Set("departments", departments.Map())
 
 		return c.Render(http.StatusUnprocessableEntity, r.HTML("/requirement_type/new.plush.html"))
 	}
@@ -145,10 +138,6 @@ func Update(c buffalo.Context) error {
 		return err
 	}
 
-	departments := models.Departments{}
-	if err := tx.All(&departments); err != nil {
-		return err
-	}
 	verrs, err := tx.ValidateAndUpdate(requirementType)
 	if err != nil {
 		return err
@@ -156,7 +145,7 @@ func Update(c buffalo.Context) error {
 
 	if verrs.HasAny() {
 		c.Set("errors", verrs)
-		c.Set("departments", departments.Map())
+
 		c.Set("requirementType", requirementType)
 
 		return c.Render(http.StatusUnprocessableEntity, r.HTML("/requirement_type/edit.plush.html"))
