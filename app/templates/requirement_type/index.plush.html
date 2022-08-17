@@ -1,19 +1,19 @@
 <div>
-	<div class="row">
-		<div class="col-6 fs-4 fw-bold"> Types  </div>
+	<div class="row pt-4 mt-1 pb-1 mb-2 d-flex justify-content-between">
+		<div class="col-6 fs-4 fw-bold semi-bold"> Types  </div>
 		<div class="col-6 text-end">
 			<%= linkTo(newRequirementTypePath(), {class: "btn border rounded-pill px-3"}) { %>
 				<i class="fa fa-plus"></i> New Type
 				<% } %>
 		</div>
 	</div>
-	<div class="row pt-4">
+	<div class="row">
 		<div class="col-12">
 			<table class="table align-middle">
 				<thead class="bg-gray-ligth">
 				  <tr >
 					<th scope="col" class="text-secondary fw-normal w-15">NAME</th>
-					<th scope="col" class="text-secondary fw-normal w-35">DESCRITPION</th>
+					<th scope="col" class="text-secondary fw-normal w-35">DESCRIPTION</th>
 					<th scope="col" class="text-secondary fw-normal w-25">Create By:</th>
 					<th scope="col" class="text-secondary fw-normal"></th>
 				</tr>
