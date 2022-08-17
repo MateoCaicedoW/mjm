@@ -51,14 +51,25 @@ func (u *User) Validate(tx *pop.Connection) (*validate.Errors, error) {
 			Message: "Phone number is required.",
 		},
 		&validators.FuncValidator{
+
 			Fn: func() bool {
-				if u.PhoneNumber != "" && regexp.MustCompile(`^[a-zA-Z]+$`).MatchString(u.PhoneNumber) {
+				if u.PhoneNumber != "" && !regexp.MustCompile(`^[0-9]+$`).MatchString(u.PhoneNumber) {
 					return false
 				}
 				return true
 			},
 			Name:    "PhoneNumber",
 			Message: "%s Phone must be number only.",
+		}, &validators.FuncValidator{
+
+			Fn: func() bool {
+				if u.DNI != "" && regexp.MustCompile(`([^\w\d])+`).MatchString(u.DNI) {
+					return false
+				}
+				return true
+			},
+			Name:    "DNI",
+			Message: "%s DNI must be letters and numbers only.",
 		},
 	), nil
 

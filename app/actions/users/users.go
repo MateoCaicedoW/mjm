@@ -150,10 +150,17 @@ func Update(c buffalo.Context) error {
 	if err != nil {
 		return err
 	}
+	departments := models.Departments{}
+
+	if err := tx.All(&departments); err != nil {
+		return err
+	}
 
 	if verrs.HasAny() {
 		c.Set("errors", verrs)
 		c.Set("user", user)
+
+		c.Set("departments", departments.Map())
 		return c.Render(http.StatusUnprocessableEntity, r.HTML("/user/edit.plush.html"))
 	}
 
