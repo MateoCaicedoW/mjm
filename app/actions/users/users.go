@@ -89,8 +89,13 @@ func Create(c buffalo.Context) error {
 	if err != nil {
 		return err
 	}
+	departments := models.Departments{}
 
+	if err := tx.All(&departments); err != nil {
+		return err
+	}
 	if verrs.HasAny() {
+		c.Set("departments", departments.Map())
 		c.Set("errors", verrs)
 		c.Set("user", user)
 		return c.Render(http.StatusUnprocessableEntity, r.HTML("/user/new.plush.html"))
