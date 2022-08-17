@@ -99,6 +99,7 @@ func Create(c buffalo.Context) error {
 	// Allocate an empty Requirement
 	requirement := &models.Requirement{}
 
+	fmt.Println("aaaaa")
 	// Bind requirement to the html form elements
 	if err := c.Bind(requirement); err != nil {
 
@@ -109,6 +110,7 @@ func Create(c buffalo.Context) error {
 	if !ok {
 		return fmt.Errorf("no transaction found")
 	}
+	fmt.Println("ccccc")
 
 	requirement.CreatedByUserID = uuid.FromStringOrNil("175afda1-82ef-4950-b8db-6dab15740d63")
 	requirement.RequestingDepartmentID = uuid.FromStringOrNil("668eca48-bc11-49ff-81ea-2665d3130b42")
@@ -131,6 +133,7 @@ func Create(c buffalo.Context) error {
 
 		return c.Render(http.StatusUnprocessableEntity, r.HTML("/requirement/new.plush.html"))
 	}
+	fmt.Println("ddddd")
 
 	// If there are no errors set a success message
 	c.Flash().Add("success", "requirement was successfully created")
