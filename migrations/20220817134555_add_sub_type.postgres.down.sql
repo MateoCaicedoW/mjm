@@ -1,0 +1,1 @@
+DELETE FROM requirement_sub_types WHERE name='Jhon'
