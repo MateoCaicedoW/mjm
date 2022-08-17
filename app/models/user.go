@@ -1,6 +1,7 @@
 package models
 
 import (
+	"regexp"
 	"time"
 
 	"github.com/gobuffalo/pop/v6"
@@ -35,11 +36,11 @@ func (u *User) Validate(tx *pop.Connection) (*validate.Errors, error) {
 			Field:   u.LastName,
 			Name:    "LastName",
 			Message: "Last name is required.",
-		},&validators.StringIsPresent{
+		}, &validators.StringIsPresent{
 			Field:   u.DNI,
 			Name:    "DNI",
 			Message: "DNI is required.",
-		},&validators.StringIsPresent{
+		}, &validators.StringIsPresent{
 			Field:   u.EmailAddress,
 			Name:    "EmailAddress",
 			Message: "Email address is required.",
@@ -49,9 +50,16 @@ func (u *User) Validate(tx *pop.Connection) (*validate.Errors, error) {
 			Name:    "PhoneNumber",
 			Message: "Phone number is required.",
 		},
-
-		
-		
+		&validators.FuncValidator{
+			Fn: func() bool {
+				if u.PhoneNumber != "" && regexp.MustCompile(`^[a-zA-Z]+$`).MatchString(u.PhoneNumber) {
+					return false
+				}
+				return true
+			},
+			Name:    "PhoneNumber",
+			Message: "%s Phone must be number only.",
+		},
 	), nil
 
 }
