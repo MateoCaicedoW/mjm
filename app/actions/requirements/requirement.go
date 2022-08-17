@@ -135,9 +135,6 @@ func Create(c buffalo.Context) error {
 	}
 	fmt.Println("ddddd")
 
-	// If there are no errors set a success message
-	c.Flash().Add("success", "requirement was successfully created")
-
 	// and redirect to the show page
 	return c.Redirect(http.StatusSeeOther, "/requirements")
 }
@@ -202,7 +199,6 @@ func Update(c buffalo.Context) error {
 	}
 
 	// If there are no errors set a success message
-	c.Flash().Add("success", "requirement was successfully updated")
 
 	// and redirect to the show page
 	return c.Redirect(http.StatusSeeOther, "/requirements")
@@ -228,9 +224,6 @@ func Delete(c buffalo.Context) error {
 	if err := tx.Eager().Destroy(requirement); err != nil {
 		return err
 	}
-
-	// If there are no errors set a flash message
-	c.Flash().Add("success", "requirement was successfully deleted")
 
 	// Redirect to the index page
 	return c.Redirect(http.StatusSeeOther, "/requirements")
