@@ -1,0 +1,1 @@
+DELETE FROM requirement_types WHERE name='iOS'
