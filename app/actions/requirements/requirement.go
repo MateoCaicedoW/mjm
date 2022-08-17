@@ -114,7 +114,7 @@ func Create(c buffalo.Context) error {
 
 	requirement.CreatedByUserID = uuid.FromStringOrNil("175afda1-82ef-4950-b8db-6dab15740d63")
 	requirement.RequestingDepartmentID = uuid.FromStringOrNil("668eca48-bc11-49ff-81ea-2665d3130b42")
-	requirement.RequirementSubTypeID = uuid.FromStringOrNil("ac5cbfda-8cc8-4d10-8a03-d55ed2647d2d")
+	requirement.RequirementSubTypeID = uuid.FromStringOrNil("ed5f4ac2-1e34-11ed-861d-0242ac120002")
 	// Validate the data from the html form
 	verrs, err := tx.Eager().ValidateAndCreate(requirement)
 	if err != nil {
