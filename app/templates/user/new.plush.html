@@ -1,10 +1,12 @@
-<div class="py-4 mb-2">
-  	<h3 class="d-inline-block">New User</h3>
-</div>
 
 
+<div>
+	<div class="py-4 mb-2 d-flex">
+		<%= linkTo(usersPath(), {class: "back fs-4 text-decoration-none me-3 text-dark"}) %>
+		<h3>New User</h3>
+	</div>
 
-<%= formFor(user, {action: createUserPath(), method: "POST"}) { %>
+	<%= formFor(user, {action: createUserPath(), method: "POST"}) { %>
     <div class="row">
 
       <div class="col-md-6 py-3">
@@ -26,9 +28,12 @@
         <%= f.InputTag("PhoneNumber") %>
       </div>
     
-      
-
-    </div>
-    <button type="submit" class="btn btn-primary">send</button>
-	<%= linkTo(usersPath(), {class: "btn btn-warning", "data-confirm": "Are you sure?", body: "Cancel"}) %>
+		
+		<div class="d-flex justify-content-end mt-4 ">
+		  <%= linkTo(usersPath(), {class: "btn btn border rounded-pill", "data-confirm": "Are you sure?", body: "Cancel"}) %>
+		  <button class="btn rounded-pill text-white ms-2 btn-save" type="submit">Save Changes</button>
+		</div>
+	  </div>
 <% } %>
+</div>
+

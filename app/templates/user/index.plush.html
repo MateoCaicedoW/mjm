@@ -1,48 +1,59 @@
-<div class="py-4 mb-2">
-	<h3 class="d-inline-block">Users</h3>
-	<div class="float-right">
-		<%= linkTo(newUserPath(), {class: "btn btn-primary"}) { %>
-		Create New User
-		<% } %>
+
+<div>
+	<div class="row">
+		<div class="col-6 fs-4 fw-bold"> Users  </div>
+		<div class="col-6 text-end">
+			<%= linkTo(newUserPath(), {class: "btn border rounded-pill px-3"}) { %>
+				<i class="fa fa-plus"></i> New User
+				<% } %>
+		</div>
 	</div>
-</div>
-
-<table class="table table-hover table-bordered">
-	<thead class="thead-light">
-		<th>ID</th>
-		<th>CreatedAt</th>
-		<th>UpdatedAt</th>
-		<th>FirstName</th>
-		<th>LastName</th>
-		<th>Dni</th>
-		<th>EmailAddress</th>
-		<th>PhoneNumber</th>
-		<th>&nbsp;</th>
-	</thead>
-	<tbody>
-		<%= for (user) in users { %>
-		<tr>
-			<td class="align-middle"><%= user.ID %></td>
-			<td class="align-middle"><%= user.CreatedAt %></td>
-			<td class="align-middle"><%= user.UpdatedAt %></td>
-			<td class="align-middle"><%= user.FirstName %></td>
-			<td class="align-middle"><%= user.LastName %></td>
-			<td class="align-middle"><%= user.DNI %></td>
-			<td class="align-middle"><%= user.EmailAddress %></td>
-			<td class="align-middle"><%= user.PhoneNumber %></td>
-
-			<td>
-				<div class="float-right">
-					<%= linkTo(showUserPath({ user_id: user.ID }), {class: "btn btn-info", body: "View"}) %>
-					<%= linkTo(editUserPath({ user_id: user.ID }), {class: "btn btn-warning", body: "Edit"}) %>
-					<%= linkTo(deleteUserPath({ user_id: user.ID }), {class: "btn btn-danger", data-method: "DELETE" ,"data-confirm": "Are you sure?", body: "Destroy"}) %>
+	<div class="row pt-4">
+		<div class="col-12">
+			<table class="table align-middle">
+				<thead class="bg-gray-ligth">
+				  <tr >
+					<th>FirstName</th>
+					<th>LastName</th>
+					<th>Dni</th>
+					<th>EmailAddress</th>
+					<th>PhoneNumber</th>
+					<th scope="col" class="text-secondary fw-normal"></th>
+				</tr>
+				</thead>
+				<tbody>
+					<%= for (user) in users { %>
+						<tr>
+							<td class="align-middle"><%= user.FirstName %></td>
+							<td class="align-middle"><%= user.LastName %></td>
+							<td class="align-middle"><%= user.DNI %></td>
+							<td class="align-middle"><%= user.EmailAddress %></td>
+							<td class="align-middle"><%= user.PhoneNumber %></td>
+							<td class="text-end">
+								<div class="dropdown d-flex justify-content-end">
+									<a class="border rounded-circle circle d-flex text-end justify-content-center text-decoration-none align-items-center" href="#"  id="dropdownMenuLink" data-bs-toggle="dropdown" aria-expanded="false">
+										<i class="fa-solid fs-5 fa-ellipsis  text-dark"></i>
+									  </a>
+	
+									<ul class="dropdown-menu">
+									  <li><%= linkTo(editUserPath({ user_id: user.ID }), {class:"dropdown-item", body: "Edit"}) %></li>
+									  <li><%= linkTo(deleteUserPath({ user_id: user.ID }), {class:"dropdown-item", data-method: "DELETE" ,"data-confirm": "Are you sure?", body: "Delete"}) %></li>
+									</ul>
+								  </div>
+							</td>
+						</tr>
+	
+						<% } %>
+				
+				</tbody>
+			  </table>
+	
+				<div class="text-center">
+					<%= paginator(pagination) %>
 				</div>
-			</td>
-		</tr>
-		<% } %>
-	</tbody>
-</table>
-
-<div class="text-center">
-	<%= paginator(pagination) %>
-</div>
+		</div>
+	</div>
+	</div>
+	
+	
+	

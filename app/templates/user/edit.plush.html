@@ -1,18 +1,38 @@
-<div class="py-4 mb-2">
-    <h3 class="d-inline-block">Edit User</h3>
-</div>
 
-<%= formFor(user, {action: updateUserPath({ user_id: user.ID }), method: "PUT"}) { %>
-        <%= f.InputTag("CreatedAt") %>
-        <%= f.InputTag("UpdatedAt") %>
-        <%= f.InputTag("FirstName") %>
-        <%= f.InputTag("LastName") %>
-        <%= f.InputTag("DNI") %>
-        <%= f.InputTag("EmailAddress") %>
-        <%= f.SelectTag("DepartmentID", {options: departments}) %>
-        <%= f.InputTag("PhoneNumber") %>
-        <div class="py-3">
-        <button class="btn btn-success " type="submit">Save</button>
-        <%= linkTo(usersPath({ user_id: user.ID }), {class: "btn btn-warning", "data-confirm": "Are you sure?", body: "Cancel"}) %>
-        </div>  
- <% } %>
+ <div>
+    <div class="py-4 mb-2 d-flex">
+        <%= linkTo(usersPath(), {class: "back fs-4 text-decoration-none me-3 text-dark"}) %>
+        <h3>Edit User</h3>
+    </div>
+    <%= formFor(user, {action: updateUserPath({ user_id: user.ID }), method: "PUT"}) { %>
+        <div class="mb-4">
+            <div class="row ">
+                <div class="col-md-6 py-3">
+                    <%= f.InputTag("FirstName") %>
+                  </div>
+                  <div class="col-md-6 py-3">
+                    <%= f.InputTag("LastName") %>
+                  </div>
+                  <div class="col-md-10 py-3 ">
+                    <%= f.InputTag("DNI") %>
+                  </div>
+                  <div class="col-md-2 pt-3">
+                    <%= f.SelectTag("DepartmentID", {options: departments}) %>
+                  </div>
+                  <div class="col-md-6 py-3">
+                    <%= f.InputTag("EmailAddress") %>
+                  </div>
+                  <div class="col-md-6 py-3">
+                    <%= f.InputTag("PhoneNumber") %>
+                  </div>
+               
+            </div>
+            </div>
+            <div>
+            </div> 
+            <div class="d-flex  justify-content-end mt-4 ">
+                    <%= linkTo(usersPath(), {class: "btn btn border rounded-pill", "data-confirm": "Are you sure?", body: "Cancel"}) %>
+                    <button class="btn rounded-pill text-white ms-2 btn-save" type="submit">Save Changes</button>
+            </div>
+    <% } %>
+    </div>
