@@ -1,6 +1,7 @@
 package models
 
 import (
+	"regexp"
 	"time"
 
 	"github.com/gobuffalo/pop/v6"
@@ -34,6 +35,38 @@ func (r *RequirementType) Validate(tx *pop.Connection) (*validate.Errors, error)
 			Field:   r.Description,
 			Name:    "Description",
 			Message: "Description is required.",
+		},
+		&validators.FuncValidator{
+			Fn: func() bool {
+				if r.Name != "" && len(r.Name) > 255 {
+					return false
+				}
+				return true
+			},
+			Field:   "",
+			Name:    "Name",
+			Message: "%s Name must be less than 255 characters.",
+		},
+		&validators.FuncValidator{
+			Fn: func() bool {
+				if r.Description != "" && len(r.Description) > 255 {
+					return false
+				}
+				return true
+			},
+			Field:   "",
+			Name:    "Description",
+			Message: "%s Description must be less than 255 characters.",
+		},
+		&validators.FuncValidator{
+			Fn: func() bool {
+				if r.Name != "" && !regexp.MustCompile(`^[a-zA-Z ]+$`).MatchString(r.Name) {
+					return false
+				}
+				return true
+			},
+			Name:    "Name",
+			Message: "%s Name must be letters only.",
 		},
 	), nil
 
