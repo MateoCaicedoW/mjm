@@ -49,9 +49,6 @@ func (u *User) Validate(tx *pop.Connection) (*validate.Errors, error) {
 			Name:    "PhoneNumber",
 			Message: "Phone number is required.",
 		},
-
-		
-		
 	), nil
 
 }
