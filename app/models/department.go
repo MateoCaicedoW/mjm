@@ -17,7 +17,6 @@ type Department struct {
 	CreatedAt         time.Time        `db:"created_at"`
 	UpdatedAt         time.Time        `db:"updated_at"`
 	Users             []User           `has_many:"users"`
-	Requirements      []Requirement    `has_many:"requirements"`
 	RequirementsTypes RequirementTypes `many_to_many:"area_requirement_types"`
 	RequirementsType  map[string]bool  `db:"-" form:"requirements_type"`
 }

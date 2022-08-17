@@ -4,7 +4,6 @@ import (
 	"net/http"
 
 	"mjm/app/actions/departments"
-	"mjm/app/actions/home"
 	"mjm/app/actions/requirement_type"
 	"mjm/app/actions/requirements"
 	"mjm/app/actions/users"
@@ -21,7 +20,7 @@ func setRoutes(root *buffalo.App) {
 	root.Use(middleware.ParameterLogger)
 	root.Use(middleware.CSRF)
 
-	root.GET("/", home.Index)
+	root.GET("/", requirements.List)
 	requirementType := root.Group("/requirement-types")
 	requirementType.GET("/", requirement_type.List)
 	requirementType.GET("/new", requirement_type.New).Name("newRequirementType")
