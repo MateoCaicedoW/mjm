@@ -23,7 +23,9 @@
                         <% } %>
                     <% } %>
                 </td>
-                <td class="align-middle"><%= department.Users %></td>
+                <td class="align-middle"><%= for (item) in department.Users { %>
+                   <%= item.FirstName %>
+                <% } %></td>
                 <td class="align-middle">
                     <div class="dropdown d-flex justify-content-end">
                         <a class="border rounded-circle circle d-flex text-end justify-content-center text-decoration-none align-items-center" href="#"  id="dropdownMenuLink" data-bs-toggle="dropdown" aria-expanded="false">

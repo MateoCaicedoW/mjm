@@ -18,7 +18,7 @@ func List(c buffalo.Context) error {
 	tx := c.Value("tx").(*pop.Connection)
 
 	departments := []models.Department{}
-	err := tx.All(&departments)
+	err := tx.Eager().All(&departments)
 	if err != nil {
 		return err
 	}
@@ -195,7 +195,7 @@ func Update(c buffalo.Context) error {
 
 		c.Set("department", department)
 		c.Set("requirements", requirements.Map())
-		return c.Render(http.StatusUnprocessableEntity, r.HTML("/department/new.plush.html"))
+		return c.Render(http.StatusUnprocessableEntity, r.HTML("/department/edit.plush.html"))
 	}
 
 	return c.Redirect(http.StatusSeeOther, "/departments")
